@@ -6,7 +6,7 @@ let manifest, active = 'render', modelPromise;
 const labels = { render: '1920 × 1440 / PNG', model: 'GLB / 可旋轉、縮放', plan: 'A101 / A3 · 1:50 · mm' };
 const files = { render: 'render.png', model: 'scene.glb', plan: 'A101.svg' };
 const hints = { render: '光線、材質與比例的第一輪對話。', model: '拖曳旋轉，滾輪縮放；鍵盤方向鍵可平移。', plan: '以標註尺寸為準。列印請使用 A3、100% 比例。' };
-const names = { 'drawings.pdf': '平面＋四向牆面立面 / PDF', 'plan.dxf': '可編輯平面 / DXF', 'scene.blend': 'Blender 原始場景 / BLEND', 'scene.glb': '三維模型 / GLB', 'render.png': '高清渲染 / PNG', 'materials.csv': '淨面積與材質表 / CSV', 'openings.csv': '門窗尺寸表 / CSV', 'furniture.csv': '家具位置與尺寸 / CSV', 'project.json': '完整專案尺寸 / JSON', 'handoff.md': '交付說明與待確認事項 / MD' };
+const names = { 'drawings.pdf': '完整設計圖面 / PDF', 'plan.dxf': '可編輯平面 / DXF', 'scene.blend': 'Blender 原始場景 / BLEND', 'scene.glb': '三維模型 / GLB', 'render.png': '高清渲染 / PNG', 'materials.csv': '材料表 / CSV', 'openings.csv': '門窗尺寸表 / CSV', 'furniture.csv': '家具位置與尺寸 / CSV', 'project.json': '完整專案尺寸 / JSON', 'handoff.md': '交付說明與待確認事項 / MD', 'J301.svg': '櫃體三視圖 / SVG', 'J401.svg': '櫃體剖面與介面 / SVG', 'joinery.csv': '櫃體內淨尺寸表 / CSV', 'issues.csv': '施工前確認事項 / CSV' };
 
 function status(text) { $('status').textContent = text; }
 async function getJSON(name) {
@@ -45,7 +45,10 @@ async function init() {
     manifest = await getJSON('manifest.json');
     if (manifest.schema_version !== '1.0' || !Array.isArray(manifest.files)) throw new Error('不支援的交付包版本');
     const data = await getJSON('project.json');
-    $('project-name').textContent = data.project.name; $('brief').textContent = data.project.brief;
+    $('project-name').textContent = data.project.name + (manifest.style_name ? ' / ' + manifest.style_name : '');
+    if (manifest.render_label) labels.render = manifest.render_label;
+    if (manifest.plan_label) labels.plan = manifest.plan_label;
+    $('brief').textContent = data.project.brief;
     const facts = [['室內面積', `${(data.room.width * data.room.depth / 1e6).toFixed(1)} m²`], ['淨高', `${data.room.height} mm`], ['版本', data.project.revision]];
     facts.forEach(([key, value]) => { const div = document.createElement('div'); const dt = document.createElement('dt'); const dd = document.createElement('dd'); dt.textContent = key; dd.textContent = value; div.append(dt, dd); $('facts').append(div); });
     for (const [name, label] of Object.entries(names)) if (has(name)) $('downloads').append(download(name, label));

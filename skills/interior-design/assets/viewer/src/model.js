@@ -28,7 +28,7 @@ export async function loadModel(isActive) {
   function reset() { camera.position.copy(center).add(new THREE.Vector3(span, span * .85, span * 1.15)); controls.target.copy(center); controls.update(); }
   reset(); controls.minDistance = span * .3; controls.maxDistance = span * 4;
   const cut = [];
-  gltf.scene.traverse((node) => { if (/^wall_(south|east|corner)|^opening_(south|east)_/.test(node.name)) cut.push(node); });
+  gltf.scene.traverse((node) => { if (/^wall_(south|east|corner)|^opening_(south|east)_|^(south|east)[ _]plaster[ _]wall|^Flush[ _]timber[ _]door/.test(node.name)) cut.push(node); });
   const toggleWalls = () => { cut.forEach((node) => { node.visible = $('walls').checked; }); }; toggleWalls();
   $('walls').onchange = toggleWalls; $('reset').onclick = reset;
   function rotateLabel() { $('rotate').textContent = controls.autoRotate ? '暫停旋轉' : '開始旋轉'; }

@@ -2,20 +2,20 @@
 
 ## Available now
 
-The self-contained skill combines requirements intake, furniture sourcing, Blender/frontend consistency, rendering and drawing handoff instructions. The executable generator supports a synthetic single rectangular room, an editable Blender scene, web GLB, dimensioned drawings and schedules.
+- Portable agent-led interior design workflow: briefs, calibrated sources, product research, Blender/native modeling, browser review and technical handoff.
+- Four original procedural style studies: MCM, Japandi, Contemporary and Bauhaus, with editable scenes, detailed furniture, material differences and image/camera provenance.
+- Eight-sheet synthetic design-development package with dimension chains, proposed lighting/power, elevations, cabinet arrangements/sections, component dimensions and schedules.
+- Existing-native-scene extraction and model-derived plan/elevation/section workflow for projects beyond the starter schema, including a selected-object register and verified dimension evidence.
+- Explicit project/user installation helpers for Codex, Claude Code, Cursor and Copilot.
 
-Workflow references also describe activity-based spatial reviews, calibrated drawing overlays and service coordination. Those instructions are not claims that every check or layer is implemented in the viewer.
+The original rectangular-room generator remains a small quick-start tool. Its input-size and primitive-furniture limits are documented in its format reference and do not define the general skill's design scope.
 
-## Future engineering work
+## Further development
 
-- Generic door, hinge, chair and storage-operation controls with swept-envelope checks.
-- Detailed geometry, licensed furniture assets, portable PBR materials and more camera views.
-- A browser-scene snapshot exporter that preserves evaluated transforms and revisions.
-- Calibrated underlays, shared plan/model selection and optional service layers.
-- Detailed cabinetry sections, trade-specific sheets, complex room shapes and multiple rooms.
+- Reusable operation controls and swept-envelope tests for hinges, chairs, drawers and storage.
+- More product-specific licensed assets and finish libraries.
+- Browser edit/state capture and calibrated underlay/plan-selection integration.
+- Richer native semantic IDs, complete hidden-line removal, CAD-native associative dimensions and selected-hardware detail libraries.
+- Project-specific electrical, mechanical, structural and approval workflows based on actual site/equipment evidence.
 
-Each extension should satisfy the project schema, preserve units and stable IDs, and pass the relevant geometry and artifact checks before being described as available.
-
-## Asset policy
-
-Use synthetic fixtures and examples suitable for redistribution. Record source, author, licence and permitted use for third-party models, textures and images. Keep personal drawings, identifying location data, private photographs, financial records and assets without redistribution rights outside published examples.
+Document available behavior from executed outputs. Do not claim automatic reconstruction, engineering approval or host-session compatibility from file-format support alone.

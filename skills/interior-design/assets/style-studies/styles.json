@@ -1,0 +1,66 @@
+{
+  "mcm": {
+    "name": "Mid-century Modern",
+    "palette": {
+      "wall": "#ebe3d1",
+      "wood": "#6f4028",
+      "upholstery": "#60705a",
+      "accent": "#bd6c38",
+      "metal": "#b49258",
+      "rug": "#c9b894"
+    },
+    "design_notes": [
+      "Exposed timber frames and tapered legs",
+      "Low olive sofa, sculptural timber table and warm brass",
+      "Original geometric artwork and selected-object composition"
+    ]
+  },
+  "japandi": {
+    "name": "Japandi",
+    "palette": {
+      "wall": "#e4ddce",
+      "wood": "#bda179",
+      "upholstery": "#d8d0bb",
+      "accent": "#625e4f",
+      "metal": "#41423a",
+      "rug": "#c2b69e"
+    },
+    "design_notes": [
+      "Low oak platform seating and restrained natural materials",
+      "Soft mineral plaster, woven texture and paper light",
+      "Quiet asymmetric styling and generous empty space"
+    ]
+  },
+  "contemporary": {
+    "name": "Contemporary",
+    "palette": {
+      "wall": "#dedbd4",
+      "wood": "#4c4034",
+      "upholstery": "#cac4b8",
+      "accent": "#785a4d",
+      "metal": "#242421",
+      "rug": "#aaa79e"
+    },
+    "design_notes": [
+      "Rounded upholstered volumes and monolithic stone",
+      "Dark restrained joinery and sculptural lighting",
+      "Layered neutrals, broad surfaces and deliberate negative space"
+    ]
+  },
+  "bauhaus": {
+    "name": "Bauhaus",
+    "palette": {
+      "wall": "#eeeae0",
+      "wood": "#212325",
+      "upholstery": "#292b2e",
+      "accent": "#b6342e",
+      "metal": "#bfc5c7",
+      "rug": "#e2dcca"
+    },
+    "design_notes": [
+      "Tubular chrome frames and crisp leather cushions",
+      "Primary-color accents within a disciplined white/black field",
+      "Geometric composition and rational furniture construction"
+    ]
+  }
+}

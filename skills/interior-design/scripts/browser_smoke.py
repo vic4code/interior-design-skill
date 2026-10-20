@@ -40,7 +40,7 @@ def main():
         page.get_by_role('button',name='尺寸平面',exact=True).click()
         assert page.locator('#plan').is_visible()
         page.wait_for_function("document.getElementById('plan').complete && document.getElementById('plan').naturalWidth > 0")
-        with page.expect_download() as event:page.get_by_role('link',name='平面＋四向牆面立面 / PDF').click()
+        with page.expect_download() as event:page.get_by_role('link',name='完整設計圖面 / PDF').click()
         download=event.value;download.save_as(str(args.out/'downloaded-drawings.pdf'))
         assert (args.out/'downloaded-drawings.pdf').read_bytes().startswith(b'%PDF-')
         page.get_by_role('button',name='3D 空間',exact=True).click()

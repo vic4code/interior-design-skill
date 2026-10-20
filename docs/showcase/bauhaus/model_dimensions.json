@@ -1,0 +1,166 @@
+{
+  "geometry_bounds_mm": {
+    "F01": {
+      "min": [
+        713.0,
+        3222.0,
+        1.08
+      ],
+      "max": [
+        2887.0,
+        4093.4,
+        801.39
+      ]
+    },
+    "F02": {
+      "min": [
+        1300.0,
+        1850.0,
+        3.0
+      ],
+      "max": [
+        2400.0,
+        2500.0,
+        400.0
+      ]
+    },
+    "F03": {
+      "min": [
+        4000.0,
+        3400.0,
+        3.0
+      ],
+      "max": [
+        5400.0,
+        4100.0,
+        740.0
+      ]
+    },
+    "F04": {
+      "min": [
+        4410.0,
+        2610.0,
+        0.83
+      ],
+      "max": [
+        4940.0,
+        3132.5,
+        820.0
+      ]
+    },
+    "F05": {
+      "min": [
+        3400.0,
+        250.0,
+        0.0
+      ],
+      "max": [
+        5600.0,
+        716.0,
+        750.0
+      ]
+    }
+  },
+  "bounds_note": "Furniture coordinates are nominal design envelopes; measured bounds include geometry and projecting pulls. Accessories are separate.",
+  "units": "mm",
+  "revision": "S01",
+  "style": "bauhaus",
+  "room": {
+    "width": 6000,
+    "depth": 4800,
+    "height": 2800,
+    "wall_thickness": 150
+  },
+  "furniture": [
+    {
+      "id": "F01",
+      "x": 700,
+      "y": 3200,
+      "width": 2200,
+      "depth": 900,
+      "height": 800
+    },
+    {
+      "id": "F02",
+      "x": 1300,
+      "y": 1850,
+      "width": 1100,
+      "depth": 650,
+      "height": 400
+    },
+    {
+      "id": "F03",
+      "x": 4000,
+      "y": 3400,
+      "width": 1400,
+      "depth": 700,
+      "height": 740
+    },
+    {
+      "id": "F04",
+      "x": 4400,
+      "y": 2600,
+      "width": 550,
+      "depth": 550,
+      "height": 820
+    },
+    {
+      "id": "F05",
+      "x": 3400,
+      "y": 250,
+      "width": 2200,
+      "depth": 450,
+      "height": 750
+    }
+  ],
+  "joinery": {
+    "revision": "S01",
+    "object_id": "F05",
+    "units": "mm",
+    "basis": "synthetic design dimensions; fabrication details require site and selected-hardware review",
+    "carcass_thickness": 18,
+    "top_thickness": 20,
+    "shelf_thickness": 18,
+    "back_thickness": 9,
+    "plinth_height": 80,
+    "door_thickness": 18,
+    "door_gap": 3,
+    "front_clearance": 3,
+    "bays": 4,
+    "shelf_top_height": 428,
+    "finish": "style-specific veneer or lacquer; verify finish/sample",
+    "hardware": {
+      "hinge": "concealed hinge concept; model and drilling not selected",
+      "anchor": "wall substrate, fixing type and loading not verified"
+    },
+    "service_points": [
+      {
+        "id": "L01",
+        "system": "lighting",
+        "x": 3000,
+        "y": 2400,
+        "z": 2500,
+        "status": "proposed",
+        "basis": "design assumption"
+      },
+      {
+        "id": "P01",
+        "system": "power",
+        "x": 5500,
+        "y": 4800,
+        "z": 300,
+        "status": "proposed",
+        "basis": "design assumption; verify desk/equipment access"
+      },
+      {
+        "id": "P02",
+        "system": "power",
+        "x": 4500,
+        "y": 0,
+        "z": 1100,
+        "status": "proposed",
+        "basis": "design assumption; above cabinet top"
+      }
+    ]
+  }
+}

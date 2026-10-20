@@ -57,3 +57,7 @@ The skill combines requirements intake, product-dimension verification, stable o
 ## Skill packaging reference
 
 The package follows the [Anthropic skill-creator structure](https://github.com/anthropics/skills/tree/main/skills/skill-creator): a concise `SKILL.md`, progressively loaded references, executable scripts and bundled assets inside one portable skill folder.
+
+## Style studies
+
+[Lo-Fi House cases](https://lofi-house.com/cases/) informs the use of complete spatial studies rather than isolated furniture swatches. [Dan Retro selection](https://www.danretro.com/products) informs a workflow for selecting objects with material, proportion and provenance. The bundled MCM, Japandi, Contemporary and Bauhaus studies are original procedural geometry and artwork; no case photographs, product images or commercial 3D assets are redistributed. Exact product identities, dimensions and manufacturer specifications require separate opened-source verification. See the [style reference](../skills/interior-design/references/style-studies.md).

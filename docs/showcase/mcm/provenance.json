@@ -1,0 +1,16 @@
+{
+  "style": "mcm",
+  "source_sha256": {
+    "hero.png": "6b102a5c7be8ac461646ed690ba44905a75bda6adbdaf98b461da449c7a7f889",
+    "detail.png": "e1adcaf1919ff6650a197a2da43fe704d36396303e662623a362561c153e677b"
+  },
+  "files": {
+    "hero.jpg": "46be1443c2e09ed17e46375b19f7edd7ce801b0c8ff6e7e31fc75b470ee68d11",
+    "model_dimensions.json": "a26985f9f7877693a87498dfa825395b1789798dbbd133527743a11c8799c82e",
+    "scene.glb": "16383ff9a9b811b9208ecc4cd7ccdd304661b74bec6a78de83078aadc2dcd867",
+    "render-settings.json": "df2b39638d83bb9fa3ad18289f340f0ae7bbdcf6a0fce74b5b80de1d055b0800",
+    "detail.jpg": "0c1e5e4985405a626f194f8ea577b050a120d05e7947f01a07988fcd35168b5f",
+    "hero-preview.jpg": "0b670003a0954b91ffbff1cf1ba6d7a00d85dfb8cf3387a95a77e25253886426",
+    "detail-preview.jpg": "21d5bfdb973be7a2b2c3c4ac882b7adcd8732ab954f5779d20a050ad5b8f7d56"
+  }
+}

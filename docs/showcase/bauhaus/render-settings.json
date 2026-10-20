@@ -1,0 +1,51 @@
+{
+  "revision": "S01",
+  "style": "bauhaus",
+  "renderer": "Cycles Metal / Apple M3 (GPU - 10 cores)",
+  "requested_device": "metal",
+  "glb_exclusions": [
+    "Exterior render staging",
+    "Plaster ceiling (native scene retained complete)"
+  ],
+  "blender": "5.2.0 LTS",
+  "samples": 48,
+  "width": 1600,
+  "view_transform": "AgX",
+  "exposure": 0.15,
+  "source_sha256": {
+    "project.json": "d9b1a054ca8bdadd123b9b3e4c7456e6bb85a0dae06d3a5b09d7aadc07e0efd2",
+    "styles.json": "afb2762f1a29aca5995e7dc60ffc6e1042a71603f6cec4cf71e13fa752fba90b",
+    "joinery.json": "c3532c7ffd14fb6391d7b057788b0c6736b539a72538562a5ef285286746eb26",
+    "render_style_studies.py": "c40d35f5e19c7c1e80b08dedd5fad9ddc4fc822548f843e5d8ec1a39298c517d"
+  },
+  "asset_origin": "Original procedural geometry, materials, and geometric artwork; no external assets",
+  "measurement_basis": "Synthetic design study; design coordination only",
+  "cameras": {
+    "Hero / architectural interior": {
+      "position_m": [
+        0.41999998688697815,
+        0.4300000071525574,
+        1.600000023841858
+      ],
+      "rotation_rad": [
+        1.441686749458313,
+        -3.807492987562e-09,
+        -0.6109193563461304
+      ],
+      "lens_mm": 22.0
+    },
+    "Joinery / crafted detail": {
+      "position_m": [
+        2.0199999809265137,
+        3.7200000286102295,
+        1.4800000190734863
+      ],
+      "rotation_rad": [
+        1.4496262073516846,
+        -6.857174383867459e-08,
+        -2.5083200931549072
+      ],
+      "lens_mm": 38.0
+    }
+  }
+}

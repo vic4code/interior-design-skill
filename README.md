@@ -1,139 +1,119 @@
 # Interior Design Skill
 
-**Turn your room ideas into editable Blender scenes, interactive reviews and dimensioned drawings for conversations with interior designers, engineers and contractors.**
+**Turn the space you imagine into an editable model, a convincing visual study and drawings your designer or builder can work through.**
 
 English · [繁體中文](README.zh-TW.md)
 
-A free, local-first Agent Skill. Start with your needs, measurements and reference images; review a rough model, then refine it. One project file keeps the model, drawings and schedules consistent. Your agent or LLM may have separate service fees; the core does not require a paid generation API.
+A portable Agent Skill for **Codex, Claude Code, Cursor and GitHub Copilot**. Bring plans, references and product links; work through layout, materials, furniture, lighting and technical details with Blender and a browser frontend. The core runs locally without a required paid generation API.
 
-The current release is a working **single-room prototype** with stylized furniture blocks. Its drawings are **coordination drafts requiring professional review** before construction.
+## Four styles, actual Blender output
 
-## Actual drawing deliverables
+The same original fictional living/work room, developed through four distinct furniture and material languages. These are **model-derived Blender renders**, with editable scene generation, GLB exports, cameras and source hashes.
 
-These are actual outputs from the bundled synthetic room, revision **P01**. Open a sheet to zoom in on its dimensions and title block.
+| Mid-century Modern | Japandi |
+| --- | --- |
+| [![MCM — timber frames, olive upholstery and warm selected objects](docs/showcase/mcm/hero-preview.jpg)](docs/showcase/mcm/hero.jpg) | [![Japandi — low oak forms, natural textile and quiet light](docs/showcase/japandi/hero-preview.jpg)](docs/showcase/japandi/hero.jpg) |
+| Exposed timber, tapered legs, olive and rust, composed vintage character. | Low platforms, pale oak, linen, mineral surfaces and soft light. |
+| **Contemporary** | **Bauhaus** |
+| [![Contemporary — rounded forms, stone and layered neutrals](docs/showcase/contemporary/hero-preview.jpg)](docs/showcase/contemporary/hero.jpg) | [![Bauhaus — tubular chrome, crisp cushions and geometric accents](docs/showcase/bauhaus/hero-preview.jpg)](docs/showcase/bauhaus/hero.jpg) |
+| Rounded upholstery, monolithic surfaces and restrained contrast. | Chrome, black upholstery and disciplined primary-color accents. |
 
-### A101 · Dimensioned furniture plan
+Click a preview for the full image. The studies use original procedural furniture, materials and artwork. See [style decisions, references and reproduction](skills/interior-design/references/style-studies.md). [Lo-Fi House](https://lofi-house.com/cases/) and [Dan Retro](https://www.danretro.com/products) informed the reference/selection workflow; their case photographs and commercial models are not bundled.
 
-[![A101 actual dimensioned floor plan: room dimensions, furniture IDs and door/window positions](docs/drawings/A101.svg)](docs/drawings/A101.svg)
+## What a drawing delivery looks like
 
-Room dimensions, furniture positions and IDs, nominal openings, source revision, units and print scale on one sheet.
+A coordinated **eight-sheet A3 set** from the same room and cabinetry dimensions: setting-out, openings, lighting/power proposals, interior elevations, cabinet arrangements, sections, finish schedules and an issue register.
 
-### A202 · North-wall datum elevation
+| Dimensioned layout · A101 | Cabinet arrangement · J301 |
+| --- | --- |
+| [![Detailed plan with dimension chains, door swing, furniture IDs and cabinet setting-out](docs/showcase/drawings/A101.svg)](docs/showcase/drawings/A101.svg) | [![Cabinet front, plan and side views with panel and opening dimensions](docs/showcase/drawings/J301.svg)](docs/showcase/drawings/J301.svg) |
+| **Cabinet section & interfaces · J401** | **Lighting & power proposals · A102** |
+| [![Section and construction interfaces with panel thickness, clear dimensions, shelf levels and fixing questions](docs/showcase/drawings/J401.svg)](docs/showcase/drawings/J401.svg) | [![Ceiling and power coordination plan with fixture IDs, mounting heights and legends](docs/showcase/drawings/A102.svg)](docs/showcase/drawings/A102.svg) |
 
-[![A202 actual north-wall elevation with wall height and window dimensions](docs/drawings/A202.svg)](docs/drawings/A202.svg)
+**Download:** [Complete A3 PDF](docs/showcase/drawings/design-coordination.pdf) · [Full delivery ZIP](docs/showcase/design-development-S01.zip) · [Plan DXF](docs/showcase/drawings/plan.dxf) · [Joinery dimensions](docs/showcase/drawings/joinery.csv) · [Furniture schedule](docs/showcase/drawings/furniture.csv) · [Open decisions](docs/showcase/drawings/issues.csv).
 
-Wall length, clear height, window width and sill position. This datum view locates wall openings; detailed cabinetry and service elevations need further development.
+These are actual generated sheets, not decorative mockups. The cabinet's width, depth, panel thicknesses, shelf levels and internal clear sizes close against the shared source. Site measurements, material samples, selected hardware and fixing conditions determine the real project's construction release status. The fictional sample explicitly records those assumptions and interfaces.
 
-**Download the examples:** [Five-page A3 PDF](docs/drawings/drawings.pdf) · [Editable plan DXF](docs/drawings/plan.dxf) · [Furniture schedule CSV](docs/drawings/furniture.csv).
-
-The PDF includes A101 and all four wall elevations, A201–A204. Print at A3, 100%, and follow the scale shown on each sheet. These are dimensioned coordination drafts for design and trade discussions.
-
-## Preview
-
-[![AI-generated fictional interior concept](docs/images/fictional-concept-preview.jpg)](docs/images/fictional-concept.png)
-
-**AI concept study:** a fictional room illustrating materials, light and composition. This separate image is not generated by the sample Blender scene and does not establish geometry or dimensional accuracy. Click either preview for its original PNG.
-
-[![Actual Blender render of the synthetic sample room](docs/images/demo-render-preview.jpg)](docs/assets/demo-render.png)
-
-**Actual Blender output:** the synthetic sample room's model-derived 1920×1440 render. This is the reproducible spatial study produced by the included pipeline.
-
-## Install the skill
+## Install for your agent
 
 ```bash
 npx skills add vic4code/interior-design-skill --skill interior-design
 ```
 
-Or copy the complete [skills/interior-design](skills/interior-design/) folder into your agent's skill directory. Its `SKILL.md`, references, scripts, schema, example and viewer travel together. See [agent compatibility](docs/agent-compatibility.md); independent host-session evaluations are still pending.
+Or, from a checkout, use the local installer:
 
-Try asking:
+```bash
+python3 skills/interior-design/scripts/install_skill.py --agent codex --user
+python3 skills/interior-design/scripts/install_skill.py --agent claude-code --user
+```
 
-> Use the interior-design skill. Help me turn my room idea into a Blender model and dimensioned drawings I can discuss with a designer or engineer. First organize my requirements, dimensions and references, mark assumptions, and show me a rough layout before refining it.
+Use `--project /path/to/project` instead of `--user` for a project installation. Existing installations are never overwritten.
 
-## Run the sample locally
+| Agent | Project skill folder | Start with |
+| --- | --- | --- |
+| Codex | `.agents/skills/interior-design` | `$interior-design` |
+| Claude Code | `.claude/skills/interior-design` | `/interior-design` |
+| Cursor | `.cursor/skills/interior-design` | Ask the agent to use the skill |
+| GitHub Copilot | `.github/skills/interior-design` | Ask the agent to use the skill |
 
-Install Python 3.11+, Node.js 20.19+ or 22.12+, and Blender 4.3+. Put `blender` on your PATH. From a checkout:
+The complete folder contains its scripts, dependency locks, example data, schema and viewer. [Compatibility and actual verification](docs/agent-compatibility.md).
+
+> Use the interior-design skill. Help me develop this plan and these references into a MCM living room, an editable Blender scene and a detailed drawing package. Check furniture use, cabinet internal dimensions and installation interfaces. Show the actual files and the questions that still need site or product confirmation.
+
+## Get your first drawing package
+
+Python 3.11+ is required. The optional browser frontend needs Node.js 20.19+ or 22.12+; editable 3D and offline renders need Blender 4.3+ on PATH. From the installed skill directory, or a checkout:
 
 ```bash
 git clone https://github.com/vic4code/interior-design-skill.git
 cd interior-design-skill/skills/interior-design
 bash scripts/setup.sh
+.venv/bin/python scripts/build_drawing_studies.py --out output/my-first-drawing-set
+```
+
+Open `output/my-first-drawing-set/design-coordination.pdf`. It contains the eight sheets shown above. For the native MCM scene and images:
+
+```bash
+blender --background --threads 4 --python-exit-code 1 --python scripts/render_style_studies.py -- --style mcm --out output/mcm-study
+```
+
+Choose `japandi`, `contemporary`, `bauhaus` or `all` for other studies. CPU is the portable default; the renderer exposes an optional device selection. See its `--help` and [workflow reference](skills/interior-design/references/style-studies.md).
+
+Windows: create `.venv` with `py -m venv .venv`, install using `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, and substitute `.venv\Scripts\python` in the commands. Install frontend dependencies with `npm --prefix assets/viewer ci --ignore-scripts`.
+
+## Design real spaces
+
+The skill is not limited to the small rectangular-room starter. Use project-specific Blender geometry and data for multiple rooms, irregular walls, rotated furniture, detailed assemblies and daily operations. Inspect the actual plan/model, preserve stable IDs and derive drawings from the same revision. [Advanced spaces](skills/interior-design/references/advanced-spaces.md) explains that route.
+
+The included `project.py` remains a small reproducible quick-start generator with its own schema limits. Those limits do not define the skill's design scope. Its [format reference](skills/interior-design/references/project-format.md) documents them. Photos alone cannot establish reliable dimensions; the agent needs calibrated plans, measurements and product evidence.
+
+A professional drawing workflow develops overall and chained dimensions, elevations, sections, component sizes, finish/hardware schedules and trade interfaces. Read [construction documents](skills/interior-design/references/construction-documents.md). Selected products should come from opened manufacturer sources; distinguish exact models from measured approximations.
+
+## Browser review and verification
+
+For the quick-start browser review, from the skill folder:
+
+```bash
 .venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
 npm --prefix assets/viewer run dev
 ```
-
-Open the local URL printed by Vite to review the render, 3D scene, plan and downloads. Setup needs internet access; installed generation and viewing run locally. For an installed skill, run the same commands from its own folder, skipping clone and `cd`.
-
-Without Blender, omit `--blender` to generate drawings and use the plan-only viewer. Windows users can use WSL. For native PowerShell, create the environment with `py -m venv .venv`, install `scripts/requirements.lock.txt` with `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, run `npm --prefix assets/viewer ci --ignore-scripts`, and use `.venv\Scripts\python` for the Python commands.
-
-## What you can deliver
-
-| Purpose | Output | Current scope |
-| --- | --- | --- |
-| Discuss style and proportions | 1920×1440 PNG | Local Blender Cycles cutaway; optional separate 4K render |
-| Review and revise the space | `.blend`, GLB, interactive frontend | Dimensioned geometry, openings, furniture blocks and camera controls |
-| Discuss layout | A101 plan | Millimetre dimensions, furniture IDs and openings |
-| Discuss wall positions | A201–A204 baseline elevations | Wall lengths, clear height and opening positions |
-| Share drawings or edit in CAD | Five-page A3 PDF, SVG, plan DXF | Sheet scales shown individually; model-space DXF in mm |
-| Track decisions and quantities | JSON, CSV, handoff notes, manifest | Dimensions, net areas, unresolved items and SHA-256 checksums |
-
-Most sheets use 1:50; A101 uses 1:100 when room depth exceeds 8000 mm. Check each title block. The plan schedule shows the first ten furniture items; `furniture.csv` contains the full list. DXF dimensions are not native associative CAD dimensions.
-
-## Bring your own room
-
-A dimensioned plan is enough to start; photos help explain existing conditions. A sketch needs wall lengths and opening positions. Photos alone support a concept until you supply reliable dimensions. The agent organizes these inputs; the generator does not automatically recognize arbitrary photos or PDFs.
-
-Copy `assets/example-project.json` to your own project file and update the brief, room dimensions, openings and furniture. All dimensions are in mm. From the skill folder:
+To review the detailed MCM study instead, build a matching drawing set and combine it with the rendered study:
 
 ```bash
-.venv/bin/python scripts/project.py validate /path/to/my-room.json
-.venv/bin/python scripts/project.py build /path/to/my-room.json --out /path/to/my-review --blender
+.venv/bin/python scripts/build_drawing_studies.py --out output/drawing-study
+.venv/bin/python scripts/build_style_review.py --study output/mcm-study --drawings output/drawing-study --out assets/viewer/public/generated
 ```
 
-Share furniture links, exact product models or screenshots. The skill guides the agent to check manufacturer dimensions and installation clearances, record sources, and label approximate models. Optional image generation stays separate from the model-derived base render. Drawing overlays and service coordination are documented workflows; layer switching, source-plan registration and complete service design are future work.
 
-Read [intake](skills/interior-design/references/intake.md), [furniture sourcing](skills/interior-design/references/furniture-sourcing.md), [render and image workflow](skills/interior-design/references/render-and-imagegen.md), [overlays and services](skills/interior-design/references/overlays-and-mep.md), [project format](skills/interior-design/references/project-format.md) and [drawing handoff (繁體中文)](skills/interior-design/references/drawing-handoff.zh-TW.md).
+It supports render/plan/GLB inspection and downloads. Drag editing, automatic scene-state recovery and complete MEP design are separate extensions, not hidden features. Keep private projects local and preserve model-faithful renders if you optionally generate AI appearance simulations.
 
-For a separate 4K render, from the skill folder:
-
-```bash
-blender -b /path/to/my-review/scene.blend --threads 2 --python-exit-code 1 --python scripts/render_hd.py -- --width 3840 --height 2880 --samples 128 --out /path/to/my-review/final-4k.png
-```
-
-This leaves the original scene and manifest image unchanged. More pixels do not add geometric detail or make drawings construction-ready.
-
-## Package and development
-
-The repository follows the [Anthropic skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) pattern: progressively loaded instructions and resources inside one skill folder.
-
-```text
-skills/interior-design/
-├── SKILL.md
-├── agents/                 # Optional host metadata
-├── references/             # Workflow and format guidance
-├── scripts/                # Setup, generators and verification
-└── assets/                 # Schema, synthetic example and viewer
-```
-
-From the repository root:
+Repository checks:
 
 ```bash
 skills/interior-design/.venv/bin/python -m unittest discover -s tests -v
+npm --prefix skills/interior-design/assets/viewer run build
 ```
 
-From the skill folder, after generating the sample:
+The skill follows the [Anthropic skill-creator structure](https://github.com/anthropics/skills/tree/main/skills/skill-creator): focused `SKILL.md`, progressively loaded references, executable scripts and reusable assets. See [verification](docs/verification.md), [research and attribution](docs/research.md), [roadmap](docs/implementation-roadmap.md) and [contributing](CONTRIBUTING.md).
 
-```bash
-.venv/bin/python scripts/verify_outputs.py assets/viewer/public/generated
-npm --prefix assets/viewer run build
-```
-
-The optional browser smoke script requires Python Playwright and Chromium. Generated projects are ignored by Git. Keep personal project data out of public builds. The development server has no authentication; use a trusted local environment. See [verification](docs/verification.md) for current evidence.
-
-## Limits and future work
-
-The prototype supports one rectangular room up to 10×10 m with a clear height of 2–5 m. Furniture edges must be at least 150 mm. It does not support multiple rooms, irregular walls, rotated furniture, automatic photo measurement or direct natural-language-to-JSON parsing. The agent translates the conversation into validated data. The viewer reviews and downloads designs; drag-and-drop editing is future work.
-
-Detailed assets, operation controls, more views, calibrated overlays and complex room shapes are planned. BIM/IFC is not integrated. See [design patterns](docs/design-patterns.md), [roadmap](docs/implementation-roadmap.md) and [research and attribution](docs/research.md).
-
-Original code and synthetic examples use [MIT](LICENSE). Third-party assets require documented source, author, licence and redistribution rights. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Original code and synthetic assets use [MIT](LICENSE). Third-party product models and images need their own documented permissions. Your agent/LLM may have separate costs; the local core does not require a paid image API.

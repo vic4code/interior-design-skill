@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "name": "Gallery Living / Style Study",
+    "revision": "S01",
+    "status": "coordination_draft",
+    "measurement_status": "assumed",
+    "brief": "Original fictional living/work room for four style directions and a detailed design coordination sample. All dimensions are design assumptions."
+  },
+  "room": {
+    "width": 6000,
+    "depth": 4800,
+    "height": 2800,
+    "wall_thickness": 150
+  },
+  "finishes": {
+    "floor": {
+      "name": "Oak / 橡木色地坪（示意）",
+      "color": "#b9956c"
+    },
+    "wall": {
+      "name": "Warm white / 暖白塗裝（示意）",
+      "color": "#eee9de"
+    }
+  },
+  "openings": [
+    {
+      "id": "D01",
+      "kind": "door",
+      "wall": "south",
+      "offset": 700,
+      "width": 900,
+      "height": 2100,
+      "sill": 0
+    },
+    {
+      "id": "W01",
+      "kind": "window",
+      "wall": "north",
+      "offset": 1400,
+      "width": 2800,
+      "height": 1400,
+      "sill": 900
+    },
+    {
+      "id": "W02",
+      "kind": "window",
+      "wall": "east",
+      "offset": 2600,
+      "width": 1400,
+      "height": 1400,
+      "sill": 900
+    }
+  ],
+  "furniture": [
+    {
+      "id": "F01",
+      "name": "Linen sofa",
+      "kind": "sofa",
+      "x": 700,
+      "y": 3200,
+      "width": 2200,
+      "depth": 900,
+      "height": 800,
+      "color": "#c3bbaa",
+      "material": "Linen upholstery / 亞麻色布面"
+    },
+    {
+      "id": "F02",
+      "name": "Coffee table",
+      "kind": "table",
+      "x": 1300,
+      "y": 1850,
+      "width": 1100,
+      "depth": 650,
+      "height": 400,
+      "color": "#9c704c",
+      "material": "Oak veneer / 橡木皮"
+    },
+    {
+      "id": "F03",
+      "name": "Work desk",
+      "kind": "table",
+      "x": 4000,
+      "y": 3400,
+      "width": 1400,
+      "depth": 700,
+      "height": 740,
+      "color": "#9c704c",
+      "material": "Oak veneer / 橡木皮"
+    },
+    {
+      "id": "F04",
+      "name": "Desk chair",
+      "kind": "chair",
+      "x": 4400,
+      "y": 2600,
+      "width": 550,
+      "depth": 550,
+      "height": 820,
+      "color": "#52685b",
+      "material": "Fabric / 布面"
+    },
+    {
+      "id": "F05",
+      "name": "Custom low sideboard",
+      "kind": "cabinet",
+      "x": 3400,
+      "y": 250,
+      "width": 2200,
+      "depth": 450,
+      "height": 750,
+      "color": "#9c704c",
+      "material": "Style-specific cabinet finish"
+    }
+  ]
+}

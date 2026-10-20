@@ -1,6 +1,6 @@
 ---
 name: interior-design
-description: Turn room ideas, measured plans and reference images into editable Blender scenes, HD renders, interactive browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. The bundled local generator supports a single rectangular room; outputs are coordination drafts.
+description: Turn room ideas, measured plans and reference images into editable Blender scenes, HD renders, interactive browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. Build project-specific geometry when the starter does not fit; track the technical evidence and issue status of drawing deliverables.
 license: MIT
 compatibility: Python 3.11+; Node.js 20.19+ or 22.12+ for the optional viewer; Blender 4.3+ for native scenes, GLB and renders.
 ---
@@ -14,7 +14,11 @@ Help the user lead their own design and give the people refining or building it 
 Treat the directory containing this SKILL.md as the **skill root**, independent of the user's working directory. Resolve scripts, assets and references from it. The complete skill folder works without the parent repository. Read only the references relevant to the task:
 
 - [Intake](references/intake.md): plan, sketch and photo starting points; calibration before modeling.
-- [Project format](references/project-format.md): schema, units, axes and supported geometry. Read before changing project JSON.
+- [Project format](references/project-format.md): the quick-start generator schema, units and axes. Read before using its project JSON.
+- [Advanced spaces](references/advanced-spaces.md): project-specific Blender workflows for multiple rooms, irregular walls, rotations and detailed assemblies.
+- [Native handoff](references/native-handoff.md): extract an existing Blender scene, cut actual geometry, verify dimension evidence and issue a model-derived drawing set.
+- [Construction documents](references/construction-documents.md): professional sheet registers, dimension chains, component details, specifications and technical evidence.
+- [Style studies](references/style-studies.md): MCM, Japandi, Contemporary and Bauhaus; references, original assets and reproduction commands.
 - [Furniture sourcing](references/furniture-sourcing.md): exact model/variant, official dimensions, installation envelopes and model licensing.
 - [Design methods](references/design-method.md): daily activities, editable/native versus browser geometry, stable IDs and evaluated-scene snapshots.
 - [Rendering](references/render-and-imagegen.md): model-faithful base renders, optional image enhancement, provenance and geometry drift.
@@ -32,7 +36,7 @@ Record each dimension's basis: assumed, manufacturer, unreviewed site measuremen
 
 Translate references into concrete layout, material, furniture and lighting decisions. Compare layouts against pulled-out chairs, open doors, storage retrieval and equipment servicing. Distinguish geometric gaps from comfortable circulation and product dimensions from installation clearances.
 
-The bundled generator supports one rectangular room, nominal door/window voids, axis-aligned primitive furniture and procedural materials. It does not implement multi-room layouts, rotated furniture, detailed casework, photo reconstruction or automatic CAD/PDF recognition. Explain unsupported features and propose an explicit extension rather than silently omitting them.
+Choose the modeling route that fits the real project. The quick-start generator handles one rectangular room and simple furniture; its schema bounds apply only to that tool. For multi-room layouts, irregular walls, rotated furniture, detailed casework and operations, follow [advanced-spaces.md](references/advanced-spaces.md) and create a project-specific scene and data contract. Do not simplify away requirements merely to fit the starter. Photos and CAD/PDF inputs still require source inspection and dimensional evidence; do not claim automatic reconstruction that has not been performed.
 
 ## Build from one source of dimensions
 
@@ -76,14 +80,14 @@ Show actual outputs for feedback on layout, materials, lighting and furniture. C
 
 ## Deliver drawings for discussion
 
-The generator produces `.blend`, GLB and PNG when Blender runs; A101 furniture plan, A201–A204 wall datum elevations, five-page A3 PDF, SVG, plan-only DXF, furniture/opening/material CSV, source JSON, unresolved reviews and a checksummed manifest.
+Choose sheets and details using [construction-documents.md](references/construction-documents.md). The quick-start generator produces `.blend`, GLB and PNG when Blender runs; A101 furniture plan, A201–A204 wall datum elevations, five-page A3 PDF, SVG, plan-only DXF, furniture/opening/material CSV, source JSON, unresolved reviews and a checksummed manifest.
 
 Explain the purpose and limits:
 
 - Plans show placement and dimensions; datum elevations locate wall openings and heights, not complete furniture or service elevations.
 - Drawings use mm. Print A3 at 100% and follow each sheet's stated scale; A101 uses 1:100 when room depth exceeds 8000 mm, otherwise 1:50. Written dimensions control. The plan table lists the first ten furniture items; CSV contains the full schedule.
 - DXF is model-space mm without native associative CAD dimensions. Material areas are net geometric quantities, not purchasing allowances.
-- Nominal openings do not specify door swing, frame, hardware or finished clear width. Primitive furniture has a 150 mm minimum on each side and does not establish real product fit.
+- Nominal openings do not specify door swing, frame, hardware or finished clear width. The quick-start primitive generator has a 150 mm minimum on each furniture envelope; this is not a minimum for detailed model components or a skill-wide size limit. Verify real product fit separately.
 
 Record unresolved site survey, circulation, joinery/fixings, substrate, services, ceiling, material build-ups, waterproofing and professional review responsibilities. Separate manufacturer sizes, model bounds, internal clear sizes and installation cutouts. Functional lighting groups are not electrical circuits; renderer energy is not rated electrical load.
 
