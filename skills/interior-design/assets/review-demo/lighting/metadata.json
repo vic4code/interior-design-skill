@@ -1,0 +1,28 @@
+{
+  "presentations": [
+    {
+      "id": "lighting-day-off",
+      "title": "白天 · 室內燈關",
+      "space": "燈光比較",
+      "image": "day-off/presentation.jpg",
+      "base_image": "base.jpg",
+      "provenance": "day-off/image-provenance.json"
+    },
+    {
+      "id": "lighting-day-on",
+      "title": "白天 · 室內燈開",
+      "space": "燈光比較",
+      "image": "day-on/presentation.jpg",
+      "base_image": "base.jpg",
+      "provenance": "day-on/image-provenance.json"
+    },
+    {
+      "id": "lighting-night-on",
+      "title": "夜晚 · 室內燈開",
+      "space": "燈光比較",
+      "image": "night-on/presentation.jpg",
+      "base_image": "base.jpg",
+      "provenance": "night-on/image-provenance.json"
+    }
+  ]
+}

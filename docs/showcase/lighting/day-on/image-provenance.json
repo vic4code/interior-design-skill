@@ -1,0 +1,38 @@
+{
+  "mode": "completion-simulation",
+  "review_status": "accepted-for-visualization",
+  "tool": "image_gen.imagegen (built-in host tool)",
+  "model": "not exposed",
+  "date": "2026-10-20",
+  "scenario": "day-on",
+  "prompt": "Use the attached image as the exact edit target, not a loose style reference. Produce ONE photorealistic interior photograph in the identical 4:3 LANDSCAPE canvas as the input, ideally 1448 by 1086 pixels. This is a controlled lighting comparison of ONE unchanged Mid-century Modern room.\nCAMERA / FRAME LOCK: Camera tripod does not move at all. Preserve exact lens, field of view, horizon height, vanishing points, wall and ceiling boundary intersection positions, image edges and crop from reference. No camera roll, no tilt, no reframing, no zoom, no perspective correction that moves reference edges, no added border or montage. Keep vertical window jambs/curtain edges in precisely the same screen positions.\nGEOMETRY / DESIGN LOCK: Preserve both window openings, exact pane divisions, curtains, walls, ceiling height, olive three-seat walnut sofa, 2 cushions, coffee table with books/cup, desk/chair and desk lamp, overhead shade, wall artwork, plant and rug. Every object's placement, scale, silhouette, orientation, material/color and visible count must remain unchanged. No extra lights, furniture, decorative objects, candles, architectural elements or added cabinetry. No text or labels.\nONLY CHANGE: illumination and physically plausible light response for the requested state. Maintain believable walnut grain, olive fabric, cream plaster and white balance. Reflections/shadows follow actual sources, fine material detail and realistic exposure; no fake bright-white surfaces, no toy render, no bloom or clipped windows. Do not redesign the space.\nDAYTIME / INTERIOR LIGHTS ON. Preserve the exact daylight direction, sun patches, trees, sky, time of day and exterior from reference, matching the day-off comparison. Turn ON the EXISTING overhead pendant and EXISTING desk lamp with restrained warm 3000K lighting: an illuminated inner pendant shade, subtle warm pool below it and desk task pool, gentle reflected warmth on nearby surfaces. Daylight remains dominant. Make lamp on/off clearly readable in the existing shades without overexposing the entire room or changing any object.",
+  "base_sha256": "524300f24693994628c9a9ccd99f5bd30c475f98c774611bc53053abc42b2f90",
+  "image_sha256": "183faed86788fa02deff9265b12549cb4a9826f2c8c14861b1bf7c1af192479b",
+  "original_sha256": "ebfc429fdf71a13bb8e13a23b552416550e1cf9fc17970ef497fff7db5d3e2c6",
+  "requested_frame": {
+    "aspect_ratio": "4:3",
+    "pixels": [
+      1448,
+      1086
+    ],
+    "camera": "Same approved source camera; locked framing"
+  },
+  "actual_generated_pixels": [
+    1448,
+    1086
+  ],
+  "preview_pixels": [
+    900,
+    675
+  ],
+  "visual_review": {
+    "method": "Side-by-side inspection of actual generated outputs and reference",
+    "preserved": "Both openings, curtain edges, pendant/art/sofa/desk positions and overall camera/crop remain visually consistent.",
+    "changes": "Requested illumination changes; fine textures/shadows and small details may differ. Day-off shades are unlit with daylight retained. Day-on and night-on illuminate the existing pendant and desk lamp.",
+    "limitations": "Visual comparison, not pixel-exact registration, photometric calculation or dimensional certification."
+  },
+  "files": {
+    "presentation.jpg": "183faed86788fa02deff9265b12549cb4a9826f2c8c14861b1bf7c1af192479b",
+    "preview.jpg": "4cc5b681bb502c4738b55ca8bc745cdb60bf2c77f3b3216f292717ab1c33b040"
+  }
+}

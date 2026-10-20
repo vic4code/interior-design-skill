@@ -47,6 +47,21 @@
             <label>視角 <select id="view-select" aria-label="選擇設計視角"></select></label>
             <span id="view-count"></span>
           </div>
+          <div id="lighting-controls" class="lighting-controls" role="group" aria-label="3D 光線情境" hidden>
+            <label for="lighting-time">時間
+              <select id="lighting-time" aria-describedby="lighting-summary">
+                <option value="day">白天</option>
+                <option value="night">夜晚</option>
+              </select>
+            </label>
+            <label for="lighting-lights">室內燈
+              <select id="lighting-lights" aria-describedby="lighting-summary">
+                <option value="on">開燈</option>
+                <option value="off">關燈</option>
+              </select>
+            </label>
+            <output id="lighting-summary" role="status" aria-live="polite">白天 · 開燈 · 光線預覽</output>
+          </div>
           <div id="mode-context" class="mode-context"></div>
           <div id="stage" class="stage">
             <img id="render" alt="空間設計效果" />

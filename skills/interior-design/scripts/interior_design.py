@@ -123,6 +123,8 @@ def main():
             entries.append(dict(id=ident, label=label, swatch=swatch, source=str(drawings),
                                 presentation=str(variant/'presentation.jpg'), base_image=str(sample/'base.jpg'),
                                 provenance=str(variant/'image-provenance.json'), model=str(variant/'space.glb')))
+            if ident == 'mcm':
+                entries[-1]['metadata'] = str(sample/'lighting/metadata.json')
         output.mkdir(parents=True, exist_ok=True)
         config = output/'variants-config.json'
         config.write_text(json.dumps(dict(variants=entries), indent=2)+'\n', encoding='utf-8')

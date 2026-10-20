@@ -1,0 +1,80 @@
+{
+  "kind": "interactive-webgl-lighting-screenshots",
+  "date": "2026-10-20",
+  "source": "skills/interior-design/assets/review-demo/variants/mcm/space.glb",
+  "source_sha256": "5f3589f183217b06e6c2360c2ce28c8dd7be53e92fcd182a420ac7de5ed81c0c",
+  "canvas_pixels": [
+    900,
+    675
+  ],
+  "camera": {
+    "id": "default-MCM-fit",
+    "method": "One loaded model and stationary camera; reset once at the recorded 4:3 viewport, no pointer movement or camera changes between the four states.",
+    "projection": "Perspective; actual viewer source is recorded below.",
+    "cutaway": "Open enclosure, original downloadable geometry unchanged."
+  },
+  "viewer_sources": {
+    "skills/interior-design/assets/viewer/src/model.js": "ec18e904a588b8b090c9062dede538aba019e6254da08f6ed05aca8d6fdc2305",
+    "skills/interior-design/assets/viewer/src/lighting.js": "f22077a3d2372cb98ebc327335bad0b5554dc0228deb09344d6fb4b0335eaea1"
+  },
+  "images": {
+    "day-on.jpg": {
+      "width": 900,
+      "height": 675,
+      "time": "day",
+      "lights_on": true,
+      "image_sha256": "9f64cbdcee02af0fdb45c8708a251ad8031f79d3cabb054f04da236c64e2f95d",
+      "canvas_state": {
+        "engine": "three.js r180",
+        "lightingTime": "day",
+        "lightingLights": "true"
+      },
+      "mean_luma_8bit": 204.37198024691358,
+      "caption": "\u767d\u5929 \u00b7 \u958b\u71c8 \u00b7 \u5149\u7dda\u9810\u89bd"
+    },
+    "day-off.jpg": {
+      "width": 900,
+      "height": 675,
+      "time": "day",
+      "lights_on": false,
+      "image_sha256": "81086430fb16a9a8f759a21d58733321d46030813bb03584d5b7bd54df0647c4",
+      "canvas_state": {
+        "engine": "three.js r180",
+        "lightingTime": "day",
+        "lightingLights": "false"
+      },
+      "mean_luma_8bit": 198.01061893004115,
+      "caption": "\u767d\u5929 \u00b7 \u95dc\u71c8 \u00b7 \u5149\u7dda\u9810\u89bd"
+    },
+    "night-on.jpg": {
+      "width": 900,
+      "height": 675,
+      "time": "night",
+      "lights_on": true,
+      "image_sha256": "308a6ae3393852da558af8ee5ead937fb71c1db89b107b54e93ee1f4458c795c",
+      "canvas_state": {
+        "engine": "three.js r180",
+        "lightingTime": "night",
+        "lightingLights": "true"
+      },
+      "mean_luma_8bit": 53.601716872427986,
+      "caption": "\u591c\u665a \u00b7 \u958b\u71c8 \u00b7 \u5149\u7dda\u9810\u89bd"
+    },
+    "night-off.jpg": {
+      "width": 900,
+      "height": 675,
+      "time": "night",
+      "lights_on": false,
+      "image_sha256": "18bbe2716e56a3ebf276377fa75c4cc49a24e48f9a8b126bc7e6eb967a2c87a8",
+      "canvas_state": {
+        "engine": "three.js r180",
+        "lightingTime": "night",
+        "lightingLights": "false"
+      },
+      "mean_luma_8bit": 24.514513580246913,
+      "caption": "\u591c\u665a \u00b7 \u95dc\u71c8 \u00b7 \u5149\u7dda\u9810\u89bd"
+    }
+  },
+  "limitations": "Real-time appearance preview with inferred qualitative light sources. Not a measured illuminance simulation or a fixture/circuit specification. No image generation or photographic retouching used.",
+  "browser": "156.0.8078.4"
+}

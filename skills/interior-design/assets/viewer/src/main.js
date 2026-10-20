@@ -39,6 +39,7 @@ let base = rootBase,
   files = new Set(),
   modelFile,
   active = "render",
+  lightingState = { time: "day", lights: true },
   modelController,
   modelPromise,
   packageVersion = 0,
@@ -149,6 +150,14 @@ function galleryOptions() {
 function imageFile() {
   return showingBase ? presentation?.base_image : presentation?.image;
 }
+function updateLighting() {
+  lightingState = {
+    time: $("lighting-time").value === "night" ? "night" : "day",
+    lights: $("lighting-lights").value === "on",
+  };
+  $("lighting-summary").textContent = `${lightingState.time === "day" ? "白天" : "夜晚"} · ${lightingState.lights ? "開燈" : "關燈"} · 光線預覽`;
+  modelController?.setLighting(lightingState);
+}
 function positionDrawing() {
   const image = $("plan");
   const limitX = image.clientWidth * (zoom - 1) / 2;
@@ -200,6 +209,7 @@ async function setMode(mode) {
   $("view-thumbnails").hidden = mode !== "render" || presentations.length < 2;
   $("zoom-controls").hidden = !["layout", "drawings", "mep"].includes(mode);
   $("model-controls").hidden = mode !== "model";
+  $("lighting-controls").hidden = mode !== "model";
   $("presentation-controls").hidden = mode !== "render";
   const sheet = mode === "layout" ? layout : currentSheet();
   const file =
@@ -234,7 +244,7 @@ async function setMode(mode) {
     drawings: "給設計師與工班核對：尺寸定位、立面剖面、櫃體板厚與節點，依圖號查閱。",
     mep: sheet?.status ? `機電協調圖 · ${{ coordination_draft: "協調草案", concept: "概念配置", proposed: "設計提案", "coordination-only": "僅供協調" }[sheet.status] || sheet.status}；設備容量、回路與管線仍需依工程專業覆核。` : "燈具、開關、插座與設備定位。實際提供範圍以圖面為準。",
     render: "選擇已完成的空間與視角，查看 image gen 設計效果。",
-    model: "旋轉空間，核對家具配置、尺度關係與幾何輪廓。",
+    model: "旋轉空間，核對家具配置與尺度；切換白天、夜晚及室內燈，預覽光線層次。",
   }[mode];
   if (mode === "mep" && sheet?.reference) $("mode-context").textContent += ` ${sheet.reference}`;
   $("hint").textContent =
@@ -245,7 +255,7 @@ async function setMode(mode) {
           ? "風格概念圖；尚未與實際空間幾何核對。"
           : "以空間輪廓與視角引導生成；材質與細節為設計模擬，尺寸仍以圖面為準。"
       : mode === "model"
-        ? "模型保存空間幾何；拖曳旋轉、滾輪縮放，方向鍵可平移。"
+        ? "拖曳旋轉、滾輪縮放，方向鍵可平移。光線為視覺預覽；燈位、回路與設備規格請見機電圖面。"
         : "整張圖面自動符合畫框；放大後可拖曳或用方向鍵平移，也可開啟原圖。施工前請覆核尺寸、五金與現場條件。";
   status("");
   if (["layout", "drawings", "mep"].includes(mode) && sheet) {
@@ -279,6 +289,7 @@ async function setMode(mode) {
         return;
       }
       modelController = controller;
+      modelController?.setLighting(lightingState);
       if (active === "model") status("");
     } catch (error) {
       if (version === packageVersion) {
@@ -485,6 +496,8 @@ async function init() {
 $("sheet-select").onchange = () => { const mode = active === "mep" ? "mep" : "drawings"; selectedSheets[mode] = $("sheet-select").value; setMode(mode); };
 $("space-select").onchange = () => { selectedSpace = $("space-select").value; showingBase = false; galleryOptions(); setMode("render"); };
 $("view-select").onchange = () => { selectedViewId = $("view-select").value; showingBase = false; galleryOptions(); setMode("render"); };
+$("lighting-time").onchange = updateLighting;
+$("lighting-lights").onchange = updateLighting;
 $("base-toggle").onclick = () => {
   showingBase = !showingBase;
   setMode("render");

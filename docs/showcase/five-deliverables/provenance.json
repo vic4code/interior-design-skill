@@ -1,0 +1,54 @@
+{
+  "description": "Public synthetic examples. SVG technical previews are browser rasterizations; the design effect is an actual base-conditioned image-generation result. 3D preview is a screenshot of the interactive model, not an image-gen render.",
+  "previews": {
+    "01-layout.jpg": {
+      "kind": "source-geometry-layout",
+      "source": "skills/interior-design/assets/style-studies/project.json",
+      "svg": "docs/showcase/five-deliverables/layout.svg",
+      "image_sha256": "4af5e2baae2718a7887b34613a696b97a21198d8b6a8fc8e3a701f72d39a4061",
+      "source_sha256": "d9b1a054ca8bdadd123b9b3e4c7456e6bb85a0dae06d3a5b09d7aadc07e0efd2",
+      "width": 900,
+      "height": 675
+    },
+    "03-imagegen.jpg": {
+      "kind": "completion-simulation",
+      "source": "docs/showcase/same-space/mcm/preview.jpg",
+      "provenance": "docs/showcase/same-space/mcm/image-provenance.json",
+      "image_sha256": "cdae5328edac7ba7f15aad9b8c3c4991c94909d8b06bc5852f434b38f1797399",
+      "source_sha256": "cdae5328edac7ba7f15aad9b8c3c4991c94909d8b06bc5852f434b38f1797399",
+      "width": 900,
+      "height": 675
+    },
+    "04-mep.jpg": {
+      "kind": "lighting-electrical-coordination",
+      "source": "docs/showcase/drawings/A102.svg",
+      "image_sha256": "a67b26bb6a14a808a5f41bf0b5ba5c8f1f31dea991ed64beb0f0ec414e62c00c",
+      "source_sha256": "7d68b28aeaeb854663441a92c57e41eb68c09a6f6ed59fbf25df14b9289b4761",
+      "width": 900,
+      "height": 675
+    },
+    "05-engineering.jpg": {
+      "kind": "cabinet-arrangement",
+      "source": "docs/showcase/drawings/J301.svg",
+      "image_sha256": "95730c3bc6839f0d299f82aa36faae6abcedc0ec0bdc19a58d9fa3e66d09b4fb",
+      "source_sha256": "d249efae3f72b85bd8696ba693cf847b50999f4d29f44d93edbb96836f74af5e",
+      "width": 900,
+      "height": 675
+    },
+    "02-3d.jpg": {
+      "kind": "interactive-geometry-screenshot",
+      "source": "skills/interior-design/assets/review-demo/variants/mcm/space.glb",
+      "source_sha256": "5f3589f183217b06e6c2360c2ce28c8dd7be53e92fcd182a420ac7de5ed81c0c",
+      "image_sha256": "9f64cbdcee02af0fdb45c8708a251ad8031f79d3cabb054f04da236c64e2f95d",
+      "width": 900,
+      "height": 675,
+      "lighting": {
+        "time": "day",
+        "lights_on": true
+      },
+      "view": "Default MCM camera fit, open enclosure; real-time appearance preview, not photometric simulation.",
+      "method": "Screenshot of the actual WebGL model canvas at a fixed 900 \u00d7 675 viewport, without generative image editing.",
+      "lighting_provenance": "docs/showcase/lighting-3d/provenance.json"
+    }
+  }
+}

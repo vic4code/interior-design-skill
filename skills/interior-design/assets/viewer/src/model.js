@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { createLightingPreview } from "./lighting.js";
 const $ = (id) => document.getElementById(id);
 export async function loadModel(
   isActive,
@@ -29,10 +30,6 @@ export async function loadModel(
   scene.environmentIntensity = 0.55;
   room.dispose();
   pmrem.dispose();
-  scene.add(new THREE.HemisphereLight(0xfffbf3, 0x72756c, 0.65));
-  const light = new THREE.DirectionalLight(0xfff5e7, 1.5);
-  light.position.set(4, 8, 5);
-  scene.add(light);
   const camera = new THREE.PerspectiveCamera(40, 1, 0.01, 200);
   host.replaceChildren(renderer.domElement);
   renderer.domElement.tabIndex = 0;
@@ -56,10 +53,12 @@ export async function loadModel(
     throw error;
   }
   let disposed = false;
+  let lighting;
   function disposeModel() {
     if (disposed) return;
     disposed = true;
     renderer.setAnimationLoop(null);
+    lighting?.dispose();
     gltf.scene.traverse((node) => {
       node.geometry?.dispose();
       for (const material of Array.isArray(node.material)
@@ -113,7 +112,8 @@ export async function loadModel(
       .add(
         new THREE.Vector3(1, 1.45, 1.15).normalize().multiplyScalar(distance),
       );
-    camera.near = Math.max(span / 10000, 0.001);
+    // Preserve depth separation between thin rugs, floorboards and joinery.
+    camera.near = Math.max(span / 200, 0.025);
     camera.far = Math.max(distance * 15, span * 20);
     camera.updateProjectionMatrix();
     controls.target.copy($("walls").checked ? center : cutCenter);
@@ -150,6 +150,7 @@ export async function loadModel(
       : [node.material]
     ).map((material) => {
       const clone = material.clone();
+      clone.clipShadows = true;
       sectionMaterials.push({ material: clone, original: clone.clippingPlanes });
       return clone;
     });
@@ -173,8 +174,10 @@ export async function loadModel(
     });
     controls.target.copy(complete ? center : cutCenter);
     controls.update();
+    lighting?.updateShadows();
   };
   toggleWalls();
+  lighting = createLightingPreview(scene, gltf.scene, renderer, bounds);
   $("walls").onchange = toggleWalls;
   $("reset").onclick = reset;
   function rotateLabel() {
@@ -201,6 +204,8 @@ export async function loadModel(
     renderer.render(scene, camera);
   });
   return {
+    setLighting: (state) => lighting.setLighting(state),
+    getLighting: () => lighting.getLighting(),
     dispose() {
       observer.disconnect();
       disposeModel();

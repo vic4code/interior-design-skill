@@ -37,9 +37,29 @@ Freeze the current revision. Set room/detail cameras, consistent neutral lightin
 
 Supply the actual base render through the provider's image input, not just a text description of it. Use only cleared material/product reference images. Keep base-render geometry authoritative. Request preservation of camera, wall/opening positions, furniture count, scale and orientation. Describe the desired material/light changes separately.
 
+### Lock the frame before the first generation
+
+Set one delivery canvas for the series: **4:3 landscape, final delivery 900 × 675 px** for the bundled examples. Record the input canvas, camera ID, camera transform or reference view, crop bounds and aspect ratio before generating alternatives. Use the actual same base image for every style. For light-only comparisons, use the actual same approved style image as the reference for every lighting condition. Keep full-resolution results alongside lightweight previews.
+
+State the frame constraints inside **every image-generation prompt**, rather than relying on a later README resize. Request a level camera, parallel architectural verticals, identical field of view, horizon, vanishing points, lens and composition. No roll, tilt, keystone distortion, reframing, extra margin, zoom, crop or stretched output. Do not enlarge or relocate objects to fill the frame. Where the host only supplies a preset canvas, choose the same preset for the whole series and export all previews to the recorded delivery size without stretching or silently cutting off content; preserve the original and document any padding/resampling.
+
 Starting prompt:
 
-> Enhance the supplied base render into a realistic interior completion simulation. Preserve the exact camera, room boundary, ceiling/beam levels, all door/window openings, furniture positions, orientations and counts. Preserve the selected product silhouettes. Improve only material texture, lighting and photographic surface response toward [confirmed palette]. Do not add furniture, plants, windows, cabinetry, decor or architectural details. Do not crop or change perspective. Treat unspecified hardware as unresolved, not a fabrication instruction.
+> Create a photorealistic interior completion simulation using the attached spatial base as the composition authority. OUTPUT: one landscape 4:3 image, intended delivery canvas 900 × 675 px. Match the reference frame edge for edge: same camera position, camera height, focal length, field of view, horizon, vanishing points and crop. Keep the camera level; architectural verticals must stay vertical. No camera roll, tilt, keystone, fisheye, zoom, reframing, added border, crop or stretched perspective. Preserve the room boundary, ceiling/beam levels, door/window locations, furniture count, footprints, orientation and relative scale. Preserve the selected product silhouettes. Change only [approved furniture/material appearance] toward [confirmed palette] and the separately specified lighting condition. Retain all unrelated objects exactly where they are. Do not add furniture, plants, windows, cabinetry, decor or architectural/service details. Treat unresolved hardware as unresolved, not a fabrication instruction.
+
+### Always propose a usable lighting design
+
+Separate **daylight** from **artificial lighting**. A model must remain readable without washing material colors to white. In the browser provide independent day/night and lights-on/off controls; these are fast appearance previews, not validated illuminance calculations. Use the room/opening geometry to orient daylight, and the available fixture locations to place local lights where those data exist. Mark inferred locations or generic preview lighting as assumptions.
+
+For the image-gen presentation, deliver this minimum comparison from the **same camera and approved style image**:
+
+| Condition | Prompt addition |
+| --- | --- |
+| Day · lights off | Natural daylight through the existing openings only. All pendants, table lamps, strips and built-in luminaires are visibly off; no emissive glow. Retain readable textile, timber and wall contrast, soft contact shadows and a balanced photographic exposure. |
+| Day · lights on | Identical daylight direction, furniture and camera. Turn on only the approved fixtures with restrained warm light (state the design temperature, e.g. 2700–3000 K). Do not erase the daylight shadows or bleach the materials. |
+| Night · lights on | Same room and camera after dark; dark exterior beyond the same windows. Illuminate with the approved pendant/task/ambient fixture proposal. Preserve material color, local shadow and depth; avoid a uniformly bright white room. |
+
+The prompt must name exactly which fixture locations are sourced and which are proposed. New fixture proposals must appear in the design/MEP coordination record before being described as approved. Decorative image glow does not establish lumens, lux, circuits, loads or compliance.
 
 This instruction is a request, not a geometry guarantee. Review the result against the base. Reject/rework changed openings, duplicate or missing furniture, implausible reflections, altered cabinets/handles, oversized products and newly invented service details. Use a localized mask/edit if supported; otherwise regenerate or retain the base. If a generated idea is selected as a design change, change the model/manifest first and rebuild.
 
@@ -54,4 +74,4 @@ Keep `base/`, `simulation/`, and a per-image provenance record with:
 
 Do not invent seeds or provider metadata. Label simulated images on their gallery cards; provide a base/simulation toggle. Keep dimensions and drawing exports attached to the model, never the simulation. Include costs only if actually known.
 
-The README’s four image-generated concepts are independent fictional style proposals made with the host image-generation tool. They are separate from the executable synthetic room and its drawing example. Original Blender renders and reproducible scene scripts remain available as geometry examples.
+The README’s primary four-style series uses one actual shared spatial base image. Its day/lights-off, day/lights-on and night/lights-on comparisons use the same approved MCM image as reference. Save the real prompts, input/result hashes and review status; camera constraints in a prompt still require visual comparison. Older independent concept studies are archived separately and are not presented as views of the dimensioned example. Original Blender geometry remains available for editing and dimensional checks.

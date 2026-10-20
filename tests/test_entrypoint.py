@@ -43,6 +43,23 @@ class EntryPointTests(unittest.TestCase):
                 bases.add(hashlib.sha256((child_root/child['presentation']['base_image']).read_bytes()).hexdigest())
                 provenance = json.loads((child_root/child['presentation']['provenance']).read_text())
                 self.assertEqual(hashlib.sha256((child_root/child['presentation']['image']).read_bytes()).hexdigest(), provenance['image_sha256'])
+                if variant['id'] == 'mcm':
+                    from PIL import Image
+                    lighting_views = [view for view in child['presentations'] if view['id'].startswith('lighting-')]
+                    self.assertEqual({view['id'] for view in lighting_views}, {'lighting-day-off', 'lighting-day-on', 'lighting-night-on'})
+                    sizes = set()
+                    lighting_bases = set()
+                    for view in lighting_views:
+                        evidence = json.loads((child_root/view['provenance']).read_text())
+                        image = child_root/view['image']
+                        self.assertEqual(hashlib.sha256(image.read_bytes()).hexdigest(), evidence['image_sha256'])
+                        base_sha = hashlib.sha256((child_root/view['base_image']).read_bytes()).hexdigest()
+                        self.assertEqual(base_sha, evidence['base_sha256'])
+                        lighting_bases.add(base_sha)
+                        with Image.open(image) as decoded:
+                            sizes.add(decoded.size)
+                    self.assertEqual(sizes, {(1448, 1086)})
+                    self.assertEqual(len(lighting_bases), 1)
             self.assertEqual(len(geometries), 1)
             self.assertEqual(len(bases), 1)
             for entry in manifest['files']:
