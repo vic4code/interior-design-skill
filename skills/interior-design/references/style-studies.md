@@ -2,7 +2,13 @@
 
 Use style as a set of spatial, material and furniture decisions, not a paint filter. Start from the user's activities, actual plan and references. Keep layout evidence independent of appearance.
 
-## Four original studies
+## Two visual routes
+
+For an attractive initial appearance proposal, use the host image-generation tool with a concrete furniture/material/lighting brief. The README leads with four independent generated concepts; these do not share the room geometry of the drawing sample. The public [concept provenance](https://github.com/vic4code/interior-design-skill/blob/main/docs/showcase/concepts/README.md) is a repository showcase, not an installed runtime dependency. If only the installed skill folder is available, use the workflow in [render-and-imagegen.md](render-and-imagegen.md).
+
+The reproducible Blender studies below retain one shared synthetic room for model/drawing inspection. Their simple procedural assets are geometry examples, not a promise of finished editorial image quality. An independent image-generated concept cannot be used as proof that its furniture or architecture is present in those scenes.
+
+## Four original Blender studies
 
 | Direction | Furniture language | Material and lighting decisions |
 | --- | --- | --- |

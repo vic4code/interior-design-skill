@@ -1,4 +1,12 @@
-# Rendering and optional image generation
+# Image generation and model-faithful rendering
+
+## Choose a route before installing tools
+
+For an attractive initial style proposal, use the host's available image-generation tool directly. The agent translates the ordinary-language request into an art-directed prompt with concrete furniture forms, material palette, spatial composition, selected objects and photographic lighting. Generate original concepts rather than reproducing third-party photographs or artwork. The user need not install Blender, Python image SDKs or a local GPU for a host-provided image tool. Availability, network access, quotas and possible service charges depend on that host; do not invent a price or switch to a paid API without authorization.
+
+For dimensioned drawings, use structured geometry and Python drawing dependencies; Blender is not needed for the bundled synthetic PDF/SVG/DXF generator. For editable 3D, extraction of a native scene or a camera-faithful render, use Blender. Blender's own `bpy` runtime is included with Blender; the core does not require installing a separate Blender Python package through pip. Detailed Cycles rendering consumes local CPU/GPU time and memory, so start with previews and render a final only when it serves the task. The optional browser viewer additionally needs Node.js dependencies.
+
+A high-quality generated image improves presentation; it does not recover reliable dimensions or complete construction details. Derive drawings from measured/assumed geometry, label the evidence, and reconcile any selected visual changes back into that geometry. Keep independent concepts separate from the drawing sample when they depict different rooms.
 
 ## Select a mode
 
@@ -38,4 +46,4 @@ Keep `base/`, `simulation/`, and a per-image provenance record with:
 
 Do not invent seeds or provider metadata. Label simulated images on their gallery cards; provide a base/simulation toggle. Keep dimensions and drawing exports attached to the model, never the simulation. Include costs only if actually known.
 
-The README concept image is an independently generated fictional design study, not a base-render enhancement and not an output of Google Imagen. It is separate from the executable synthetic studio example.
+The README’s four image-generated concepts are independent fictional style proposals made with the host image-generation tool. They are separate from the executable synthetic room and its drawing example. Original Blender renders and reproducible scene scripts remain available as geometry examples.

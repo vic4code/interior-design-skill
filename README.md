@@ -1,28 +1,48 @@
 # Interior Design Skill
 
-**Turn the space you imagine into an editable model, a convincing visual study and drawings your designer or builder can work through.**
+**Describe your space. Get a design you can see—and drawings you can discuss with your builder.**
 
 English · [繁體中文](README.zh-TW.md)
 
-A portable Agent Skill for **Codex, Claude Code, Cursor and GitHub Copilot**. Bring plans, references and product links; work through layout, materials, furniture, lighting and technical details with Blender and a browser frontend. The core runs locally without a required paid generation API.
+An interior design skill for **Codex, Claude Code, Cursor and GitHub Copilot**. Start with your needs, taste and budget. Your agent develops the brief, visual concepts, spatial layout and dimensioned drawing package. Plans and measurements make the result more precise; you can start without them.
 
-## Four styles, actual Blender output
+[![MCM concept: olive upholstery, rich walnut, amber glass and warm late-afternoon light](docs/showcase/concepts/mcm/preview.jpg)](docs/showcase/concepts/mcm/concept.jpg)
 
-The same original fictional living/work room, developed through four distinct furniture and material languages. These are **model-derived Blender renders**, with editable scene generation, GLB exports, cameras and source hashes.
+*Mid-century Modern · AI-generated design concept. Click for the full image.*
 
-| Mid-century Modern | Japandi |
-| --- | --- |
-| [![MCM — timber frames, olive upholstery and warm selected objects](docs/showcase/mcm/hero-preview.jpg)](docs/showcase/mcm/hero.jpg) | [![Japandi — low oak forms, natural textile and quiet light](docs/showcase/japandi/hero-preview.jpg)](docs/showcase/japandi/hero.jpg) |
-| Exposed timber, tapered legs, olive and rust, composed vintage character. | Low platforms, pale oak, linen, mineral surfaces and soft light. |
-| **Contemporary** | **Bauhaus** |
-| [![Contemporary — rounded forms, stone and layered neutrals](docs/showcase/contemporary/hero-preview.jpg)](docs/showcase/contemporary/hero.jpg) | [![Bauhaus — tubular chrome, crisp cushions and geometric accents](docs/showcase/bauhaus/hero-preview.jpg)](docs/showcase/bauhaus/hero.jpg) |
-| Rounded upholstery, monolithic surfaces and restrained contrast. | Chrome, black upholstery and disciplined primary-color accents. |
+## Start with a sentence
 
-Click a preview for the full image. The studies use original procedural furniture, materials and artwork. See [style decisions, references and reproduction](skills/interior-design/references/style-studies.md). [Lo-Fi House](https://lofi-house.com/cases/) and [Dan Retro](https://www.danretro.com/products) informed the reference/selection workflow; their case photographs and commercial models are not bundled.
+> Use the interior-design skill. I want a warm MCM living room for two people, with reading space, concealed storage and a place to work. I like walnut, olive upholstery and vintage lighting. Give me a visual proposal, layout and a drawing package I can take to a designer or builder. I can provide measurements later.
+
+The agent handles the brief, image prompts, structured dimensions and export tools. You do not write JSON or start with a Blender setup. With no measured plan, the first layout and drawings use clearly marked assumptions; supply a plan, sketch, photos or dimensions to refine the next revision.
+
+**Your deliverables:** a visual direction and material/furniture proposal; a dimensioned layout; elevations, sections and cabinetry details suited to the project; a downloadable PDF/SVG/DXF package, schedules and a list of decisions to confirm before fabrication. Output scope depends on the available tools and project evidence; the agent reports unavailable capabilities rather than inventing files.
+
+## Four design languages
+
+MCM above, plus three distinct directions below—each art-directed through furniture, material, composition and light.
+
+| Japandi | Contemporary | Bauhaus |
+| --- | --- | --- |
+| [![Japandi concept: tactile oak, linen, stone and quiet daylight](docs/showcase/concepts/japandi/preview.jpg)](docs/showcase/concepts/japandi/concept.jpg) | [![Contemporary concept: sculptural bouclé, travertine and smoked oak](docs/showcase/concepts/contemporary/preview.jpg)](docs/showcase/concepts/contemporary/concept.jpg) | [![Bauhaus concept: tubular chrome, leather, cane and disciplined primary colors](docs/showcase/concepts/bauhaus/preview.jpg)](docs/showcase/concepts/bauhaus/concept.jpg) |
+| Low oak forms, woven textures and soft morning light. | Sculptural curves, bold stone and layered architectural lighting. | Chrome, leather, geometric accents and modernist clarity. |
+
+**These four images were made with image gen.** They are independent style concepts, not Blender renders or exact views of the drawing example below. [Prompts and provenance](docs/showcase/concepts/README.md) record what was generated. The reproducible [Blender studies](skills/interior-design/references/style-studies.md) remain available for editable geometry and model-faithful checks. [Lo-Fi House](https://lofi-house.com/cases/) and [Dan Retro](https://www.danretro.com/products) inform the style/selection workflow; their photographs and commercial models are not bundled.
+
+## Choose the tools for the result
+
+| Goal | What runs | Resources |
+| --- | --- | --- |
+| Compelling style concepts | The agent’s image-generation tool | No local Blender or GPU required; tool access, network, quota and possible charges depend on the host |
+| Dimensioned drawing PDFs/SVGs/DXF | Python and the bundled drawing scripts | No Blender rendering required for the bundled drawing generator |
+| Editable 3D or model-faithful views | Blender, with its included Python runtime | Local installation; CPU/GPU time and memory depend on scene detail and render quality |
+| Interactive browser review | The optional frontend | Node.js packages and a browser |
+
+Image gen is the preferred route for initial appearance studies when available. Geometry and drawing tools provide the dimensions and technical evidence. A selected visual idea must be reconciled into the actual layout/model before its drawings can represent it. [Rendering workflow](skills/interior-design/references/render-and-imagegen.md).
 
 ## What a drawing delivery looks like
 
-A coordinated **eight-sheet A3 set** from the same room and cabinetry dimensions: setting-out, openings, lighting/power proposals, interior elevations, cabinet arrangements, sections, finish schedules and an issue register.
+A separate, reproducible synthetic example: a coordinated **eight-sheet A3 set** from shared room and cabinetry dimensions: setting-out, openings, lighting/power proposals, interior elevations, cabinet arrangements, sections, finish schedules and an issue register.
 
 | Dimensioned layout · A101 | Cabinet arrangement · J301 |
 | --- | --- |
@@ -60,7 +80,7 @@ The complete folder contains its scripts, dependency locks, example data, schema
 
 > Use the interior-design skill. Help me develop this plan and these references into a MCM living room, an editable Blender scene and a detailed drawing package. Check furniture use, cabinet internal dimensions and installation interfaces. Show the actual files and the questions that still need site or product confirmation.
 
-## Get your first drawing package
+## Optional local drawing tools
 
 Python 3.11+ is required. The optional browser frontend needs Node.js 20.19+ or 22.12+; editable 3D and offline renders need Blender 4.3+ on PATH. From the installed skill directory, or a checkout:
 
@@ -97,7 +117,7 @@ For the quick-start browser review, from the skill folder:
 .venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
 npm --prefix assets/viewer run dev
 ```
-To review the detailed MCM study instead, build a matching drawing set and combine it with the rendered study:
+To review the procedural Blender MCM example instead, build a matching drawing set and combine it with the rendered study:
 
 ```bash
 .venv/bin/python scripts/build_drawing_studies.py --out output/drawing-study

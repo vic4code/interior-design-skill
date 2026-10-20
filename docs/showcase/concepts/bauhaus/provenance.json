@@ -1,0 +1,21 @@
+{
+  "mode": "independent-ai-concept",
+  "style": "bauhaus",
+  "tool": "image_gen.imagegen (host built-in)",
+  "model": "not exposed by tool",
+  "date": "2026-10-20",
+  "prompt": "Create one original photorealistic architectural interior photograph for a high-quality open-source interior-design skill README portfolio. Landscape 3:2 composition, one continuous room photograph, no panels, no collage, no lettering, no watermark, no people. This is an independent AI design concept, not a dimensionally verified construction drawing. Bauhaus: a confident collector's apartment with architectural clarity and lived-in warmth. Precise chrome tubular-framed black leather sofa with a burgundy-red cushion, tubular cantilever chair with woven cane seat/back, black-lacquer and glass low table, structured red wool area rug, walnut modular storage with a small saturated blue cabinet front, opaline globe lighting and one brushed-metal task lamp. Original geometric artwork in red/yellow/blue with plenty of off-white, cream plaster architecture and warm oak flooring. Primary colors as disciplined accents, deep architectural shadows, bright clear natural daylight. Authentic material richness, refined modernist composition. Photograph at eye height with a carefully composed 28–35mm architectural lens, corrected verticals, a clear foreground/middle/background, balanced negative space and deliberate furniture placement. Sophisticated residential-scale 28–35m² room, plausible circulation. Exceptional authentic wood grain, upholstery weave, stone, reflections and soft shadow detail; nuanced exposure and natural color. The quality should resemble a carefully styled independent design magazine shoot, finished and inviting, rather than a basic 3D asset demo. No visible brand logos or copied artworks.",
+  "reference_images": [],
+  "source_png_sha256": "dc06fe046583c0e7e68e3b6526779579b40bbc81b6fd1db2861a500e87d1d284",
+  "original_size": [
+    1536,
+    1024
+  ],
+  "drawing_relationship": "Independent style concept; not the geometry of the bundled synthetic drawing example. Never measure this image.",
+  "review_status": "accepted-for-concept-visualization",
+  "review": "Reviewed visually for furniture composition, coherent style, material response, lighting and obvious artifacts. No geometry-preservation claim; this is text-to-image concept generation.",
+  "files": {
+    "preview.jpg": "cd066f44e01765944ed0f3665880a9c7d6b88e798d5307a236fa317e5e1f821e",
+    "concept.jpg": "979f5037bf4d260058a29f095c6c503f73d0a1a75d2b6dbd57cce45e7bb3a570"
+  }
+}

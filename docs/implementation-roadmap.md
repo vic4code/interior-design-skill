@@ -2,6 +2,8 @@
 
 ## Available now
 
+- Ordinary-language entry: the agent develops the brief and structured inputs; measurements are optional starting aids, with assumptions made explicit.
+- Host image-generation concepts for MCM, Japandi, Contemporary and Bauhaus, with full prompts and derivative provenance.
 - Portable agent-led interior design workflow: briefs, calibrated sources, product research, Blender/native modeling, browser review and technical handoff.
 - Four original procedural style studies: MCM, Japandi, Contemporary and Bauhaus, with editable scenes, detailed furniture, material differences and image/camera provenance.
 - Eight-sheet synthetic design-development package with dimension chains, proposed lighting/power, elevations, cabinet arrangements/sections, component dimensions and schedules.

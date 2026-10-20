@@ -1,28 +1,48 @@
 # Interior Design Skill
 
-**把想像的空間，做成可修改的模型、完整風格呈現，以及能跟設計師與師傅逐項對圖的交付文件。**
+**講出你想住的樣子，得到看得見的設計，以及能交給設計師與師傅對圖的圖面。**
 
 [English](README.md) · 繁體中文
 
-支援 **Codex、Claude Code、Cursor、GitHub Copilot** 的標準 Agent Skill。從平面圖、參考案例與選物連結出發，用 Blender 與前端檢視配置、家具、材質、燈光及施工介面。本機核心不需要付費生成 API。
+支援 **Codex、Claude Code、Cursor、GitHub Copilot**。先說需求、風格與預算，agent 會整理設計方向、製作效果圖、空間配置與尺寸圖冊。有圖面或尺寸會更精準；沒有也能先開始。
 
-## 四種風格，都是實際 Blender 輸出
+[![MCM 概念：橄欖綠布面、胡桃木、琥珀玻璃與午後光線](docs/showcase/concepts/mcm/preview.jpg)](docs/showcase/concepts/mcm/concept.jpg)
 
-同一個原創合成客廳／工作空間，透過四種不同家具造型、材質與選物組合呈現。以下皆是**模型直接渲染**，可重建原生場景、匯出 GLB，並保留相機與來源雜湊。
+*Mid-century Modern／MCM · image gen 生成的設計概念，點圖查看完整尺寸。*
 
-| Mid-century Modern／MCM | Japandi／日系北歐 |
-| --- | --- |
-| [![MCM：外露木框、橄欖綠布面、暖色選物](docs/showcase/mcm/hero-preview.jpg)](docs/showcase/mcm/hero.jpg) | [![Japandi：低矮橡木、自然織物、柔和光線](docs/showcase/japandi/hero-preview.jpg)](docs/showcase/japandi/hero.jpg) |
-| 木框、細腳、橄欖綠與鏽橘，搭配有層次的復古選物。 | 低平台、淺橡木、亞麻、礦物感牆面與柔光。 |
-| **Contemporary／當代現代** | **Bauhaus／包浩斯** |
-| [![當代現代：圓潤家具、石材、層次中性色](docs/showcase/contemporary/hero-preview.jpg)](docs/showcase/contemporary/hero.jpg) | [![Bauhaus：鍍鉻管架、俐落坐墊、幾何色塊](docs/showcase/bauhaus/hero-preview.jpg)](docs/showcase/bauhaus/hero.jpg) |
-| 圓潤布面、整塊量體與節制的材質對比。 | 金屬管架、黑色布面與紅黃藍幾何點綴。 |
+## 一句話開始
 
-點圖可看完整尺寸。家具、材質與畫作均為原創程序建模。詳見[風格決策、來源與重建方式](skills/interior-design/references/style-studies.md)。[Lo-Fi House 案例](https://lofi-house.com/cases/)與 [Dan Retro 選物](https://www.danretro.com/products)用來研究風格與選品流程，未將案例照片或商業模型打包再散布。
+> 使用 interior-design skill。我想要兩人住的溫暖 MCM 客廳，有閱讀區、收納和可以工作的角落。喜歡胡桃木、橄欖綠沙發與復古燈具。幫我做效果圖、配置，以及能跟設計師或師傅討論的圖面交付包。尺寸之後可以補。
+
+Agent 負責整理需求、撰寫生圖提示、建立尺寸資料與執行輸出。你不用先寫 JSON 或安裝 Blender 才能開始提案。尚無量測資料時，先產出**標明假設尺寸**的配置與圖面草案；之後提供平面圖、草圖、照片或尺寸，再修到更精準。
+
+**你會拿到：**風格效果圖與材料／家具提案、尺寸配置平面、依專案需求製作的立面／剖面／櫃體詳圖，以及可下載的 PDF／SVG／DXF、表單與施工前確認清單。實際輸出取決於可用工具與專案資料；agent 會說明缺少的能力，不會假稱檔案已產出。
+
+## 四種有個性的設計方向
+
+上方是 MCM，以下呈現另外三種風格。從家具選型、材質、空間構圖到光線，各自有完整設計語言。
+
+| Japandi／日系北歐 | Contemporary／當代現代 | Bauhaus／包浩斯 |
+| --- | --- | --- |
+| [![Japandi：橡木、亞麻、石材與安靜的自然光](docs/showcase/concepts/japandi/preview.jpg)](docs/showcase/concepts/japandi/concept.jpg) | [![當代現代：雕塑感布面、洞石與煙燻橡木](docs/showcase/concepts/contemporary/preview.jpg)](docs/showcase/concepts/contemporary/concept.jpg) | [![Bauhaus：鍍鉻管架、皮革、藤編與節制的原色](docs/showcase/concepts/bauhaus/preview.jpg)](docs/showcase/concepts/bauhaus/concept.jpg) |
+| 低矮木作、織物與柔和晨光。 | 圓潤量體、鮮明石材與有層次的建築照明。 | 金屬、皮革、幾何色彩與現代主義比例。 |
+
+**這四張皆由 image gen 製作。**它們是獨立風格概念，並非 Blender 渲染，也不代表下方圖面範例的同一個空間。[提示與來源紀錄](docs/showcase/concepts/README.md)可查看生成方式。可重建的 [Blender 範例](skills/interior-design/references/style-studies.md)則保留給可編輯幾何與模型檢查。[Lo-Fi House 案例](https://lofi-house.com/cases/)與 [Dan Retro 選物](https://www.danretro.com/products)用來研究風格與選品流程，未散布其照片或商業模型。
+
+## 依成果選擇工具
+
+| 想要的成果 | 使用工具 | 需要的資源 |
+| --- | --- | --- |
+| 有吸引力的風格效果圖 | Agent 的 image gen 工具 | 不需本機 Blender 或 GPU；工具權限、連線、額度及可能費用依平台而定 |
+| 有尺寸的 PDF／SVG／DXF 圖面 | Python 與內附出圖腳本 | 內附圖面產生器不需先跑 Blender 渲染 |
+| 可修改的 3D 或忠於模型的視角 | Blender 與其內建 Python | 需要安裝；本機 CPU／GPU 時間及記憶體取決於場景與品質 |
+| 可互動的瀏覽器檢視 | 選用的前端 | Node.js 套件與瀏覽器 |
+
+有 image gen 時，優先用它探索外觀；尺寸與施工依據來自幾何及出圖工具。選中的視覺設計需回寫配置／模型，圖面才能對應到它。[完整呈現流程](skills/interior-design/references/render-and-imagegen.md)。
 
 ## 實際交付圖面長這樣
 
-同一份空間與櫃體尺寸，產出完整 **8 張 A3 圖冊**：尺寸定位、門窗、燈位／插座提案、室內立面、櫃體三視圖、剖面、材料尺寸表及待確認事項。
+以下是另一個可重建的合成圖面範例，從共同空間與櫃體尺寸產出完整 **8 張 A3 圖冊**：尺寸定位、門窗、燈位／插座提案、室內立面、櫃體三視圖、剖面、材料尺寸表及待確認事項。
 
 | 尺寸配置平面 · A101 | 櫃體三視圖 · J301 |
 | --- | --- |
@@ -60,7 +80,7 @@ python3 skills/interior-design/scripts/install_skill.py --agent claude-code --us
 
 > 請使用 interior-design skill。把這份平面圖與參考風格做成 MCM 客廳、可編輯 Blender 模型，以及詳細的交付圖冊。檢查家具使用、櫃體內淨尺寸和安裝介面；給我實際檔案，並列出還需要現場或產品確認的事項。
 
-## 先拿到第一份圖冊
+## 選用的本機出圖工具
 
 需要 Python 3.11+。選用的前端需要 Node.js 20.19+ 或 22.12+；原生 3D 與離線渲染需要 Blender 4.3+，並將 `blender` 加入 PATH。在安裝後的 skill 資料夾執行，或從 checkout 開始：
 
@@ -97,7 +117,7 @@ Skill 可以使用專案化 Blender 幾何與資料處理多房、不規則牆�
 .venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
 npm --prefix assets/viewer run dev
 ```
-要在瀏覽器檢視上述 MCM 詳細設計，先產出同版本圖面，再整合渲染成果：
+要在瀏覽器檢視程序建模的 MCM 範例，先產出同版本圖面，再整合渲染成果：
 
 ```bash
 .venv/bin/python scripts/build_drawing_studies.py --out output/drawing-study

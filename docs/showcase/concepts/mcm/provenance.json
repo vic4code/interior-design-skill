@@ -1,0 +1,21 @@
+{
+  "mode": "independent-ai-concept",
+  "style": "mcm",
+  "tool": "image_gen.imagegen (host built-in)",
+  "model": "not exposed by tool",
+  "date": "2026-10-20",
+  "prompt": "Create one original photorealistic architectural interior photograph for a high-quality open-source interior-design skill README portfolio. Landscape 3:2 composition, one continuous room photograph, no panels, no collage, no lettering, no watermark, no people. This is an independent AI design concept, not a dimensionally verified construction drawing. Mid-century modern: a warm urban apartment living room with beautifully grained walnut built-ins, low olive woven sofa on a finely joined exposed walnut frame, sculptural vintage-inspired teak lounge chair with cognac leather, low organically shaped walnut coffee table, a smoked amber glass lamp, rust wool rug, linen drapery, curated ceramics and books, one large restrained original abstract artwork. Rich warm material contrast, design-collector sensibility, spatially believable furnishing, late-afternoon sidelight. Photograph at eye height with a carefully composed 28–35mm architectural lens, corrected verticals, a clear foreground/middle/background, balanced negative space and deliberate furniture placement. Sophisticated residential-scale 28–35m² room, plausible circulation. Exceptional authentic wood grain, upholstery weave, stone, reflections and soft shadow detail; nuanced exposure and natural color. The quality should resemble a carefully styled independent design magazine shoot, finished and inviting, rather than a basic 3D asset demo. No visible brand logos or copied artworks.",
+  "reference_images": [],
+  "source_png_sha256": "d039adb339ca5d720046418374c0a557b5302f6b8ebc01be1746fedcd6f520b5",
+  "original_size": [
+    1536,
+    1024
+  ],
+  "drawing_relationship": "Independent style concept; not the geometry of the bundled synthetic drawing example. Never measure this image.",
+  "review_status": "accepted-for-concept-visualization",
+  "review": "Reviewed visually for furniture composition, coherent style, material response, lighting and obvious artifacts. No geometry-preservation claim; this is text-to-image concept generation.",
+  "files": {
+    "preview.jpg": "3d0285a315b1fee8b4534546cb9fc6d09c266ed617ed4af990836e5139f348cb",
+    "concept.jpg": "b0cf92155c1fccf424c29414766b7253a11335b4eb0d54885a5fd5c0ace40840"
+  }
+}

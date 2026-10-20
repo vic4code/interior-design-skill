@@ -1,8 +1,8 @@
 ---
 name: interior-design
-description: Turn room ideas, measured plans and reference images into editable Blender scenes, HD renders, interactive browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. Build project-specific geometry when the starter does not fit; track the technical evidence and issue status of drawing deliverables.
+description: Turn everyday room requests, optional measured plans and reference images into compelling image-generated design concepts, editable Blender scenes, browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. Build project-specific geometry when the starter does not fit; track the technical evidence and issue status of drawing deliverables.
 license: MIT
-compatibility: Python 3.11+; Node.js 20.19+ or 22.12+ for the optional viewer; Blender 4.3+ for native scenes, GLB and renders.
+compatibility: Host image-generation tool for optional AI concepts; Python 3.11+ for drawings; Node.js 20.19+ or 22.12+ for the optional viewer; Blender 4.3+ for native scenes, GLB and renders.
 ---
 
 # Interior Design
@@ -27,6 +27,14 @@ Treat the directory containing this SKILL.md as the **skill root**, independent 
 - [Prompt examples](references/prompt-workflow.md): iterating from brief to layout, materials, lighting and delivery.
 
 Keep the local workflow independent of paid APIs. Optional web search, image tools and Blender MCP depend on the host's available tools. Do not introduce paid calls, upload project content or redistribute reference assets without the user's authorization.
+
+## Start from the user’s words
+
+The user can describe a room, needs and taste in ordinary language. They do not need to write JSON, install a renderer or prepare a full drawing brief before seeing a proposal. Inspect existing context, translate the request into a brief and handle structured inputs and tooling for them.
+
+Deliver an initial design direction, a compelling visual concept when an image tool is available, a spatial proposal and a drawing package with stated dimensional evidence. Prefer the host's image-generation tool for aspirational appearance studies; reserve Blender rendering for model-faithful checks or requested editable 3D. See [rendering modes](references/render-and-imagegen.md). Do not run a heavy render just to produce an appearance concept.
+
+Plans, dimensions and photos are optional starting aids. If measurements are missing, proceed with a clearly labeled synthetic/assumed layout and drawing draft, list the specific dimensions needed to refine it and request them without holding up independent concept work. Never present assumed dimensions as measured, invent product verification, or imply that an independent concept image is represented by the drawing model. If a requested deliverable cannot actually be generated, report the unavailable tool and deliver the useful outputs that can be produced.
 
 ## Establish the design brief
 
@@ -64,11 +72,11 @@ npm --prefix assets/viewer run dev
 
 The viewer serves its own asset directory on localhost. Keep private outputs in the user's project; preview them in a separate copy of `assets/viewer/` when needed. Copy the entire review package into that copy's `public/generated/`, install its npm dependencies and run its dev command. Do not serve the user's workspace root or publish private projects.
 
-## Render, inspect and revise
+## Visualize, inspect and revise
 
 Inspect the actual model, PNG and drawings. Check room proportions, door/window locations, furniture IDs, dimensions and revision consistency; exercise the browser's plan/3D views and downloads. Report failed or unavailable checks accurately.
 
-Default output is a 1920×1440 Cycles CPU render with 32 samples and denoising when available, or 128 samples without denoising. Higher resolution increases pixels; detailed geometry, materials and lighting determine realism. For a separate final image:
+The bundled starter’s model-faithful render is a 1920×1440 Cycles CPU render with 32 samples and denoising when available, or 128 samples without denoising. Higher resolution increases pixels; detailed geometry, materials and lighting determine realism. For a separate final image:
 
 ```bash
 blender -b /path/to/review/scene.blend --threads 2 --python-exit-code 1 --python scripts/render_hd.py -- --width 3840 --height 2880 --samples 128 --out /path/to/final-4k.png

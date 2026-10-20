@@ -25,3 +25,7 @@ An execution-capable agent can perform these modeling steps using the workflow. 
 Suggested first response in Traditional Chinese:
 
 > 先給我你手上的平面圖、草圖或照片即可。有標尺寸的平面圖最好；再告訴我想改哪個空間、怎麼使用，以及一兩張喜歡的風格。層高不知道也能先做概念版，我會把未知尺寸標出來，再逐步補齊。
+
+## A useful first result without a measured plan
+
+Treat an ordinary-language request as the entry point. Summarize the inferred brief, choose a coherent design direction and generate a concept with the host image tool if available. Create a provisional layout and dimensioned drawing draft from explicitly recorded assumptions; the agent creates and validates the structured data. Ask for only the few measurements that materially change the next revision. A provided plan improves dimensional confidence but is not a prerequisite for concept work. Track each size’s basis and preserve the distinction between an attractive concept, a model dimension and a verified site measurement.
