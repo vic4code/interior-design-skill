@@ -21,7 +21,7 @@ These are original interpretations. They do not identify an exact manufacturer p
 
 ## Reference and selection workflow
 
-The user's reference directions include the [Lo-Fi House case portfolio](https://lofi-house.com/cases/) and [Dan Retro product selection](https://www.danretro.com/products). Use case studies to discuss composition and material relationships, and retailer selections to discover potential furniture/lighting candidates. Keep the sources linked rather than redistribute their photographs or commercial models.
+Use the user's supplied case studies to discuss composition and material relationships, and product references to discover potential furniture/lighting candidates. Treat them as private creative inputs unless the user requests public attribution. Keep any product evidence needed for actual selection in its appropriate source record; do not redistribute third-party photographs or commercial models without permission.
 
 For an actual selection, record the exact product/variant and opened manufacturer dimensions, finish, installation needs, model licence and source date. A retailer category or stylistic resemblance is not verified product identity. Vintage pieces may need seller measurements, condition records and confirmation that the actual item matches the listing. Follow [furniture-sourcing.md](furniture-sourcing.md).
 

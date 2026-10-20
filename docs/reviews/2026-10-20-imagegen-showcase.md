@@ -29,3 +29,9 @@ One pending item was synchronization of installed guidance. All five changed ski
 ## Publication
 
 Publish this scoped update to the existing main branch using only the public owner handle and its noreply address. Concept images and synthetic drawings only; no private residential files are included.
+
+## Follow-up: lightweight spatial visualization
+
+The owner clarified that supplied brand/case references are creative inputs, not public product attribution. Removed their names/URLs from the current public files. Position the workflow as spatially grounded image generation: dimensions, outlines and a simple base view guide camera/layout while image gen develops appearance, reducing some detailed asset/material and local render work. Document actual image-input requirements, visual/overlay review and authoritative model dimensions without claiming native-render geometric equivalence, automatic validation or measured cost savings. Existing independent concept examples keep their original provenance; no conditioned-output demonstration is claimed.
+
+Follow-up verification: brand-name/URL scan returned no current-file matches; bilingual links and Anthropic validation passed; three revised skill files synchronized and hash-verified in both installed hosts. Existing local frontend was opened, HTTP 200 confirmed, and served render/GLB/plan/PDF hashes matched its manifest. Documentation-only update; no runtime behavior or concept-image provenance was changed.

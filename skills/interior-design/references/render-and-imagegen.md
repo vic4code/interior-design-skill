@@ -8,6 +8,14 @@ For dimensioned drawings, use structured geometry and Python drawing dependencie
 
 A high-quality generated image improves presentation; it does not recover reliable dimensions or complete construction details. Derive drawings from measured/assumed geometry, label the evidence, and reconcile any selected visual changes back into that geometry. Keep independent concepts separate from the drawing sample when they depict different rooms.
 
+## Lightweight spatially grounded visualization
+
+Use room dimensions, plan outlines, openings and furniture positions as spatial priors. If the user supplies geometry or a measured plan, create a simplified model/base view without first investing in detailed presentation assets, high-resolution textures or high-sample path tracing. Use an inexpensive solid/neutral preview or low-sample render when it provides enough structure. Then pass the actual base image to a tool that supports image input; a text description alone does not condition the output on that view.
+
+Keep its camera, perspective, boundary and arrangement explicit in the prompt; ask image generation to develop material response, light and atmosphere. This is a lightweight alternative for design iteration, not a guarantee of equivalent geometric fidelity to native rendering. It reduces some local asset/render work and shifts appearance synthesis to a hosted tool; do not promise lower total cost or latency without measuring them.
+
+Compare base and generated image side by side or with an overlay. Inspect wall/floor edges, opening corners, ceiling levels and furniture footprints; reject or revise material spatial drift. Do not describe overlay review as an implemented automatic validator or infer construction dimensions from the image. Record actual findings in the image provenance; use geometry for dimensioned deliverables.
+
 ## Select a mode
 
 | Mode | Input | Output / evidence |

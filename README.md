@@ -27,7 +27,20 @@ MCM above, plus three distinct directions below—each art-directed through furn
 | [![Japandi concept: tactile oak, linen, stone and quiet daylight](docs/showcase/concepts/japandi/preview.jpg)](docs/showcase/concepts/japandi/concept.jpg) | [![Contemporary concept: sculptural bouclé, travertine and smoked oak](docs/showcase/concepts/contemporary/preview.jpg)](docs/showcase/concepts/contemporary/concept.jpg) | [![Bauhaus concept: tubular chrome, leather, cane and disciplined primary colors](docs/showcase/concepts/bauhaus/preview.jpg)](docs/showcase/concepts/bauhaus/concept.jpg) |
 | Low oak forms, woven textures and soft morning light. | Sculptural curves, bold stone and layered architectural lighting. | Chrome, leather, geometric accents and modernist clarity. |
 
-**These four images were made with image gen.** They are independent style concepts, not Blender renders or exact views of the drawing example below. [Prompts and provenance](docs/showcase/concepts/README.md) record what was generated. The reproducible [Blender studies](skills/interior-design/references/style-studies.md) remain available for editable geometry and model-faithful checks. [Lo-Fi House](https://lofi-house.com/cases/) and [Dan Retro](https://www.danretro.com/products) inform the style/selection workflow; their photographs and commercial models are not bundled.
+**These four images were made with image gen.** They are independent style concepts, not Blender renders or exact views of the drawing example below. [Prompts and provenance](docs/showcase/concepts/README.md) record what was generated. The reproducible [Blender studies](skills/interior-design/references/style-studies.md) remain available for editable geometry and model-faithful checks.
+
+## Your actual space, visualized with a lighter workflow
+
+**Use spatial dimensions as a prior; let image gen develop the materials, light and atmosphere.** A measured plan, room outline, sketch or simplified model gives the proposal a concrete starting point. Where available, supply a low-cost Blender base view to image gen so the camera, openings and furniture arrangement have a visual reference.
+
+This can reduce the need to build detailed presentation assets, author complex material textures and run high-sample local renders for every design iteration. A simple geometry pass establishes the space; image gen develops the visual finish. It shifts appearance-generation work to the image service, whose access, quotas and possible charges depend on the host.
+
+1. Establish dimensions, room boundaries, openings and furniture positions; mark assumed sizes.
+2. Freeze a base view and provide the actual image to an image-capable generation tool, asking it to retain the camera and spatial structure.
+3. Compare the result with that base, including overlays when useful; revise images that move openings, alter proportions or add unplanned objects.
+4. Derive the drawing package from the authoritative geometry and update it when a visual design change is adopted.
+
+Spatial references help guide perspective and proportions; they do **not** make image gen geometrically identical to a Blender render. Use it for convincing design visualization, with model/drawing dimensions remaining authoritative. See [base-image conditioning and review](skills/interior-design/references/render-and-imagegen.md).
 
 ## Choose the tools for the result
 

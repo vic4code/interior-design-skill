@@ -2,7 +2,7 @@
 
 ## Authorized scope
 
-Improve the skill beyond the scope of its bundled starter generator. Produce original MCM, Japandi, Contemporary and Bauhaus studies informed by the supplied Lo-Fi House cases and Dan Retro selection references. Show actual Blender renders, several coordinated drawing deliverables and downloads in both READMEs. Preserve a host-neutral standard skill with Codex, Claude Code and other mainstream installation guidance. Keep private source names/data out of public files and Git metadata.
+Improve the skill beyond the scope of its bundled starter generator. Produce original MCM, Japandi, Contemporary and Bauhaus studies informed by supplied spatial and furniture references. Show actual Blender renders, several coordinated drawing deliverables and downloads in both READMEs. Preserve a host-neutral standard skill with Codex, Claude Code and other mainstream installation guidance. Keep private source names/data out of public files and Git metadata.
 
 ## Acceptance
 

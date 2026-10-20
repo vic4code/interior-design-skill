@@ -27,7 +27,20 @@ Agent 負責整理需求、撰寫生圖提示、建立尺寸資料與執行輸�
 | [![Japandi：橡木、亞麻、石材與安靜的自然光](docs/showcase/concepts/japandi/preview.jpg)](docs/showcase/concepts/japandi/concept.jpg) | [![當代現代：雕塑感布面、洞石與煙燻橡木](docs/showcase/concepts/contemporary/preview.jpg)](docs/showcase/concepts/contemporary/concept.jpg) | [![Bauhaus：鍍鉻管架、皮革、藤編與節制的原色](docs/showcase/concepts/bauhaus/preview.jpg)](docs/showcase/concepts/bauhaus/concept.jpg) |
 | 低矮木作、織物與柔和晨光。 | 圓潤量體、鮮明石材與有層次的建築照明。 | 金屬、皮革、幾何色彩與現代主義比例。 |
 
-**這四張皆由 image gen 製作。**它們是獨立風格概念，並非 Blender 渲染，也不代表下方圖面範例的同一個空間。[提示與來源紀錄](docs/showcase/concepts/README.md)可查看生成方式。可重建的 [Blender 範例](skills/interior-design/references/style-studies.md)則保留給可編輯幾何與模型檢查。[Lo-Fi House 案例](https://lofi-house.com/cases/)與 [Dan Retro 選物](https://www.danretro.com/products)用來研究風格與選品流程，未散布其照片或商業模型。
+**這四張皆由 image gen 製作。**它們是獨立風格概念，並非 Blender 渲染，也不代表下方圖面範例的同一個空間。[提示與來源紀錄](docs/showcase/concepts/README.md)可查看生成方式。可重建的 [Blender 範例](skills/interior-design/references/style-studies.md)則保留給可編輯幾何與模型檢查。
+
+## 用實際空間作依據，輕量做出設計效果
+
+**以空間尺寸作為先驗條件，讓 image gen 表現材質、光線與氛圍。** 有尺寸的平面圖、格局輪廓、草圖或簡化模型，都能讓提案有具體起點；有 Blender 基底視角時，直接把低成本基底圖提供給 image gen，作為相機、門窗與家具配置的視覺依據。
+
+這條路徑可減少每次提案都要製作精細展示資產、複雜貼圖，以及執行高採樣本機渲染的負擔。用簡單幾何確認空間，再讓 image gen 發展視覺質感；外觀生成改由圖片服務處理，工具權限、額度及可能費用依平台而定。
+
+1. 建立尺寸、空間輪廓、門窗與家具配置，標明假設尺寸。
+2. 固定基底視角，將實際圖片交給支援影像輸入的生圖工具，要求保留相機與空間結構。
+3. 對照基底圖，必要時疊圖檢查；門窗移位、比例改變或新增非預期物件時，再修正效果圖。
+4. 工程交付圖仍從尺寸模型產生；採用新的視覺設計時，同步更新模型與圖面。
+
+空間依據有助於引導視角與比例，但不代表 image gen 與 Blender 渲染幾何完全一致。用它輕量呈現有說服力的設計效果，精確尺寸則以模型與工程圖為準。詳見[基底圖約束與比對流程](skills/interior-design/references/render-and-imagegen.md)。
 
 ## 依成果選擇工具
 
