@@ -17,7 +17,7 @@ The owner requested correction of washed-out 3D materials, designed default ligh
 
 ## Implementation and verification
 
-Implementation and final installed-browser acceptance passed on 2026-10-21. Publication follows the release commit.
+Implementation, final installed-browser acceptance and publication passed on 2026-10-21.
 
 ### Actual changes
 
@@ -48,3 +48,7 @@ Implementation and final installed-browser acceptance passed on 2026-10-21. Publ
 ### Remaining limits
 
 Interactive light is qualitative, with a bounded number of unshadowed practical preview lights and a directional shadow map; it is not a photometric or electrical calculation. Image-gen results remain visual simulations. Live Claude Code generation remains unverified because authentication failed in the earlier host test; the portable installation itself is verified. The separate Temporal installation is not integrated into this workflow.
+
+## Publication — 2026-10-21
+
+[Implementation commit 6b88b52](https://github.com/vic4code/interior-design-skill/commit/6b88b5245920c8732b4890b358d8a024ddd4035b) was pushed to `main`; `git ls-remote origin refs/heads/main` matched that local commit. Private source models, corrected native exports, browser packages and QA evidence remain outside the public repository. The two installed hosts match all 130 released portable files.
