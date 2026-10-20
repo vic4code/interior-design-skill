@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Interior Design Project v1 — all lengths in mm",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "project", "room", "finishes", "openings", "furniture"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "project": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "revision", "status", "measurement_status", "brief"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 120},
+        "revision": {"type": "string", "pattern": "^[A-Za-z0-9-]{1,12}$"},
+        "status": {"const": "coordination_draft"},
+        "measurement_status": {"enum": ["assumed", "site_measured_unverified", "site_measured_reviewed"]},
+        "brief": {"type": "string", "maxLength": 2000}
+      }
+    },
+    "room": {
+      "type": "object", "additionalProperties": false,
+      "required": ["width", "depth", "height", "wall_thickness"],
+      "properties": {
+        "width": {"type": "number", "minimum": 1000, "maximum": 10000},
+        "depth": {"type": "number", "minimum": 1000, "maximum": 10000},
+        "height": {"type": "number", "minimum": 2000, "maximum": 5000},
+        "wall_thickness": {"type": "number", "minimum": 50, "maximum": 500}
+      }
+    },
+    "finishes": {
+      "type": "object", "additionalProperties": false, "required": ["floor", "wall"],
+      "properties": {"floor": {"$ref": "#/$defs/finish"}, "wall": {"$ref": "#/$defs/finish"}}
+    },
+    "openings": {"type": "array", "maxItems": 30, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "wall", "offset", "width", "height", "sill"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "kind": {"enum": ["door", "window"]},
+        "wall": {"enum": ["north", "south", "east", "west"]},
+        "offset": {"type": "number", "minimum": 0},
+        "width": {"$ref": "#/$defs/length"}, "height": {"$ref": "#/$defs/length"},
+        "sill": {"type": "number", "minimum": 0}
+      }
+    }},
+    "furniture": {"type": "array", "maxItems": 100, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "kind", "x", "y", "width", "depth", "height", "color", "material"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "name": {"type": "string", "minLength": 1, "maxLength": 80},
+        "kind": {"enum": ["sofa", "table", "chair", "cabinet"]},
+        "x": {"type": "number", "minimum": 0}, "y": {"type": "number", "minimum": 0},
+        "width": {"$ref": "#/$defs/length"}, "depth": {"$ref": "#/$defs/length"}, "height": {"$ref": "#/$defs/length"},
+        "color": {"$ref": "#/$defs/color"}, "material": {"type": "string", "minLength": 1, "maxLength": 120}
+      }
+    }}
+  },
+  "$defs": {
+    "length": {"type": "number", "exclusiveMinimum": 0, "maximum": 10000},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,19}$"},
+    "color": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$"},
+    "finish": {"type": "object", "additionalProperties": false, "required": ["name", "color"], "properties": {
+      "name": {"type": "string", "minLength": 1, "maxLength": 120}, "color": {"$ref": "#/$defs/color"}
+    }}
+  }
+}

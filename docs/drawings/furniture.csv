@@ -1,0 +1,6 @@
+﻿id,name,kind,x,y,width,depth,height,color,material
+F01,Linen sofa,sofa,700,3200,2200,900,800,#c3bbaa,Linen upholstery / 亞麻色布面
+F02,Coffee table,table,1300,1850,1100,650,400,#9c704c,Oak veneer / 橡木皮
+F03,Work desk,table,4000,3400,1400,700,740,#9c704c,Oak veneer / 橡木皮
+F04,Desk chair,chair,4400,2600,550,550,820,#52685b,Fabric / 布面
+F05,Low storage,cabinet,3800,250,1600,450,650,#9c704c,Oak veneer / 橡木皮

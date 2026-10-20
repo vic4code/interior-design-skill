@@ -1,0 +1,90 @@
+---
+name: interior-design
+description: Turn room ideas, measured plans and reference images into editable Blender scenes, HD renders, interactive browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. The bundled local generator supports a single rectangular room; outputs are coordination drafts.
+license: MIT
+compatibility: Python 3.11+; Node.js 20.19+ or 22.12+ for the optional viewer; Blender 4.3+ for native scenes, GLB and renders.
+---
+
+# Interior Design
+
+Help the user lead their own design and give the people refining or building it concrete drawings to discuss. Speak the user's language. Distinguish visual agreement, dimensional evidence and professional technical review.
+
+## Use the bundled resources
+
+Treat the directory containing this SKILL.md as the **skill root**, independent of the user's working directory. Resolve scripts, assets and references from it. The complete skill folder works without the parent repository. Read only the references relevant to the task:
+
+- [Intake](references/intake.md): plan, sketch and photo starting points; calibration before modeling.
+- [Project format](references/project-format.md): schema, units, axes and supported geometry. Read before changing project JSON.
+- [Furniture sourcing](references/furniture-sourcing.md): exact model/variant, official dimensions, installation envelopes and model licensing.
+- [Design methods](references/design-method.md): daily activities, editable/native versus browser geometry, stable IDs and evaluated-scene snapshots.
+- [Rendering](references/render-and-imagegen.md): model-faithful base renders, optional image enhancement, provenance and geometry drift.
+- [Overlays and services](references/overlays-and-mep.md): source drawing registration and evidence for lighting, power, plumbing and HVAC. These are extension workflows, not implemented viewer features.
+- [Drawing handoff](references/drawing-handoff.zh-TW.md): sheet meanings, trade questions and dimensional limitations. Read before issuing a package; explain it in the user's language.
+- [Prompt examples](references/prompt-workflow.md): iterating from brief to layout, materials, lighting and delivery.
+
+Keep the local workflow independent of paid APIs. Optional web search, image tools and Blender MCP depend on the host's available tools. Do not introduce paid calls, upload project content or redistribute reference assets without the user's authorization.
+
+## Establish the design brief
+
+Inspect provided files and existing decisions first. Ask only for missing information that changes the design: room and activities, retained items, priorities/budget, desired mood and references, measured internal dimensions, height, structure, openings and service points. A dimensioned plan is enough to start; photos can clarify existing conditions.
+
+Record each dimension's basis: assumed, manufacturer, unreviewed site measurement or reviewed site measurement. An uncalibrated photo cannot establish reliable dimensions. Continue concept work with explicit assumptions; never invent verified measurements or pretend inaccessible files informed the design.
+
+Translate references into concrete layout, material, furniture and lighting decisions. Compare layouts against pulled-out chairs, open doors, storage retrieval and equipment servicing. Distinguish geometric gaps from comfortable circulation and product dimensions from installation clearances.
+
+The bundled generator supports one rectangular room, nominal door/window voids, axis-aligned primitive furniture and procedural materials. It does not implement multi-room layouts, rotated furniture, detailed casework, photo reconstruction or automatic CAD/PDF recognition. Explain unsupported features and propose an explicit extension rather than silently omitting them.
+
+## Build from one source of dimensions
+
+Copy [the synthetic example](assets/example-project.json) into the user's project workspace before editing. Validate against [the schema](assets/project.schema.json). Use millimetres in JSON and drawings; Blender uses metres and the GLB exporter converts to Y-up. Origin is the inside southwest corner, +X east, +Y north, +Z up. Furniture positions are minimum corners. N/S opening offsets run west to east; E/W offsets run south to north. Room dimensions are clear internal faces; walls extend outward.
+
+Keep stable IDs and update the revision after changes. `project.status` remains `coordination_draft`. Reconcile browser overrides into the input, or freeze the evaluated scene before rebuilding. Match source hashes and revisions instead of assuming an older native file is current.
+
+Run commands from the skill root, substituting the user's actual project path and output directory. Initial setup installs the pinned Python and viewer dependencies, not Blender:
+
+```bash
+bash scripts/setup.sh
+.venv/bin/python scripts/project.py validate /path/to/project.json
+.venv/bin/python scripts/project.py build /path/to/project.json --out /path/to/review --blender
+.venv/bin/python scripts/verify_outputs.py /path/to/review
+```
+
+Omit `--blender` for drawings only. Python dependencies are listed in `scripts/requirements.lock.txt`. On Windows create `.venv` using `py -m venv .venv`, install dependencies with `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, use `.venv\Scripts\python` for commands, and run `npm --prefix assets/viewer ci --ignore-scripts`.
+
+For the bundled synthetic browser demo:
+
+```bash
+.venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
+npm --prefix assets/viewer run dev
+```
+
+The viewer serves its own asset directory on localhost. Keep private outputs in the user's project; preview them in a separate copy of `assets/viewer/` when needed. Copy the entire review package into that copy's `public/generated/`, install its npm dependencies and run its dev command. Do not serve the user's workspace root or publish private projects.
+
+## Render, inspect and revise
+
+Inspect the actual model, PNG and drawings. Check room proportions, door/window locations, furniture IDs, dimensions and revision consistency; exercise the browser's plan/3D views and downloads. Report failed or unavailable checks accurately.
+
+Default output is a 1920×1440 Cycles CPU render with 32 samples and denoising when available, or 128 samples without denoising. Higher resolution increases pixels; detailed geometry, materials and lighting determine realism. For a separate final image:
+
+```bash
+blender -b /path/to/review/scene.blend --threads 2 --python-exit-code 1 --python scripts/render_hd.py -- --width 3840 --height 2880 --samples 128 --out /path/to/final-4k.png
+```
+
+Keep this image linked to its source revision. If optional image generation changes appearance, preserve the base render and label the new image as an AI visual simulation, with its inputs/prompt and a geometry-drift review. Do not measure generated imagery.
+
+Show actual outputs for feedback on layout, materials, lighting and furniture. Change the authoritative input and rebuild affected outputs together. Manual Blender decoration is a separate presentation variant unless encoded back into the generator.
+
+## Deliver drawings for discussion
+
+The generator produces `.blend`, GLB and PNG when Blender runs; A101 furniture plan, A201–A204 wall datum elevations, five-page A3 PDF, SVG, plan-only DXF, furniture/opening/material CSV, source JSON, unresolved reviews and a checksummed manifest.
+
+Explain the purpose and limits:
+
+- Plans show placement and dimensions; datum elevations locate wall openings and heights, not complete furniture or service elevations.
+- Drawings use mm. Print A3 at 100% and follow each sheet's stated scale; A101 uses 1:100 when room depth exceeds 8000 mm, otherwise 1:50. Written dimensions control. The plan table lists the first ten furniture items; CSV contains the full schedule.
+- DXF is model-space mm without native associative CAD dimensions. Material areas are net geometric quantities, not purchasing allowances.
+- Nominal openings do not specify door swing, frame, hardware or finished clear width. Primitive furniture has a 150 mm minimum on each side and does not establish real product fit.
+
+Record unresolved site survey, circulation, joinery/fixings, substrate, services, ceiling, material build-ups, waterproofing and professional review responsibilities. Separate manufacturer sizes, model bounds, internal clear sizes and installation cutouts. Functional lighting groups are not electrical circuits; renderer energy is not rated electrical load.
+
+Return actual file paths, revision, resolution, checks and open questions. Issue the package as a coordination draft for the designer, contractor or engineer; do not describe it as an approved construction, shop or permit set.

@@ -1,0 +1,34 @@
+{
+  "mode": "independent-fictional-concept",
+  "provider": "available host image-generation tool",
+  "model": null,
+  "created_at": "2026-10-20",
+  "source_base_render": null,
+  "geometry_matched": false,
+  "private_case_used": false,
+  "image_sha256": "1b437cfb58b0219551985d858729d986e40471a36000043cd7a0501ea31cb66a",
+  "prompt": "Create one refined architectural interior design concept image for an open-source README. This is a wholly FICTIONAL room, not based on any real private apartment or existing interior. Landscape 16:9, editorial architecture photography, an original 5.4m by 4.2m creative studio living room. Calm Scandinavian/Japanese material language, warm pale oak, ivory plaster, linen beige low sofa, sculptural oval oak low table, ivory textured rug, rear wall custom pale oak storage with open shelving and ceramics, a slim work desk with chair on right, large left window with sheer curtain, soft morning sunlight, a few tasteful books and a green leafy plant. Balanced functional furniture layout and human scale. Very high quality realistic material and soft indirect light, quiet understated composition, camera at human eye height from the entrance, no people. No text, no logo, no labels, no dimension lines, no watermark. This will be explicitly labelled as an AI-generated fictional design study, not a Blender render or a construction drawing.",
+  "preview_derivatives": [
+    {
+      "file": "docs/images/fictional-concept-preview.jpg",
+      "source": "docs/images/fictional-concept.png",
+      "source_sha256": "1b437cfb58b0219551985d858729d986e40471a36000043cd7a0501ea31cb66a",
+      "sha256": "ae6f57cb05496143c4d8120a2d63621ae8f62f281ff4345033cd5b804b9ed604",
+      "original_bytes": 2642742,
+      "preview_bytes": 152375,
+      "max_width_px": 1200,
+      "encoding": "JPEG quality 82, progressive, optimized; resized only"
+    },
+    {
+      "file": "docs/images/demo-render-preview.jpg",
+      "source": "docs/assets/demo-render.png",
+      "source_sha256": "428d53af84879be6ab858a691d88901f93a04fca387409270174c7244bc750d6",
+      "sha256": "0895e8e381cc8688756d4a6d485864d0aff8c9c3ce099eb30a595959612e3bc8",
+      "original_bytes": 2389230,
+      "preview_bytes": 44761,
+      "max_width_px": 1200,
+      "encoding": "JPEG quality 82, progressive, optimized; resized only",
+      "source_metadata": "PNG metadata removed; decoded image pixels unchanged"
+    }
+  ]
+}

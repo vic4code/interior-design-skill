@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interior Design"
+  short_description: "Blender interiors and drawings for design coordination"
+  default_prompt: "Use $interior-design to turn my floor plan and references into a Blender scene, browser review, and dimensioned drawings for my designer and contractor."

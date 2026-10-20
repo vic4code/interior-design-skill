@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 420 297">
+<rect width="420" height="297" fill="white"/>
+<rect x="10" y="10" width="400" height="277" fill="none" stroke="#253e36" stroke-width="0.3"/>
+<text x="16" y="20" font-family="sans-serif" font-size="5" fill="#253e36">INTERIOR / DESIGN STUDIO</text>
+<text x="16" y="29" font-family="sans-serif" font-size="4" fill="#253e36">A101  Furniture plan / clear internal dimensions</text>
+<line x1="10" y1="255" x2="410" y2="255" stroke="#253e36" stroke-width="0.2"/>
+<text x="16" y="263" font-family="sans-serif" font-size="4" fill="#9b3f24">COORDINATION DRAFT - NOT FOR CONSTRUCTION</text>
+<text x="16" y="272" font-family="sans-serif" font-size="2.8" fill="#253e36">Rev P01 | mm | A3 | 1:50 at 100% | Model origin SW; +X east, +Y north</text>
+<text x="16" y="280" font-family="sans-serif" font-size="2.8" fill="#253e36">Measurements: assumed | Do not scale this drawing. Verify written dimensions.</text>
+<rect x="32.0" y="60.0" width="126.0" height="102.0" fill="#eee9de" stroke="#253e36" stroke-width="0.3"/>
+<rect x="35" y="63" width="120.0" height="96.0" fill="#f6f3ec" stroke="#253e36" stroke-width="0.3"/>
+<rect x="49.0" y="159.0" width="18.0" height="3.0" fill="#ffffff" stroke="#253e36" stroke-width="0.3"/>
+<text x="49.0" y="157.0" font-family="sans-serif" font-size="2.5" fill="#253e36">D01</text>
+<rect x="63.0" y="60.0" width="56.0" height="3.0" fill="#ffffff" stroke="#253e36" stroke-width="0.3"/>
+<text x="63.0" y="58.0" font-family="sans-serif" font-size="2.5" fill="#253e36">W01</text>
+<rect x="155.0" y="79.0" width="3.0" height="28.0" fill="#ffffff" stroke="#253e36" stroke-width="0.3"/>
+<text x="159.0" y="82.0" font-family="sans-serif" font-size="2.5" fill="#253e36">W02</text>
+<rect x="49.0" y="77.0" width="44.0" height="18.0" fill="#ded4c1" stroke="#253e36" stroke-width="0.3"/>
+<text x="50.0" y="81.0" font-family="sans-serif" font-size="2.5" fill="#253e36">F01</text>
+<rect x="61.0" y="109.0" width="22.0" height="13.0" fill="#ded4c1" stroke="#253e36" stroke-width="0.3"/>
+<text x="62.0" y="113.0" font-family="sans-serif" font-size="2.5" fill="#253e36">F02</text>
+<rect x="115.0" y="77.0" width="28.0" height="14.0" fill="#ded4c1" stroke="#253e36" stroke-width="0.3"/>
+<text x="116.0" y="81.0" font-family="sans-serif" font-size="2.5" fill="#253e36">F03</text>
+<rect x="123.0" y="96.0" width="11.0" height="11.0" fill="#ded4c1" stroke="#253e36" stroke-width="0.3"/>
+<text x="124.0" y="100.0" font-family="sans-serif" font-size="2.5" fill="#253e36">F04</text>
+<rect x="111.0" y="145.0" width="32.0" height="9.0" fill="#ded4c1" stroke="#253e36" stroke-width="0.3"/>
+<text x="112.0" y="149.0" font-family="sans-serif" font-size="2.5" fill="#253e36">F05</text>
+<line x1="35" y1="49" x2="155.0" y2="49" stroke="#253e36" stroke-width="0.2"/>
+<line x1="34" y1="50" x2="36" y2="48" stroke="#253e36" stroke-width="0.2"/>
+<line x1="154.0" y1="50" x2="156.0" y2="48" stroke="#253e36" stroke-width="0.2"/>
+<text x="96.0" y="47.0" font-family="sans-serif" font-size="2.7" fill="#253e36">6000</text>
+<line x1="17" y1="63" x2="17" y2="159.0" stroke="#253e36" stroke-width="0.2"/>
+<line x1="16" y1="64" x2="18" y2="62" stroke="#253e36" stroke-width="0.2"/>
+<line x1="16" y1="160.0" x2="18" y2="158.0" stroke="#253e36" stroke-width="0.2"/>
+<text x="18.0" y="109.0" font-family="sans-serif" font-size="2.7" fill="#253e36">4800</text>
+<text x="148.0" y="39" font-family="sans-serif" font-size="4" fill="#253e36">N ↑</text>
+<text x="265" y="50" font-family="sans-serif" font-size="4" fill="#253e36">ROOM / QUANTITIES</text>
+<text x="265" y="60" font-family="sans-serif" font-size="3" fill="#253e36">Internal: 6000 x 4800 x 2800 mm</text>
+<text x="265" y="68" font-family="sans-serif" font-size="3" fill="#253e36">Floor: 28.80 m2 (net)</text>
+<text x="265" y="76" font-family="sans-serif" font-size="3" fill="#253e36">Wall thickness: 150 mm (assumed build-up)</text>
+<text x="265" y="90" font-family="sans-serif" font-size="4" fill="#253e36">FURNITURE / W x D x H</text>
+<text x="265" y="100" font-family="sans-serif" font-size="3" fill="#253e36">F01  Linen sofa</text>
+<text x="265" y="105" font-family="sans-serif" font-size="2.6" fill="#253e36">2200 x 900 x 800</text>
+<text x="265" y="113" font-family="sans-serif" font-size="3" fill="#253e36">F02  Coffee table</text>
+<text x="265" y="118" font-family="sans-serif" font-size="2.6" fill="#253e36">1100 x 650 x 400</text>
+<text x="265" y="126" font-family="sans-serif" font-size="3" fill="#253e36">F03  Work desk</text>
+<text x="265" y="131" font-family="sans-serif" font-size="2.6" fill="#253e36">1400 x 700 x 740</text>
+<text x="265" y="139" font-family="sans-serif" font-size="3" fill="#253e36">F04  Desk chair</text>
+<text x="265" y="144" font-family="sans-serif" font-size="2.6" fill="#253e36">550 x 550 x 820</text>
+<text x="265" y="152" font-family="sans-serif" font-size="3" fill="#253e36">F05  Low storage</text>
+<text x="265" y="157" font-family="sans-serif" font-size="2.6" fill="#253e36">1600 x 450 x 650</text>
+<text x="20" y="234" font-family="sans-serif" font-size="3" fill="#253e36">Origin = inside southwest corner. Plan: north up. Door gaps show rough positions; swing NOT specified.</text>
+<text x="20" y="242" font-family="sans-serif" font-size="3" fill="#253e36">Furniture outlines are bounding envelopes. Openings are nominal; structural rough openings require review.</text>
+</svg>

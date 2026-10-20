@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+**/public/generated/
+output/
+.env
+.env.*
+.DS_Store
+.cache/
+*.skill

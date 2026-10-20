@@ -1,0 +1,23 @@
+{
+  "skill_name": "interior-design",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I installed only this skill folder. Use its supplied fictional room data to create a drawings-only review package from a different working directory. I do not have Blender available. Tell me what I can discuss with my contractor and what still needs verification.",
+      "expected_output": "A generated PDF/SVG/DXF/CSV package with matching revision and source hashes, clear model-unavailable status and unresolved trade questions; no dependency on the parent repository.",
+      "files": ["skills/interior-design/assets/example-project.json"]
+    },
+    {
+      "id": 2,
+      "prompt": "我只有一張喜歡的客廳照片，想把同款沙發和一整排收納櫃搬進家裡。請直接做能給木工下單的圖，我還沒有量尺寸，也不知道沙發品牌。",
+      "expected_output": "A useful concept brief, explicit unknown dimensions/product identity, targeted measurement and manufacturer-source requests, and an explanation of the information needed before fabrication. No invented dimensions or construction approval.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The layout changed in my browser after the last Blender export. Make a realistic finished-room image and a dimensioned handoff for my designer without losing those changes.",
+      "expected_output": "A plan to reconcile or freeze the evaluated scene, regenerate model-derived deliverables for the same revision, and preserve geometry-faithful base renders separately from optional AI appearance simulations with provenance.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "project": "Synthetic single-room example",
+  "revision": "P01",
+  "source_sha256": "24e6b003729d9eda2efd1fae81978a2fdacb1f866fd8dd47582b212ec294bc1e",
+  "source": "skills/interior-design/assets/example-project.json",
+  "purpose": "design coordination",
+  "files": [
+    {
+      "file": "A101.svg",
+      "bytes": 5447,
+      "sha256": "e8f7062a377c8474ec7264195dd24bfee62e43461a0e1816b131d1a293905975"
+    },
+    {
+      "file": "A202.svg",
+      "bytes": 3818,
+      "sha256": "7f524dfe7d29a929c8e01e4ab152410e607dd1536bccdb44ebae1aa6b2192935"
+    },
+    {
+      "file": "drawings.pdf",
+      "bytes": 10300,
+      "sha256": "af62f2a8946fc3fa59ae351664a5e442965ce8a13e2e95b2c28d888d6ff6a0c2"
+    },
+    {
+      "file": "plan.dxf",
+      "bytes": 4079,
+      "sha256": "78e8e99ba49f4b875ea127d87584854d3ccf2501f9814bb6d0f3a932d33a3781"
+    },
+    {
+      "file": "furniture.csv",
+      "bytes": 440,
+      "sha256": "91bcfb6d2af69af10f09402c81f3fd5c0d881cb21ee81776aa871a03b8225b60"
+    }
+  ]
+}
