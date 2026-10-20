@@ -29,7 +29,7 @@ Three findings: P1 image-generation flow exists only in prose/gallery while actu
 
 ## Implementation / verification
 
-Implementation and installed-browser acceptance passed on 2026-10-20. Publication is recorded below after the release commit is available.
+Implementation, installed-browser acceptance and publication passed on 2026-10-20.
 
 ### Additional confirmed acceptance — 2026-10-20
 
@@ -51,7 +51,7 @@ Implementation and installed-browser acceptance passed on 2026-10-20. Publicatio
 | Five-mode package, multi-view gallery and MEP registration | Passed real installed-package acceptance; 22 completed views, 12 sheets and two supplied MEP references in the local multi-room test. |
 | Default interior cutaway and single scrolling experience | Passed actual full-model and four-style checks; source model hashes unchanged; fit/zoom/pan checked at 320, 375, 768 and 1440 px. |
 | Installed-host run and final team review | Codex workflow passed; Codex and Claude Code installations match all 118 portable source files. Standards: zero blocking violations. Spec: zero open findings. |
-| Public publication | Pending release commit/push verification. |
+| Public publication | Published implementation commit `8f6fecd`; remote main verified after push. |
 
 Do not mark screenshot, installed-host, privacy or output checks passed until the actual final files and page have been inspected. Keep live host limitations explicit in the compatibility/verification record.
 
@@ -87,4 +87,8 @@ Passed against the final staged source snapshot before publication:
 - A clean portable stage was assembled exclusively from Git-tracked skill files. Anthropic's official `quick_validate.py` and `package_skill.py` both passed using Python 3.12. The resulting private audit artifact contains **118 files, 4,466,323 bytes**, and has SHA-256 `4b6b95cdb0605d5dea2e8e649f3bfc532f583a628814518a80e869cb643e842b`.
 - Every packaged file matches its portable-stage bytes. The package's four GLB JSON chunks parse, and private-identifier checks pass. No Git metadata, virtual environment, node_modules, build output or runtime cache directories are packaged.
 
-These results cover public privacy, registered file integrity and portable packaging. Installed-host/browser integration, final review and publication are tracked separately and remain subject to their actual acceptance results.
+These results cover public privacy, registered file integrity and portable packaging. Installed-host/browser integration and the two review axes passed as recorded above.
+
+## Publication — 2026-10-20
+
+[Implementation commit 8f6fecd](https://github.com/vic4code/interior-design-skill/commit/8f6fecd376f1fcfd01565242a9ceffceb52f94fd) was pushed to `main`; `git ls-remote origin refs/heads/main` matched the local implementation commit. Only synthetic examples, cleared third-party guidance and portable runtime code were published. Private acceptance files and the installable audit archive remain outside the repository.
