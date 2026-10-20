@@ -1,31 +1,22 @@
 # Verification
 
-The latest scope and results are recorded in the [style-study work record](reviews/2026-10-20-style-studies.md). The current suite passes 26 tests, covering project validation, copied-skill independence, detailed drawing consistency, native cuts/dimension evidence and host installation safety. Four original Blender style studies and eight-sheet technical drawings are included. The earlier [skill-package record](reviews/2026-10-20-skill-package.md) records the starter pipeline checks. Use the commands below to reproduce the checks; see the work record for exact scope and remaining unverified platforms.
+The current integration scope and review findings are recorded in the [product quality audit](reviews/2026-10-20-product-quality-audit.md). Earlier work records preserve the checks performed on prior snapshots; their old helper commands are historical, not current user entry points.
 
 From the repository root:
 
 ```bash
-cd skills/interior-design
-bash scripts/setup.sh
-.venv/bin/python scripts/project.py validate assets/example-project.json
-.venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
-.venv/bin/python scripts/verify_outputs.py assets/viewer/public/generated
-npm --prefix assets/viewer run build
-cd ../..
 skills/interior-design/.venv/bin/python -m unittest discover -s tests -v
-```
-
-Expected full-demo outputs include the model-derived 1920×1440 render, editable scene, GLB, five-page A3 PDF, SVG/DXF drawings and CSV schedules. The artifact verifier checks checksums and package consistency. Blender is required for model/render generation; omitting `--blender` generates the drawing package and a plan-only viewer.
-
-The optional `scripts/browser_smoke.py` needs Python Playwright and Chromium. Report real browser execution separately from build success. Image resizing and link checks do not establish Blender or browser correctness. No site measurement, professional drawing approval or engineering certification is implied by software checks.
-
-## Detailed study checks
-
-```bash
-skills/interior-design/.venv/bin/python skills/interior-design/scripts/build_drawing_studies.py --out output/drawing-studies
-blender --background --threads 4 --python-exit-code 1 --python skills/interior-design/scripts/render_style_studies.py -- --style all --out output/style-studies
-skills/interior-design/.venv/bin/python skills/interior-design/scripts/build_style_review.py --study output/style-studies/mcm --drawings output/drawing-studies --out skills/interior-design/assets/viewer/public/generated
 npm --prefix skills/interior-design/assets/viewer run build
 ```
 
-The detailed eight-sheet pack and original four-style scene pipeline were generated successfully. Chromium tested render/plan/GLB modes, controls, real PDF download and three responsive widths without failed requests or page errors. A live Codex session generated and verified the installed drawing package. Claude Code is installed, but its session test failed at local authentication before generation; Cursor/Copilot live behavior remains unverified. See [agent compatibility](agent-compatibility.md).
+From the installed skill directory:
+
+```bash
+.venv/bin/python scripts/interior_design.py demo --out /path/to/demo
+```
+
+The single entry should generate four same-space branches, preserve base/result provenance, include matching GLBs and eight-sheet drawing examples, start a loopback-only server and open one browser page. `--no-serve` verifies artifact generation without Node/Blender/browser execution; it does not establish frontend behavior.
+
+Browser acceptance checks must use real generated packages, not only mocked routes. Exercise every style and all five modes, room/view filtering, base comparison, sheet selection/zoom, actual PDF download, responsive widths and rapid 3D style switching. Verify cutaway interior visibility and fit-to-frame drawings without nested scrollbars. Inspect screenshots for exposure/material/readability as well as request/script failures. Confirm a native multi-room package omits unknown area instead of inventing rectangular data, and a drawing-only package opens its available technical sheets.
+
+The automated suite covers validation, geometry evidence, native annotations/schedules, copied-skill independence, same-space source/base consistency, image provenance, package hashes, local serving/isolation/reuse/stop and installation safety. Host file paths do not prove live model behavior in every host; see [compatibility](agent-compatibility.md). Image quality, site dimensions and professional construction approval cannot be established by code tests alone.

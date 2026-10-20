@@ -15,7 +15,7 @@ import sys
 import bpy
 from mathutils import Vector
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 PARENT = None
 M = {}
 STYLE = ''
@@ -472,6 +472,19 @@ def main():
         bpy.ops.object.select_all(action='DESELECT')
         for ob in scene.objects:
             if ob.type in ('MESH','CURVE','EMPTY') and not ob.name.startswith('Exterior ') and ob.name!='Plaster ceiling':ob.select_set(True)
+        # Procedural ColorRamp/Bump graphs are not supported by core glTF.
+        # Export the explicitly authored linear albedo as a portable PBR fallback.
+        # Native scene was saved before this export-only material simplification.
+        for mat in bpy.data.materials:
+            if not mat.use_nodes:
+                continue
+            bs = next((node for node in mat.node_tree.nodes if node.type == 'BSDF_PRINCIPLED'), None)
+            if bs is None:
+                continue
+            for socket_name in ('Base Color', 'Normal'):
+                for link in list(bs.inputs[socket_name].links):
+                    mat.node_tree.links.remove(link)
+            bs.inputs['Base Color'].default_value = mat.diffuse_color
         bpy.ops.export_scene.gltf(filepath=str(out/'scene.glb'),export_format='GLB',use_selection=True,export_cameras=False,export_lights=False,export_extras=True,export_apply=True)
         bpy.context.view_layer.update()
         geometry_bounds={}

@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-SCRIPT = Path(__file__).resolve().parents[1]/'skills/interior-design/scripts/build_style_review.py'
+SCRIPT = Path(__file__).resolve().parents[1]/'skills/interior-design/scripts/_internal/build_style_review.py'
 spec = importlib.util.spec_from_file_location('style_review', SCRIPT)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)

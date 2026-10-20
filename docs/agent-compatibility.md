@@ -7,10 +7,10 @@ Interior Design is one portable [Agent Skills](https://agentskills.io/specificat
 From a checkout of this repository, choose an existing project directory and run **one** command:
 
 ```bash
-python3 skills/interior-design/scripts/install_skill.py --agent codex --project /path/to/project
-python3 skills/interior-design/scripts/install_skill.py --agent claude-code --project /path/to/project
-python3 skills/interior-design/scripts/install_skill.py --agent cursor --project /path/to/project
-python3 skills/interior-design/scripts/install_skill.py --agent copilot --project /path/to/project
+python3 skills/interior-design/scripts/interior_design.py install --agent codex --project /path/to/project
+python3 skills/interior-design/scripts/interior_design.py install --agent claude-code --project /path/to/project
+python3 skills/interior-design/scripts/interior_design.py install --agent cursor --project /path/to/project
+python3 skills/interior-design/scripts/interior_design.py install --agent copilot --project /path/to/project
 ```
 
 For personal installation across projects, replace `--project /path/to/project` with `--user`. Use `--list` to show destinations. Python 3 is needed for this copy helper; no Python packages are needed just to install the skill.

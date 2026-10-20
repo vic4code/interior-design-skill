@@ -7,10 +7,11 @@
   "files": {
     "hero.jpg": "8e6e18c5be7cabd7e82fda69b378a61b04a7bbdd859a23c4d145f9a9883a4cf9",
     "model_dimensions.json": "e3fb7fd797e5e89f7c956059725229cc89ca1f1db7bda5c20152d204eecdca92",
-    "scene.glb": "00fc5ace31bdcdae0263c697785628b0289ee81548160359cd2b94386e03d87e",
+    "scene.glb": "49fbf11691bc9bbf9247f784c275c486ab53d9e9d553722f93668b458b9a92e1",
     "render-settings.json": "450c23d5495cd8710413a60bc14d83dc78c9511ad3d4f441f8826f160bf708dd",
     "detail.jpg": "02eed63b25618f3ffbf5b881377e1df978517d2066bb7aa72c2ff850d4d97acc",
     "hero-preview.jpg": "024b246b0fac953d3c769cccbb01dca8f97494eabec116eaf50227825608f061",
-    "detail-preview.jpg": "c50bd16e682f46bd2c425fd8a155930028183e2c26bb36c15a5362918835c85f"
+    "detail-preview.jpg": "c50bd16e682f46bd2c425fd8a155930028183e2c26bb36c15a5362918835c85f",
+    "export-provenance.json": "4cd4f23854599ab7e8c2c0c6fe5bf19d7cb261b090328178c1c1f251f7b2a41c"
   }
 }

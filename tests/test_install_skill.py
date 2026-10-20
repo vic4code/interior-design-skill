@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 SKILL = Path(__file__).resolve().parents[1] / 'skills/interior-design'
-SCRIPT = SKILL / 'scripts/install_skill.py'
+SCRIPT = SKILL / 'scripts/_internal/install_skill.py'
 spec = importlib.util.spec_from_file_location('install_skill', SCRIPT)
 installer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(installer)
@@ -23,15 +23,15 @@ class InstallSkillTests(unittest.TestCase):
                     with patch.object(Path, 'home', return_value=root):
                         installed = installer.install(agent, user=True) if user else installer.install(agent, project=root)
                     self.assertEqual(installed, root.resolve() / roots[int(user)] / 'interior-design')
-                    for resource in ('SKILL.md', 'LICENSE.txt', 'scripts/project.py',
-                                     'scripts/install_skill.py', 'assets/example-project.json',
+                    for resource in ('SKILL.md', 'LICENSE.txt', 'scripts/interior_design.py', 'scripts/_internal/project.py',
+                                     'scripts/_internal/install_skill.py', 'assets/example-project.json',
                                      'assets/project.schema.json', 'assets/viewer/package.json'):
                         self.assertTrue((installed / resource).is_file(), resource)
                     self.assertTrue(any((installed / 'references').iterdir()))
                     self.assertFalse(any(p.is_symlink() for p in installed.rglob('*')))
                     self.assertFalse(any(p.name in ('generated', '__pycache__', 'node_modules', '.venv')
                                          for p in installed.rglob('*')))
-                    listed = subprocess.run([sys.executable, str(installed / 'scripts/install_skill.py'), '--list'],
+                    listed = subprocess.run([sys.executable, str(installed / 'scripts/interior_design.py'), 'install', '--list'],
                                             cwd=root, capture_output=True, text=True)
                     self.assertEqual(listed.returncode, 0, listed.stderr)
                     self.assertIn('claude-code:', listed.stdout)

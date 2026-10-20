@@ -21,7 +21,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.units import mm
 from project import validate, dxf
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 INK, MUTED, ACCENT, PALE = '#243345', '#66727c', '#986747', '#ece9e3'
 INDEX = [('G000','Drawing register & design basis'),('A101','Dimensioned furniture plan'),
          ('A102','Lighting & power coordination'),('A201','South interior elevation'),

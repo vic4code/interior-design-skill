@@ -10,13 +10,14 @@ Before a pull request, run the unit tests from the repository root:
 skills/interior-design/.venv/bin/python -m unittest discover -s tests -v
 ```
 
-Then, from `skills/interior-design/`, generate and verify the sample and build the viewer:
+Then, from `skills/interior-design/`, try the complete portable example and build the viewer:
 
 ```bash
-.venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
-.venv/bin/python scripts/verify_outputs.py assets/viewer/public/generated
+.venv/bin/python scripts/interior_design.py demo --out /path/to/demo --no-serve
 npm --prefix assets/viewer run build
 ```
+
+For a real browser acceptance run, omit `--no-serve`; the browser should open automatically. Check all four styles and layout/3D/image/MEP/drawing views, room/view selection, a base comparison, sheet selection/zoom and a real PDF download. Verify default interior visibility and fit-to-frame drawings without nested scrollbars. Missing MEP inputs must remain explicit. Inspect desktop and mobile screenshots; rendering a canvas is not proof of visual quality. Keep internal Python helpers under `scripts/_internal/`; expose product workflows through the single entry point. Verify bundled dependency licenses/hashes when changing vendored resources.
 
 Report platform limitations and distinguish passed checks from unverified paths. Keep the core free of required paid API calls. Publish synthetic fixtures and assets cleared for redistribution; document third-party source, author, licence and permitted use. Keep private project content and generated user projects out of Git. Describe unreviewed drawings as coordination drafts.
 

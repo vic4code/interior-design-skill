@@ -7,10 +7,11 @@
   "files": {
     "hero.jpg": "5df969384dea85032aa74227ab5d4b5b35253d536a8ba999a59772efdadb6ba9",
     "model_dimensions.json": "f0569b6efc2fce2961f5aa1bfa11c0c2b32aa7585e6d66c26a796f142cbeb9a2",
-    "scene.glb": "eda9f396bf64b39a34fdb3c5f246168dfdd5bca82b7af2cb65cb2a5fbde5ff29",
+    "scene.glb": "d292824c9bbeada0fe9c6f8d1b0efbaa9fb7522f614119fc5dcd638d4d1ca892",
     "render-settings.json": "b6b6d777269dcae97f3a813a4ae5c8b2613db33f23ff213a1c8ae4dadd48ce22",
     "detail.jpg": "96f56b138a7e04e813ddcd6c21ed2cb8d087eaa3f73607901ec46b893b9afece",
     "hero-preview.jpg": "e780ee1adaf2adc7cc10680c5109d48a2da82b31719dffa9b944d8ad0ce39e9a",
-    "detail-preview.jpg": "0eef920561a95f89ee4d397f2a4673c03bf6826dfb22998ecfa9ca485f8e5a4a"
+    "detail-preview.jpg": "0eef920561a95f89ee4d397f2a4673c03bf6826dfb22998ecfa9ca485f8e5a4a",
+    "export-provenance.json": "7b1344bab5eec4f7d286071e81e3b861a0acc6ed545038749832ddc0b8e533ec"
   }
 }

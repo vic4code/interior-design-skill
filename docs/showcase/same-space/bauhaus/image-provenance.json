@@ -1,0 +1,24 @@
+{
+  "mode": "completion-simulation",
+  "style": "bauhaus",
+  "revision": "S01",
+  "tool": "image_gen.imagegen (built-in host tool)",
+  "model": "not exposed",
+  "date": "2026-10-20",
+  "prompt": "Edit the attached room base into ONE photorealistic interior design photograph. This is one of four style alternatives for THE SAME room. Absolute constraints: identical original 4:3 composition and full crop; same camera/perspective/vanishing points; preserve exact wall/ceiling/room boundaries; preserve both window openings, their positions, proportions and pane divisions; curtain locations unchanged; preserve sofa, coffee table, desk, chair, potted plant, hanging light, desk light and framed-art locations, counts, approximate outer sizes and orientation. Do not add a fireplace, room, cabinet wall, window, door, furniture or decorative object. Keep circulation and all furniture footprints as in source. Change style by material, upholstery, lighting, restrained furniture form within those footprints and surface finish, not by inventing a different home. Bauhaus: polished tubular chrome for the sofa's exposed frame while keeping its outer footprint and 3-seat arrangement; rich black leather upholstery with one red and one warm-ivory cushion; crisp black lacquer coffee table within the original footprint/height; tubular cantilever desk chair in the identical location and size, black desk with a small primary-blue accent, original red/yellow/blue geometric artwork within the same frame, red pendant shade at the exact original fixture position, structured cream rug with a few black lines. Chrome, leather and geometric primary accents in warm architectural daylight. No extra objects, no new architecture. Strong polished architectural photography, authentic wood/stone/fabric/leather detail, convincing contact shadows and nuanced exposure. Existing exterior foliage can become photographic foliage inside the unchanged windows. Match the supplied camera framing precisely. No typography, logos, watermark or people. Output 4:3 landscape.",
+  "base_sha256": "46be1443c2e09ed17e46375b19f7edd7ce801b0c8ff6e7e31fc75b470ee68d11",
+  "image_sha256": "13811d07d49166bbd03c3bbab0792345a8f7b1be00d0af1c312467b559842223",
+  "original_sha256": "653f40f3a6118b2602d8f8c72c81705eff02a84dd943705deaa702374833590d",
+  "review_status": "accepted-for-visualization",
+  "geometry_relationship": "One shared synthetic room and base camera for all four alternatives; imagery is a conditioned appearance proposal, not an exact geometry export.",
+  "visual_review": {
+    "method": "Side-by-side visual inspection against same original base",
+    "preserved": "Two wall openings and pane counts, wall/ceiling outline, general camera composition, furniture count and placement remain recognizable across four variants.",
+    "changes": "Furniture material/form, lighting, exterior foliage and small objects/seams vary; selected changes must be reconciled into the model before fabrication.",
+    "limitations": "No pixel-exact registration, product verification or dimensional certification is implied."
+  },
+  "files": {
+    "presentation.jpg": "13811d07d49166bbd03c3bbab0792345a8f7b1be00d0af1c312467b559842223",
+    "preview.jpg": "557594586c7abc5211c83be0adf79ffc2b8de2dac228526e4f186c85775e0ee9"
+  }
+}

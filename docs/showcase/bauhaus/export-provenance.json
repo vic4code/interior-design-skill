@@ -1,0 +1,7 @@
+{
+  "operation": "glTF export-only procedural-material fallback",
+  "source_native_sha256": "9552ef542611ec9a79ae6dae272f9b5c72c476602b43c1ef8c6c0a17e4be90dc",
+  "native_changed": false,
+  "material_policy": "Use authored diffuse_color linear albedo for unsupported procedural ColorRamp; retain PBR roughness/metallic; omit unsupported procedural normal links. Native/render remain unchanged.",
+  "glb_sha256": "d292824c9bbeada0fe9c6f8d1b0efbaa9fb7522f614119fc5dcd638d4d1ca892"
+}

@@ -1,0 +1,24 @@
+{
+  "mode": "completion-simulation",
+  "style": "mcm",
+  "revision": "S01",
+  "tool": "image_gen.imagegen (built-in host tool)",
+  "model": "not exposed",
+  "date": "2026-10-20",
+  "prompt": "Transform this provided room base render into a high-quality photorealistic MCM interior completion simulation while preserving its EXACT composition. Preserve original 4:3 crop, camera and vanishing points; wall and ceiling boundaries; TWO windows in exactly the same positions, proportions and pane divisions; curtain placement; sofa location, orientation, 3 seats, timber frame and two accent cushions; coffee table shape/position; writing desk and chair shape/location; hanging shade, desk lamp, framed abstract art and existing potted plant locations. No additional furniture, objects, new openings, new built-ins or changed layout. Improve surfaces/light only: finely grained satin walnut, tactile olive woven upholstery, rust-orange and cream cushions, natural linen curtains, pale oak planks, realistic wool rug and subtly textured cream plaster, accurately grounded soft contact shadows, beautifully balanced warm natural daylight, natural highlights and restrained reflections. Replace synthetic-looking exterior foliage with photographic foliage within the unchanged window frame. Preserve silhouettes and footprint of every object; don't transform this into a different apartment. Make it convincingly photographed with nuanced material detail and professional exposure, never flat/beige washed-out or toy-like. No text, no logos, no people.",
+  "base_sha256": "46be1443c2e09ed17e46375b19f7edd7ce801b0c8ff6e7e31fc75b470ee68d11",
+  "image_sha256": "524300f24693994628c9a9ccd99f5bd30c475f98c774611bc53053abc42b2f90",
+  "original_sha256": "8b0914d22f0254be9079a8a7c91a2291fe93bfc7cac9a43d9b8ee4ea521afd05",
+  "review_status": "accepted-for-visualization",
+  "geometry_relationship": "One shared synthetic room and base camera for all four alternatives; imagery is a conditioned appearance proposal, not an exact geometry export.",
+  "visual_review": {
+    "method": "Side-by-side visual inspection against same original base",
+    "preserved": "Two wall openings and pane counts, wall/ceiling outline, general camera composition, furniture count and placement remain recognizable across four variants.",
+    "changes": "Furniture material/form, lighting, exterior foliage and small objects/seams vary; selected changes must be reconciled into the model before fabrication.",
+    "limitations": "No pixel-exact registration, product verification or dimensional certification is implied."
+  },
+  "files": {
+    "presentation.jpg": "524300f24693994628c9a9ccd99f5bd30c475f98c774611bc53053abc42b2f90",
+    "preview.jpg": "cdae5328edac7ba7f15aad9b8c3c4991c94909d8b06bc5852f434b38f1797399"
+  }
+}

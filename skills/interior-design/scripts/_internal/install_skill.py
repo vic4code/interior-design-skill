@@ -31,7 +31,7 @@ def install(agent, *, project=None, user=False, source=None):
     """Return the new destination; never update an existing installation."""
     if (project is None) == (not user):
         raise ValueError("Choose exactly one scope: --project PATH or --user")
-    source = Path(source or Path(__file__).resolve().parents[1]).resolve()
+    source = Path(source or Path(__file__).resolve().parents[2]).resolve()
     if not (source / "SKILL.md").is_file():
         raise ValueError("Source must be the complete skill folder containing SKILL.md")
     base = Path.home() if user else Path(project).expanduser()

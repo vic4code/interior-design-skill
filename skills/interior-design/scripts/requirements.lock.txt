@@ -7,3 +7,4 @@ referencing==0.37.0
 reportlab==4.4.9
 rpds-py==2026.9.1
 typing_extensions==4.16.0
+pypdfium2==5.14.0

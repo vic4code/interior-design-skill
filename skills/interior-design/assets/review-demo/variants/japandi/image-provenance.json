@@ -1,0 +1,24 @@
+{
+  "mode": "completion-simulation",
+  "style": "japandi",
+  "revision": "S01",
+  "tool": "image_gen.imagegen (built-in host tool)",
+  "model": "not exposed",
+  "date": "2026-10-20",
+  "prompt": "Edit the attached room base into ONE photorealistic interior design photograph. This is one of four style alternatives for THE SAME room. Absolute constraints: identical original 4:3 composition and full crop; same camera/perspective/vanishing points; preserve exact wall/ceiling/room boundaries; preserve both window openings, their positions, proportions and pane divisions; curtain locations unchanged; preserve sofa, coffee table, desk, chair, potted plant, hanging light, desk light and framed-art locations, counts, approximate outer sizes and orientation. Do not add a fireplace, room, cabinet wall, window, door, furniture or decorative object. Keep circulation and all furniture footprints as in source. Change style by material, upholstery, lighting, restrained furniture form within those footprints and surface finish, not by inventing a different home. Japandi: pale natural oak or ash throughout exposed furniture frames, oatmeal textured linen sofa with soft greige and muted sage cushions, pale honed limestone coffee tabletop on the same table footprint/height, restrained woven chair upholstery, original abstract art in softer mineral colors within the same frame, cream paper pendant at the same hanging point, natural woven rug. Quiet, tactile, crafted, soft morning daylight. Keep each furniture silhouette simple, with the original outer sizes and placements. Strong polished architectural photography, authentic wood/stone/fabric/leather detail, convincing contact shadows and nuanced exposure. Existing exterior foliage can become photographic foliage inside the unchanged windows. Match the supplied camera framing precisely. No typography, logos, watermark or people. Output 4:3 landscape.",
+  "base_sha256": "46be1443c2e09ed17e46375b19f7edd7ce801b0c8ff6e7e31fc75b470ee68d11",
+  "image_sha256": "da4da26d474096962313b9e55b4133ca28a002b9b63d75dc3fce9311b0179d6b",
+  "original_sha256": "e6955503565081cdcbf69a7b100eea72f9edef4844f4e761b95836bb48d52631",
+  "review_status": "accepted-for-visualization",
+  "geometry_relationship": "One shared synthetic room and base camera for all four alternatives; imagery is a conditioned appearance proposal, not an exact geometry export.",
+  "visual_review": {
+    "method": "Side-by-side visual inspection against same original base",
+    "preserved": "Two wall openings and pane counts, wall/ceiling outline, general camera composition, furniture count and placement remain recognizable across four variants.",
+    "changes": "Furniture material/form, lighting, exterior foliage and small objects/seams vary; selected changes must be reconciled into the model before fabrication.",
+    "limitations": "No pixel-exact registration, product verification or dimensional certification is implied."
+  },
+  "files": {
+    "presentation.jpg": "da4da26d474096962313b9e55b4133ca28a002b9b63d75dc3fce9311b0179d6b",
+    "preview.jpg": "1c64497c5132ecc638d0c8985187437c567d433c5e435b3ea030b9e09af93425"
+  }
+}

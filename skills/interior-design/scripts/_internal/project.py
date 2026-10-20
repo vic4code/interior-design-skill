@@ -17,7 +17,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.units import mm
 from geometry import WALLS, overlaps, wall_length
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 STAMP = 'COORDINATION DRAFT - NOT FOR CONSTRUCTION'
 
 
@@ -260,7 +260,7 @@ def build(source,out,blender=False):
     if blender:
         binary=shutil.which('blender')
         if not binary: raise ValueError('Blender 4.3+ is required for --blender; install Blender or omit this flag for drawings only')
-        subprocess.run([binary,'--background','--threads','4','--python-exit-code','1','--python',str(ROOT/'scripts/blender_scene.py'),'--',str(out/'project.json'),str(out)],check=True)
+        subprocess.run([binary,'--background','--threads','4','--python-exit-code','1','--python',str(ROOT/'scripts/_internal/blender_scene.py'),'--',str(out/'project.json'),str(out)],check=True)
     files=['project.json','drawings.pdf','A101.svg',*[f'A20{i}.svg' for i in range(1,5)],'plan.dxf','furniture.csv','openings.csv','materials.csv','review.json','handoff.md']
     if blender: files+=['scene.glb','scene.blend','render.png','render-settings.json']
     manifest={'schema_version':'1.0','revision':data['project']['revision'],'status':'coordination_draft','has_model':blender,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'files':[]}

@@ -1,102 +1,89 @@
 ---
 name: interior-design
-description: Turn everyday room requests, optional measured plans and reference images into compelling image-generated design concepts, editable Blender scenes, browser reviews and dimensioned drawings for interior designers, contractors and engineers. Use for interior layouts, furniture placement, renovation visualization, material studies and design coordination, even when the user does not name this skill. Build project-specific geometry when the starter does not fit; track the technical evidence and issue status of drawing deliverables.
+description: Turn everyday interior-design needs, optional plans and existing projects into image-generated design visualizations, spatial layouts and dimensioned drawing deliveries, then open the results in a local browser. Use for room design, renovation, furniture/material selection, model-guided image generation and contractor/designer coordination. Continue existing geometry first; use project-specific models for arbitrary room shapes and multiple rooms.
 license: MIT
-compatibility: Host image-generation tool for optional AI concepts; Python 3.11+ for drawings; Node.js 20.19+ or 22.12+ for the optional viewer; Blender 4.3+ for native scenes, GLB and renders.
+compatibility: Host image tool for AI visuals; Python 3.11+ for drawings; Node.js 20.19+ or 22.12+ for browser builds; Blender 4.3+ only for native extraction/model work.
 ---
 
 # Interior Design
 
-Help the user lead their own design and give the people refining or building it concrete drawings to discuss. Speak the user's language. Distinguish visual agreement, dimensional evidence and professional technical review.
+The user describes the space they want. You handle the brief, spatial data, image generation and drawings, then **open the completed review in their browser**. Do not hand them a list of internal scripts or an ugly primitive model as the design result. Speak their language.
 
-## Use the bundled resources
+## Interface design dependencies
 
-Treat the directory containing this SKILL.md as the **skill root**, independent of the user's working directory. Resolve scripts, assets and references from it. The complete skill folder works without the parent repository. Read only the references relevant to the task:
+Before creating or changing the browser experience, load the bundled [Taste and UI UX Pro Max dependencies](references/design-dependencies.md). They include the design guidance, search runtime/data and licenses; no separate host skill installation is required. Preserve one frontend with five modes: clean layout, 3D arrangement, image-generated effects, available MEP coordination and engineering drawings. Use the same interface for examples and existing projects. Keep same-space style images at identical framing/aspect ratio.
 
-- [Intake](references/intake.md): plan, sketch and photo starting points; calibration before modeling.
-- [Project format](references/project-format.md): the quick-start generator schema, units and axes. Read before using its project JSON.
-- [Advanced spaces](references/advanced-spaces.md): project-specific Blender workflows for multiple rooms, irregular walls, rotations and detailed assemblies.
-- [Native handoff](references/native-handoff.md): extract an existing Blender scene, cut actual geometry, verify dimension evidence and issue a model-derived drawing set.
-- [Construction documents](references/construction-documents.md): professional sheet registers, dimension chains, component details, specifications and technical evidence.
-- [Style studies](references/style-studies.md): MCM, Japandi, Contemporary and Bauhaus; references, original assets and reproduction commands.
-- [Furniture sourcing](references/furniture-sourcing.md): exact model/variant, official dimensions, installation envelopes and model licensing.
-- [Design methods](references/design-method.md): daily activities, editable/native versus browser geometry, stable IDs and evaluated-scene snapshots.
-- [Rendering](references/render-and-imagegen.md): model-faithful base renders, optional image enhancement, provenance and geometry drift.
-- [Overlays and services](references/overlays-and-mep.md): source drawing registration and evidence for lighting, power, plumbing and HVAC. These are extension workflows, not implemented viewer features.
-- [Drawing handoff](references/drawing-handoff.zh-TW.md): sheet meanings, trade questions and dimensional limitations. Read before issuing a package; explain it in the user's language.
-- [Prompt examples](references/prompt-workflow.md): iterating from brief to layout, materials, lighting and delivery.
+## 1. Continue the actual project
 
-Keep the local workflow independent of paid APIs. Optional web search, image tools and Blender MCP depend on the host's available tools. Do not introduce paid calls, upload project content or redistribute reference assets without the user's authorization.
+Inspect the user's existing plans, models, images and recorded decisions first. Preserve the latest coherent source and SHA-256. Do not replace an existing design with the bundled sample. A recent filename alone does not prove freshness; compare actual revised geometry and saved/browser states.
 
-## Start from the user’s words
+If starting from words, infer a brief and make useful progress: activities, style, retained items, priorities and budget. Ask only for missing decisions that materially change the proposal. Plans, sketches, photos and dimensions improve precision but are optional starting aids. Mark assumed dimensions and request the specific measurements needed for the next revision. The agent creates structured data; the user does not write JSON.
 
-The user can describe a room, needs and taste in ordinary language. They do not need to write JSON, install a renderer or prepare a full drawing brief before seeing a proposal. Inspect existing context, translate the request into a brief and handle structured inputs and tooling for them.
+Choose the route before modeling:
 
-Deliver an initial design direction, a compelling visual concept when an image tool is available, a spatial proposal and a drawing package with stated dimensional evidence. Prefer the host's image-generation tool for aspirational appearance studies; reserve Blender rendering for model-faithful checks or requested editable 3D. See [rendering modes](references/render-and-imagegen.md). Do not run a heavy render just to produce an appearance concept. When spatial data exists, use its dimensions and a simple base view as priors for image generation, then compare the result against that view. This can reduce detailed asset/material authoring and local render work; it does not guarantee Blender-equivalent geometry. Keep dimensions and drawing exports tied to the model.
+- **Existing/native project:** preserve its actual geometry and follow [native handoff](references/native-handoff.md).
+- **Multiple rooms, irregular walls, rotations or detailed assemblies:** use project-specific geometry following [advanced spaces](references/advanced-spaces.md). Do not flatten it into a rectangular substitute.
+- **Small synthetic demonstration only:** use the bundled demo. Its rectangular schema is one helper's scope, not a limit on the skill.
 
-Plans, dimensions and photos are optional starting aids. If measurements are missing, proceed with a clearly labeled synthetic/assumed layout and drawing draft, list the specific dimensions needed to refine it and request them without holding up independent concept work. Never present assumed dimensions as measured, invent product verification, or imply that an independent concept image is represented by the drawing model. If a requested deliverable cannot actually be generated, report the unavailable tool and deliver the useful outputs that can be produced.
+Read [intake](references/intake.md) for calibration and [project format](references/project-format.md) only when using the rectangular helper. Track each dimension as assumed, manufacturer, unreviewed site measurement or reviewed site measurement. Photos and generated images alone cannot establish construction dimensions.
 
-## Establish the design brief
+## 2. Make the design visible with image gen
 
-Inspect provided files and existing decisions first. Ask only for missing information that changes the design: room and activities, retained items, priorities/budget, desired mood and references, measured internal dimensions, height, structure, openings and service points. A dimensioned plan is enough to start; photos can clarify existing conditions.
+Use the host's available image-generation tool for the presentation result. Do not silently substitute a Blender preview when image generation was requested. If the required tool is unavailable, say so and deliver the useful outputs that can actually be made.
 
-Record each dimension's basis: assumed, manufacturer, unreviewed site measurement or reviewed site measurement. An uncalibrated photo cannot establish reliable dimensions. Continue concept work with explicit assumptions; never invent verified measurements or pretend inaccessible files informed the design.
+Translate the brief into coherent furniture forms, material choices, lighting and composition. When spatial data exists, create/use a simple base view and pass the actual image to an image-capable tool. Preserve camera, boundaries, openings and arrangement; develop material response and atmosphere. This reduces some detailed asset/material and local render work, but does not guarantee native-render geometry or lower overall cost.
 
-Translate references into concrete layout, material, furniture and lighting decisions. Compare layouts against pulled-out chairs, open doors, storage retrieval and equipment servicing. Distinguish geometric gaps from comfortable circulation and product dimensions from installation clearances.
+Plan view coverage from each room's actual polygon or supplied area, activities and declared design features. Start with an overview per room, then add diagonal/reverse/connection and activity/detail views as justified within an agreed image budget. Use `views --spaces /project/spaces.json --out /project/view-plan.json --budget 12` to prepare work; it does not generate images. Unknown area stays unknown, and an irregular room's bounding rectangle is not its floor area. Generate the required images with the host tool, inspect them and package completed views with their own bases/provenance. Do not deliver only a living-room view when other spaces or activities need coverage. See [browser review](references/browser-review.md) for the input and gallery contract.
 
-Choose the modeling route that fits the real project. The quick-start generator handles one rectangular room and simple furniture; its schema bounds apply only to that tool. For multi-room layouts, irregular walls, rotated furniture, detailed casework and operations, follow [advanced-spaces.md](references/advanced-spaces.md) and create a project-specific scene and data contract. Do not simplify away requirements merely to fit the starter. Photos and CAD/PDF inputs still require source inspection and dimensional evidence; do not claim automatic reconstruction that has not been performed.
+Inspect base and generated result side by side or with an overlay. Record changed edges, openings, furniture and details; revise unacceptable drift. Keep the base and generated image separately. Never measure the image. If a visual idea changes the design, update the authoritative geometry and drawings together. See [image generation and review](references/render-and-imagegen.md).
 
-## Build from one source of dimensions
+Record `mode`, `image_sha256`, `review_status`, and `base_sha256` when conditioned, plus the actual tool, prompt, revision and visual findings. Use `completion-simulation` for supplied-base edits, `concept` for independent proposals; accepted visualization is not geometric certification. Do not invent model IDs, costs, seeds or approvals.
 
-Copy [the synthetic example](assets/example-project.json) into the user's project workspace before editing. Validate against [the schema](assets/project.schema.json). Use millimetres in JSON and drawings; Blender uses metres and the GLB exporter converts to Y-up. Origin is the inside southwest corner, +X east, +Y north, +Z up. Furniture positions are minimum corners. N/S opening offsets run west to east; E/W offsets run south to north. Room dimensions are clear internal faces; walls extend outward.
+## 3. Develop drawings people can work through
 
-Keep stable IDs and update the revision after changes. `project.status` remains `coordination_draft`. Reconcile browser overrides into the input, or freeze the evaluated scene before rebuilding. Match source hashes and revisions instead of assuming an older native file is current.
+Use the same model revision for plans, elevations, sections and component dimensions. Establish a readable sheet register, room/use labels, internal and overall dimension chains, opening IDs/location, detail/section references, material legends and schedules appropriate to the project. A mesh outline with only a bounding-box dimension is not a complete construction drawing.
 
-Run commands from the skill root, substituting the user's actual project path and output directory. Initial setup installs the pinned Python and viewer dependencies, not Blender:
+Follow [construction documents](references/construction-documents.md) and [drawing handoff](references/drawing-handoff.zh-TW.md). Verify clear sizes, panel thickness, datums and dimension closure against actual modeled faces; keep envelopes distinct from functional openings. Record hardware, joints, fixing substrates, loads, services and site items that remain unresolved. Do not invent construction details merely to fill a sheet.
+
+Inspect the actual PDF/SVG at print scale for legibility, missing glyphs, overlaps, omitted geometry and consistent references. Explain issue status honestly. Coordination drawings become construction/fabrication releases only after the necessary site/product/trade decisions and review.
+
+Keep the clean layout distinct from technical sheets: layout shows placement and circulation without title-block tables; engineering sheets carry dimensions, datums, sections and assembly information. Register available lighting/power, HVAC or plumbing drawings in the separate MEP mode with their source revision and review status. The demo's A102 is lighting/electrical intent. Do not invent complete circuits, service sizing or plumbing routes from a furniture plan; list missing inputs and trade decisions instead.
+
+## 4. Package and open the browser
+
+The single entry point is `scripts/interior_design.py`, resolved relative to this SKILL.md. Internal implementation belongs under `scripts/_internal/`; users should not operate those helpers separately. Keep all private project output outside the installed skill/repository.
+
+For an existing drawing delivery and its generated visual:
+
+```bash
+.venv/bin/python scripts/interior_design.py review --drawings /path/to/drawings --image /path/to/presentation.jpg --base-image /path/to/base.jpg --provenance /path/to/image-provenance.json --out /path/to/review
+```
+
+Provide `--model /path/to/space.glb` when an actual matching model is available. For native extraction plus delivery, use the entry point's `native --help`; preserve the real view/selection profile. Never force an existing project through the synthetic demo.
+
+The review command packages the actual sheet register, clean layout and separate visual/base/provenance, builds the viewer when needed, serves only that review package on localhost and opens the browser automatically. Show presentation first, room/view selection, base comparison, spatial/model inspection, available MEP and drawings/downloads. Do not require a separate terminal/server command from the user. Return the URL and saved delivery location. See [browser review](references/browser-review.md) for same-space variants and metadata. Reopen with `review --existing /path/to/review`; `--stop` stops its local review server.
+
+Start 3D with the interior visible through a view-only cutaway, with a control to restore the full enclosure; preserve source geometry. Keep plan, MEP and drawing content in a consistent viewing frame with fit/zoom controls. Avoid nested vertical scrolling inside the page's content blocks.
+
+Verify in a real browser: generated image/base and room/view selections load, layout differs from detailed engineering sheets, supplied MEP opens, actual sheet selection and PDF download work, and the page fits mobile/desktop without nested vertical scroll traps. Check failed requests/script errors and inspect 3D colors, framing and default interior visibility. Functional WebGL success is not aesthetic acceptance. Unknown area/height stays unknown; the viewer must not invent a rectangle.
+
+## Optional setup and demo
+
+The agent handles setup when needed; explain unavailable dependencies rather than invent execution. Python dependencies are in `scripts/requirements.lock.txt`; browser builds require Node.js. Blender is needed for native extraction or editable/model-faithful 3D, not the image-gen presentation route or synthetic drawing generator. Do not assume a separately configured image API or SDK. Respect existing authorization; do not upload private references or introduce paid services without it.
+
+For a separate synthetic demonstration, never as a replacement for the user's project:
 
 ```bash
 bash scripts/setup.sh
-.venv/bin/python scripts/project.py validate /path/to/project.json
-.venv/bin/python scripts/project.py build /path/to/project.json --out /path/to/review --blender
-.venv/bin/python scripts/verify_outputs.py /path/to/review
+.venv/bin/python scripts/interior_design.py demo --out /path/to/demo
 ```
 
-Omit `--blender` for drawings only. Python dependencies are listed in `scripts/requirements.lock.txt`. On Windows create `.venv` using `py -m venv .venv`, install dependencies with `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, use `.venv\Scripts\python` for commands, and run `npm --prefix assets/viewer ci --ignore-scripts`.
+The demo uses four genuinely same-base-conditioned image-generated alternatives, matching 3D examples and four eight-sheet drawing sets in one switchable page; no Blender render is required to view it. `--no-serve` is for artifact-only CI. Windows uses `.venv\Scripts\python` after creating the environment with `py -m venv .venv` and installing the lock file.
 
-For the bundled synthetic browser demo:
+## Load references as needed
 
-```bash
-.venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender
-npm --prefix assets/viewer run dev
-```
-
-The viewer serves its own asset directory on localhost. Keep private outputs in the user's project; preview them in a separate copy of `assets/viewer/` when needed. Copy the entire review package into that copy's `public/generated/`, install its npm dependencies and run its dev command. Do not serve the user's workspace root or publish private projects.
-
-## Visualize, inspect and revise
-
-Inspect the actual model, PNG and drawings. Check room proportions, door/window locations, furniture IDs, dimensions and revision consistency; exercise the browser's plan/3D views and downloads. Report failed or unavailable checks accurately.
-
-The bundled starter’s model-faithful render is a 1920×1440 Cycles CPU render with 32 samples and denoising when available, or 128 samples without denoising. Higher resolution increases pixels; detailed geometry, materials and lighting determine realism. For a separate final image:
-
-```bash
-blender -b /path/to/review/scene.blend --threads 2 --python-exit-code 1 --python scripts/render_hd.py -- --width 3840 --height 2880 --samples 128 --out /path/to/final-4k.png
-```
-
-Keep this image linked to its source revision. If optional image generation changes appearance, preserve the base render and label the new image as an AI visual simulation, with its inputs/prompt and a geometry-drift review. Do not measure generated imagery.
-
-Show actual outputs for feedback on layout, materials, lighting and furniture. Change the authoritative input and rebuild affected outputs together. Manual Blender decoration is a separate presentation variant unless encoded back into the generator.
-
-## Deliver drawings for discussion
-
-Choose sheets and details using [construction-documents.md](references/construction-documents.md). The quick-start generator produces `.blend`, GLB and PNG when Blender runs; A101 furniture plan, A201–A204 wall datum elevations, five-page A3 PDF, SVG, plan-only DXF, furniture/opening/material CSV, source JSON, unresolved reviews and a checksummed manifest.
-
-Explain the purpose and limits:
-
-- Plans show placement and dimensions; datum elevations locate wall openings and heights, not complete furniture or service elevations.
-- Drawings use mm. Print A3 at 100% and follow each sheet's stated scale; A101 uses 1:100 when room depth exceeds 8000 mm, otherwise 1:50. Written dimensions control. The plan table lists the first ten furniture items; CSV contains the full schedule.
-- DXF is model-space mm without native associative CAD dimensions. Material areas are net geometric quantities, not purchasing allowances.
-- Nominal openings do not specify door swing, frame, hardware or finished clear width. The quick-start primitive generator has a 150 mm minimum on each furniture envelope; this is not a minimum for detailed model components or a skill-wide size limit. Verify real product fit separately.
-
-Record unresolved site survey, circulation, joinery/fixings, substrate, services, ceiling, material build-ups, waterproofing and professional review responsibilities. Separate manufacturer sizes, model bounds, internal clear sizes and installation cutouts. Functional lighting groups are not electrical circuits; renderer energy is not rated electrical load.
-
-Return actual file paths, revision, resolution, checks and open questions. Issue the package as a coordination draft for the designer, contractor or engineer; do not describe it as an approved construction, shop or permit set.
+- [Furniture sourcing](references/furniture-sourcing.md): exact products, manufacturer sizes, installation envelopes and licensing.
+- [Design methods](references/design-method.md): activities, stable IDs, native/browser states and evaluated snapshots.
+- [Styles](references/style-studies.md): MCM, Japandi, Contemporary and Bauhaus; original proposals and geometry studies.
+- [Services/overlays](references/overlays-and-mep.md): source registration and evidence; no automatic complete MEP promise.
+- [Prompt iteration](references/prompt-workflow.md): brief, materials, lighting and delivery revisions.

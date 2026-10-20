@@ -1,6 +1,6 @@
 # Project format v1.0
 
-`assets/project.schema.json` is the machine-readable contract. `scripts/project.py validate` additionally checks finite numbers, unique IDs, openings contained within walls, non-overlapping opening rectangles, door sill=0 and furniture contained in the clear room. Overlapping furniture is a review issue, not silently accepted as a good layout. The validator does not claim circulation or code compliance.
+`assets/project.schema.json` is the machine-readable contract. `scripts/interior_design.py project validate` additionally checks finite numbers, unique IDs, openings contained within walls, non-overlapping opening rectangles, door sill=0 and furniture contained in the clear room. Overlapping furniture is a review issue, not silently accepted as a good layout. The validator does not claim circulation or code compliance.
 
 - Required fields: `schema_version`, `project`, `room`, `finishes`, `openings`, `furniture`. Unknown fields fail validation.
 - All input lengths are millimetres. Room bounds: width/depth 1000–10000; height 2000–5000; wall thickness 50–500.

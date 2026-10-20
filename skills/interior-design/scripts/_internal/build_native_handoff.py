@@ -3,7 +3,8 @@
 
 A selection configuration may add views with kind plan/elevation/section,
 include/exclude regular expressions, axis x/y/z and offset_mm for actual cuts.
-Dimension chains are model component envelope stations, never inferred joinery.
+Optional typed annotations and verified face-to-face dimension chains preserve
+their source basis. Neither model envelopes nor room labels approve fabrication.
 """
 import argparse
 import csv
@@ -134,6 +135,59 @@ def view_axes(view):
     return axis,([0,1] if axis==2 else ([0,2] if axis==1 else [1,2]))
 
 
+def expand_dimension_chains(view):
+    """Expand configured chains into the same verified-face path as key dimensions."""
+    result=list(view.get('dimensions',[]))
+    for chain in view.get('dimension_chains',[]):
+        if not chain.get('basis'):raise ValueError('Dimension chains require a source basis')
+        axis=AXES[chain['axis']];stations=chain['stations_mm']
+        if len(stations)<2 or any(not isinstance(v,(int,float)) or not math.isfinite(v) for v in stations) or any(b<=a for a,b in zip(stations,stations[1:])):
+            raise ValueError('Dimension-chain stations must be finite and increasing')
+        anchor=chain['at_mm']
+        if len(anchor)!=3 or any(not isinstance(v,(int,float)) or not math.isfinite(v) for v in anchor):raise ValueError('Dimension chain requires a finite world-space anchor')
+        for i,(a,b) in enumerate(zip(stations,stations[1:]),1):
+            start=list(anchor);end=list(anchor);start[axis]=a;end[axis]=b
+            item={k:v for k,v in chain.items() if k not in ('stations_mm','at_mm')}
+            item.update(id=chain['id']+'.'+str(i),start_mm=start,end_mm=end,display_id=False)
+            result.append(item)
+    ids=[d['id'] for d in result]
+    if len(set(ids))!=len(ids):raise ValueError('Duplicate dimension IDs in view')
+    return result
+
+
+def draw_annotations(sh,view,config,xy,bbox):
+    """Draw explicit sourced annotations, never infer a building or product claim."""
+    rows=[];known_sheets={v.get('sheet',f'M{i:03}') for i,v in enumerate(config.get('views',[]),1)}
+    for item in view.get('annotations',[]):
+        kind=item.get('kind')
+        if kind not in ('room','text','leader','sectionmark','opening','material'):raise ValueError('Unsupported annotation kind')
+        if not item.get('basis'):raise ValueError('Annotations require a source basis')
+        point=item.get('at_mm',[])
+        if len(point)!=3 or any(not isinstance(v,(int,float)) or not math.isfinite(v) for v in point):raise ValueError('Annotation requires finite world-space coordinates')
+        if any(point[k]<bbox['min'][k]-1 or point[k]>bbox['max'][k]+1 for k in range(3)):raise ValueError('Annotation anchor lies outside selected geometry')
+        if item.get('reference_sheet') and item['reference_sheet'] not in known_sheets:raise ValueError('Annotation references an unknown drawing sheet')
+        x,y=xy(point);label=item.get('text','');code=item.get('id','')
+        if kind=='room':
+            width=item.get('paper_width_mm',26)
+            sh.rect(x-width/2,y-6,width,12,'#ffffff',.12,'#b9c1c2')
+            sh.text(x,y-1,code,2.4,ACCENT,anchor='middle');sh.text(x,y+3.5,label,3.0,INK,anchor='middle')
+        elif kind in ('opening','material'):
+            offset=item.get('paper_offset_mm',[0,-7]);xx,yy=x+offset[0],y+offset[1]
+            sh.line(x,y,xx,yy,.18,ACCENT);sh.rect(xx-6,yy-2.8,12,5.6,'#ffffff',.2,ACCENT);sh.text(xx,yy+1,code,2.5,ACCENT,anchor='middle')
+        elif kind=='sectionmark':
+            xx,yy=x+item.get('paper_offset_mm',[0,-9])[0],y+item.get('paper_offset_mm',[0,-9])[1]
+            sh.line(x,y,xx,yy,.25,ACCENT);sh.circle(xx,yy,5,'#ffffff',.25,ACCENT)
+            sh.line(xx-4.7,yy,xx+4.7,yy,.18,ACCENT);sh.text(xx,yy-1.1,code,2.4,ACCENT,anchor='middle');sh.text(xx,yy+3.2,item['reference_sheet'],2,ACCENT,anchor='middle')
+        elif kind=='leader':
+            offset=item.get('paper_offset_mm',[10,-10]);xx,yy=x+offset[0],y+offset[1]
+            sh.circle(x,y,.7,ACCENT,0,ACCENT);sh.line(x,y,xx,yy,.2,ACCENT)
+            sh.paragraph(xx,yy-2,(code+' '+label).strip(),item.get('wrap',30),2.6,4)
+        else:
+            sh.paragraph(x,y,(code+' '+label).strip(),item.get('wrap',36),item.get('size',2.8),4)
+        rows.append(dict(item,view_sheet=view.get('sheet')))
+    return rows
+
+
 def draw_view(inventory,view,code,config,issue_rows):
     objects=select(inventory['objects'],view.get('include','.*'),view.get('exclude',r'^$'))
     bbox=bounds(objects);axis,(haxis,vaxis)=view_axes(view)
@@ -144,10 +198,13 @@ def draw_view(inventory,view,code,config,issue_rows):
     extents=[bbox['max'][k]-bbox['min'][k] for k in range(3)]
     need=max(extents[haxis]/250,extents[vaxis]/154)
     scale=view.get('scale') or next((s for s in (5,10,20,25,30,40,50,75,100,150,200,500) if s>=need),math.ceil(need/100)*100)
-    if scale<=0 or extents[haxis]/scale>275 or extents[vaxis]/scale>165:raise ValueError(f'{code}: requested scale does not fit sheet')
+    area=view.get('drawing_area_mm',[275,165])
+    if len(area)!=2 or not 0<area[0]<=285 or not 0<area[1]<=200:raise ValueError('Invalid drawing area')
+    if scale<=0 or extents[haxis]/scale>area[0] or extents[vaxis]/scale>area[1]:raise ValueError(f'{code}: requested scale does not fit sheet')
     chinese=config.get('language')=='zh-TW'
     sh=NativeSheet(code,view['title'],config.get('project','Native model coordination'),config.get('revision','N01'),f'1:{number(scale)}',chinese=chinese)
-    ox,oy=35,65;w=extents[haxis]/scale;h=extents[vaxis]/scale
+    ox,oy=view.get('drawing_origin_mm',[35,65]);w=extents[haxis]/scale;h=extents[vaxis]/scale
+    if not (15<=ox and 40<=oy and ox+w<=315 and oy+h<=257):raise ValueError('Drawing bounds exceed printable view area')
     flip=view.get('flip_horizontal',False)
     def xy(p):
         x=(bbox['max'][haxis]-p[haxis] if flip else p[haxis]-bbox['min'][haxis])/scale
@@ -197,7 +254,7 @@ def draw_view(inventory,view,code,config,issue_rows):
             x2=x1+(b-a)/scale
             sh.dimh(x1,x2,oy+h+12,oy+h,number(round(b-a,1)))
     dimension_evidence=[]
-    for dim in view.get('dimensions',[]):
+    for dim in expand_dimension_chains(view):
         dim_axis=AXES[dim['axis']]
         if dim_axis not in (haxis,vaxis):raise ValueError('Annotated dimension axis is normal to the view')
         evidence_objects=select(objects,dim.get('source_include','.*'))
@@ -205,7 +262,7 @@ def draw_view(inventory,view,code,config,issue_rows):
         matched_faces=[planar_station_evidence(evidence_objects,dim_axis,point[dim_axis],dim.get('evidence_region_mm')) for point in (start,end)]
         if not all(matched_faces):
             raise ValueError(f"{code}/{dim['id']}: station lacks selected planar-face evidence perpendicular to measurement axis")
-        a,b=xy(start),xy(end);value=abs(end[dim_axis]-start[dim_axis]);label=dim['id']+' / '+number(round(value,2))
+        a,b=xy(start),xy(end);value=abs(end[dim_axis]-start[dim_axis]);label=(dim['id']+' / ' if dim.get('display_id',True) else '')+number(round(value,2))
         offset=dim.get('paper_offset_mm',10)
         if dim.get('schedule_only'):
             pass
@@ -216,6 +273,7 @@ def draw_view(inventory,view,code,config,issue_rows):
             top,bottom=sorted((a[1],b[1]));reference=(a[0]+b[0])/2
             sh.dimv(top,bottom,reference+offset,reference,label)
         dimension_evidence.append(dict(id=dim['id'],value_mm=value,axis=dim['axis'],start_mm=start,end_mm=end,basis=dim.get('basis','evaluated mesh face plane separation'),source_object_ids=[o['id'] for o in evidence_objects],matched_faces=matched_faces,verification='each station matches a selected planar triangle face perpendicular to the measurement axis (0.1 degree / 0.15 mm tolerance); functional clearances are not inferred'))
+    annotation_rows=draw_annotations(sh,view,config,xy,bbox)
     sh.text(323,51,'圖面依據與判讀' if chinese else 'DRAWING EVIDENCE',3.4,ACCENT)
     yy=61
     notes=[f"{len(objects)} selected native objects.",f"Projected feature edges: {projection_count}.",f"Actual cut segments: {section_count}.",f"Model plane: {'XYZ'[axis]} = {number(round(cut,1))} mm." if view['kind'] in ('plan','section') else 'Projection of actual evaluated geometry.',f"View horizontal: {'XYZ'[haxis]}; vertical: {'XYZ'[vaxis]}."+(' Horizontal reversed.' if flip else ''),'Heavy lines: actual triangle/plane intersections. Fine grey: projected mesh feature edges; no hidden-line removal.','Overall dimensions/chains are model envelopes. Keyed D dimensions separately verify selected mesh face-plane separations; see dimension-evidence.csv. Hardware and fabrication release remain unresolved.']
@@ -226,14 +284,73 @@ def draw_view(inventory,view,code,config,issue_rows):
         notes.append(f'有 {len(omitted)} 項網格或投影省略，詳 issues.csv；未補畫虛構細節。' if chinese else f'{len(omitted)} mesh/projection omissions. See issues.csv; no substitute details invented.')
         issue_rows.append(dict(id=f'G{len(issue_rows)+1:03}',scope=code,question='Geometry/projection omitted: '+', '.join(omitted),status='open'))
     for text in notes:yy=sh.paragraph(323,yy,text,43,2.8,4.8)+7
-    sh.text(35,242,'構件與尺寸證據對照' if chinese else 'GEOMETRY REGISTER',2.8,ACCENT)
-    sh.text(35,248,'物件編號、原始名稱、材質與模型尺寸詳 source-register.csv；關鍵尺寸與取值面詳 dimension-evidence.csv。' if chinese else 'Object IDs, full native names, material assignments and modeled extents: source-register.csv',2.6,MUTED)
-    return sh,objects,dict(sheet=code,title=view['title'],kind=view['kind'],axis='XYZ'[axis],plane_mm=cut if view['kind'] in ('plan','section') else None,scale=scale,object_ids=[o['id'] for o in objects],bounds_mm=bbox,projected_segments=projection_count,cut_segments=section_count,dimensions=dimension_evidence)
+    if not view.get('omit_footer_note'):
+        sh.text(35,242,'構件與尺寸證據對照' if chinese else 'GEOMETRY REGISTER',2.8,ACCENT)
+        sh.text(35,248,'物件編號、原始名稱、材質與模型尺寸詳 source-register.csv；關鍵尺寸與取值面詳 dimension-evidence.csv。' if chinese else 'Object IDs, full native names, material assignments and modeled extents: source-register.csv',2.6,MUTED)
+    return sh,objects,dict(sheet=code,title=view['title'],kind=view['kind'],axis='XYZ'[axis],plane_mm=cut if view['kind'] in ('plan','section') else None,scale=scale,object_ids=[o['id'] for o in objects],bounds_mm=bbox,projected_segments=projection_count,cut_segments=section_count,dimensions=dimension_evidence,annotations=annotation_rows)
 
 
 def csv_write(path,fields,rows):
     with path.open('w',newline='') as file:
         writer=csv.DictWriter(file,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(rows)
+
+
+def supplementary_sheets(config,records,inventory,issues):
+    """Optional issue-linked drawing register and schedules from explicit annotations."""
+    if not config.get('include_register'):return [],[],[a for record in records for a in record.get('annotations',[])],[]
+    chinese=config.get('language')=='zh-TW';project=config.get('project','Native model coordination');revision=config.get('revision','N01')
+    annotations=[a for record in records for a in record.get('annotations',[])]
+    rooms=[a for a in annotations if a['kind']=='room'];openings=[a for a in annotations if a['kind']=='opening']
+    materials=[]
+    for item in config.get('materials',[]):
+        if not item.get('basis'):raise ValueError('Material schedules require a source basis')
+        objects=select(inventory['objects'],item['source_include'])
+        if not objects:raise ValueError('Material definition matches no native object: '+item['id'])
+        assignments=sorted({m for o in objects for m in o.get('material_names',[])})
+        materials.append(dict(item,model_materials=' | '.join(assignments),source_object_ids=' | '.join(o['id'] for o in objects),status=item.get('status','model appearance; specification unconfirmed')))
+    supplements=[]
+    def new(code,title):
+        sheet=NativeSheet(code,title,project,revision,'NTS',chinese)
+        supplements.append(sheet);return sheet
+    register_code=config.get('register_sheet','N000')
+    sh=new(register_code,'圖紙目錄・圖例與交付界面' if chinese else 'DRAWING REGISTER / EVIDENCE AND RELEASE')
+    register_entries=[dict(sheet=register_code,title=sh.title,kind='register',scale=None)]+records
+    if config.get('include_schedules'):
+        register_entries += [dict(sheet='N501',title='空間與開口定位表' if chinese else 'ROOM AND OPENING LOCATION SCHEDULE',kind='schedule',scale=None),dict(sheet='N502',title='材質索引與待決施工界面' if chinese else 'MATERIAL INDEX AND OUTSTANDING TRADE INTERFACES',kind='schedule',scale=None)]
+    sh.text(18,47,'本次圖紙目錄' if chinese else 'ISSUED SHEET REGISTER',3.8,ACCENT)
+    table(sh,18,54,235,['圖號','圖名／用途','A3 比例'] if chinese else ['SHEET','TITLE / PURPOSE','A3 SCALE'],[[r['sheet'],r['title'],f"1:{number(r['scale'])}" if isinstance(r.get('scale'),(int,float)) else 'NTS'] for r in register_entries],[23,181,31],step=9,size=2.7)
+    sh.text(271,47,'交付依據與線型' if chinese else 'EVIDENCE AND LINEWORK',3.8,ACCENT)
+    yy=57
+    notes=['粗黑線＝原生網格與指定剖切平面的交線。','細灰線＝原生網格特徵線投影；非完整消隱圖。','D／P 編號尺寸：兩端均核對模型真實平面；詳尺寸證據表。','R＝使用區域標籤；W／O＝開口定位；圓形索引連結立面／剖面圖。','圖面尺寸單位 mm，圖框標示 A3 列印比例；禁止從螢幕量測下料。','此版可供工種討論、核尺寸及介面對照；現場、產品五金、接合與固定須完成覆核，尚非施工核准版。'] if chinese else ['Heavy black: actual evaluated mesh / section-plane intersections.','Fine grey: projected native feature edges; no complete hidden-line removal.','Keyed D/P dimensions match actual planar faces at both stations; see dimension-evidence.csv.','R: use-zone label; W/O: opening locator; circular references link actual detail sheets.','Units mm. A3 scale stated per sheet. Do not measure screen images for fabrication.','Coordination issue: site, products, joints and fixings remain subject to trade verification.']
+    for note in notes:yy=sh.paragraph(271,yy,note,62,2.8,4.6)+6
+    sh.text(18,205,'來源可追溯檔案' if chinese else 'TRACEABLE EVIDENCE',3.4,ACCENT)
+    sh.paragraph(18,214,'source-evidence.json / dimension-evidence.csv / annotation-register.csv / sheet-register.csv',110,2.7,5)
+    sh.paragraph(18,226,('來源模型 SHA256：' if chinese else 'Source model SHA256: ')+inventory['source']['sha256'],130,2.5,5)
+    if config.get('include_schedules'):
+        sh=new('N501','空間與開口定位表' if chinese else 'ROOM AND OPENING LOCATION SCHEDULE')
+        sh.text(18,47,'空間使用索引（非面積／現場證明）' if chinese else 'USE-ZONE INDEX / NOT SURVEYED AREAS',3.5,ACCENT)
+        table(sh,18,55,180,['編號','空間使用','定位圖'] if chinese else ['ID','USE','VIEW'],[[r.get('id',''),r.get('text',''),r.get('view_sheet','')] for r in rooms],[20,130,30],step=10,size=2.8)
+        sh.text(214,47,'門窗與開口定位（尺寸見證據表）' if chinese else 'OPENING LOCATORS / SEE DIMENSION EVIDENCE',3.5,ACCENT)
+        table(sh,214,55,188,['編號','描述','模型名義寬 mm'] if chinese else ['ID','DESCRIPTION','MODEL WIDTH mm'],[[r.get('id',''),r.get('text',''),r.get('width_mm','待核')] for r in openings],[20,125,43],step=10,size=2.6)
+        sh.paragraph(18,220,'標籤與用途依既有設計及模型定位；不推算現場淨面積。開口標註須另核框、扇、五金、完成面及實際淨通行寬。' if chinese else 'Use labels reflect the existing design and native model locations; no surveyed areas are inferred. Verify frames, leaves, hardware, finishes and clear passage separately.',170,2.9,5)
+        sh.paragraph(18,242,'逐項來源依據：annotation-register.csv；圖面位置及文字保留於 selection.json。' if chinese else 'Per-item sources: annotation-register.csv; exact coordinates and wording: selection.json.',170,2.6,4)
+        sh=new('N502','材質索引與待決施工界面' if chinese else 'MATERIAL INDEX AND OUTSTANDING TRADE INTERFACES')
+        sh.text(18,47,'原生模型材質索引（非產品規格）' if chinese else 'NATIVE MATERIAL INDEX / NOT A PRODUCT SPECIFICATION',3.5,ACCENT)
+        yy=55
+        for material in materials:
+            sh.rect(18,yy,235,21,'none',.13,'#b9c1c2');sh.text(21,yy+5,material['id']+'  '+material.get('name',''),3,ACCENT)
+            sh.paragraph(21,yy+10,material['model_materials'],115,2.4,3.8)
+            yy+=23
+            if yy>235:break
+        sh.text(269,47,'製作前待決／負責工種' if chinese else 'PRE-FABRICATION ISSUES / RESPONSIBILITY',3.5,ACCENT)
+        yy=57
+        for issue in issues[:10]:
+            yy=sh.paragraph(269,yy,issue['id']+' / '+issue['question'],64,2.8,4.5)+6
+        sh.text(18,246,'完整材質來源與狀態見 material-register.csv；待決事項見 issues.csv。' if chinese else 'Complete source assignments/status: material-register.csv. Outstanding items: issues.csv.',2.6,MUTED)
+    added=[]
+    for sheet in supplements:
+        added.append(dict(sheet=sheet.code,title=sheet.title,kind='register' if sheet.code==register_code else 'schedule',scale=None,object_ids=[],dimensions=[],annotations=[]))
+    return supplements,added,annotations,materials
 
 
 def build(inventory_path,out,config_path=None):
@@ -252,6 +369,12 @@ def build(inventory_path,out,config_path=None):
         sh,objects,record=draw_view(inventory,view,view.get('sheet',f'M{index:03}'),config,issues)
         sheets.append(sh);view_register.append(record)
         register.update({o['id']:o for o in objects})
+    supplementary,extra_records,annotations,materials=supplementary_sheets(config,view_register,inventory,issues)
+    if supplementary:
+        sheets=[supplementary[0]]+sheets+supplementary[1:]
+        view_register=[extra_records[0]]+view_register+extra_records[1:]
+    codes=[sheet.code for sheet in sheets]
+    if len(set(codes))!=len(codes) or any(not re.fullmatch(r'[A-Za-z][A-Za-z0-9_-]{0,25}',code) for code in codes):raise ValueError('Sheet IDs must be unique safe filenames')
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     pdf=canvas.Canvas(str(out/'native-coordination.pdf'),pagesize=(420*mm,297*mm),pageCompression=1,invariant=1)
     pdf.setTitle(config.get('project','Native model coordination'));pdf.setAuthor('Interior Design Skill')
@@ -265,11 +388,14 @@ def build(inventory_path,out,config_path=None):
     csv_write(out/'issues.csv',['id','scope','question','status'],issues)
     dimension_rows=[dict(sheet=view['sheet'],id=d['id'],value_mm=d['value_mm'],axis=d['axis'],start_mm=json.dumps(d['start_mm']),end_mm=json.dumps(d['end_mm']),basis=d['basis'],source_object_ids=' | '.join(d['source_object_ids']),matched_faces=json.dumps(d['matched_faces'],ensure_ascii=False),verification=d['verification']) for view in view_register for d in view['dimensions']]
     csv_write(out/'dimension-evidence.csv',['sheet','id','value_mm','axis','start_mm','end_mm','basis','source_object_ids','matched_faces','verification'],dimension_rows)
+    csv_write(out/'sheet-register.csv',['sheet','title','kind','scale'],view_register)
+    csv_write(out/'annotation-register.csv',['view_sheet','kind','id','text','at_mm','basis','reference_sheet','width_mm'],annotations)
+    csv_write(out/'material-register.csv',['id','name','model_materials','source_object_ids','basis','status'],materials)
     (out/'selection.json').write_text(json.dumps(config,indent=2)+'\n')
     (out/'views.json').write_text(json.dumps(view_register,indent=2)+'\n')
     evidence=dict(source=inventory['source'],extractor_sha256=inventory.get('extractor_sha256'),units=inventory['units'],selection=inventory.get('selection'),geometry_omissions=inventory.get('omissions',[]),basis=inventory.get('evidence'))
     (out/'source-evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')
-    files=[out/(s.code+'.svg') for s in sheets]+[out/n for n in ('native-coordination.pdf','source-register.csv','issues.csv','dimension-evidence.csv','selection.json','views.json','source-evidence.json')]
+    files=[out/(s.code+'.svg') for s in sheets]+[out/n for n in ('native-coordination.pdf','source-register.csv','issues.csv','dimension-evidence.csv','selection.json','views.json','source-evidence.json','sheet-register.csv','annotation-register.csv','material-register.csv')]
     sha=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
     sources=dict(inventory=sha(inventory_path),native_file=inventory['source']['sha256'],generator=sha(__file__),drawing_renderer=sha(Path(__file__).with_name('build_drawing_studies.py')))
     if config_path:sources['selection_config']=sha(config_path)

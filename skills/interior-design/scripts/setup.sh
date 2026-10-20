@@ -10,7 +10,7 @@ npm --prefix assets/viewer ci --ignore-scripts
 if command -v blender >/dev/null 2>&1; then
   blender --version
 else
-  printf '%s\n' 'Blender not found: drawings work; install Blender 4.3+ for 3D and HD rendering.'
+  printf '%s\n' 'Blender is optional: use your agent image tool for presentation; native geometry extraction requires Blender.'
 fi
-printf '%s\n' 'From this skill directory: .venv/bin/python scripts/project.py build assets/example-project.json --out assets/viewer/public/generated --blender'
-printf '%s\n' 'Then: npm --prefix assets/viewer run dev'
+printf '%s\n' 'Try the complete sample: .venv/bin/python scripts/interior_design.py demo --out output/first-review'
+printf '%s\n' 'The review opens in your browser. Add --no-serve to only package files.'

@@ -1,3 +1,5 @@
 *.pdf binary
 *.csv binary
 *.zip binary
+# Preserve the pinned upstream source bytes and their recorded hashes.
+skills/interior-design/assets/design-guidance/ui-ux-pro-max/** whitespace=-blank-at-eol

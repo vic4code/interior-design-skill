@@ -21,7 +21,7 @@ class InstalledSkillTests(unittest.TestCase):
             working.mkdir()
             output = working / 'review'
             result = subprocess.run([
-                sys.executable, str(installed / 'scripts/project.py'), 'build',
+                sys.executable, str(installed / 'scripts/interior_design.py'), 'project', 'build',
                 str(installed / 'assets/example-project.json'), '--out', str(output)
             ], cwd=working, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -30,7 +30,7 @@ class InstalledSkillTests(unittest.TestCase):
             self.assertFalse(manifest['has_model'])
             self.assertEqual(len(manifest['files']), 13)
             verified = subprocess.run([
-                sys.executable, str(installed / 'scripts/verify_outputs.py'), str(output)
+                sys.executable, str(installed / 'scripts/interior_design.py'), 'verify', str(output)
             ], cwd=working, capture_output=True, text=True)
             self.assertEqual(verified.returncode, 0, verified.stderr)
 

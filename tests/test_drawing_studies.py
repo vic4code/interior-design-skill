@@ -9,7 +9,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]/'skills/interior-design'
-sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0,str(ROOT/'scripts/_internal'))
 from build_drawing_studies import build, joinery_geometry, make_sheets
 
 class DrawingStudyTests(unittest.TestCase):

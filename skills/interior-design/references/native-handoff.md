@@ -13,13 +13,12 @@ A scene exported from a browser may be batched by material and have lost semanti
 From the skill root:
 
 ```bash
-blender --background /path/to/current-model.blend --python-exit-code 1 --python scripts/extract_native_model.py -- --out /path/to/work/inventory.json
-.venv/bin/python scripts/build_native_handoff.py --inventory /path/to/work/inventory.json --config /path/to/work/selection.json --out /path/to/handoff
+.venv/bin/python scripts/interior_design.py native --blend /path/to/current-model.blend --config /path/to/work/selection.json --image /path/to/presentation.jpg --base-image /path/to/base.jpg --provenance /path/to/image-provenance.json --model /path/to/space.glb --out /path/to/delivery
 ```
 
 The extractor evaluates native geometry in world-space millimetres, records source filename/hash and custom properties, and reports omissions instead of silently treating missing geometry as complete. Use its include/exclude/budget options for dense scenes. Keep inventories and project-specific selections in the user's project workspace, not inside the distributed skill.
 
-The drawing generator also accepts an inventory without `--config` for an initial model-derived plan. For a useful delivery, define explicit views, selected object patterns, clipping regions, section planes, scales and keyed dimensions in the selection file. Inspect its source/CLI when designing the profile rather than guessing selection behavior.
+Use `--inventory /path/to/work/inventory.json` instead of `--blend` to reuse a verified extraction. For a useful delivery, define explicit views, object selection, clipping regions, section planes, scales, keyed dimensions, room/opening annotations, detail references and schedules in the selection file. Inspect the native implementation/CLI when designing the profile rather than guessing selection behavior. The single entry packages and opens the actual sheets in the same frontend as other projects.
 
 ## Develop useful views
 

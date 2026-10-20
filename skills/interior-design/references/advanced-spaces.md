@@ -4,7 +4,7 @@ The skill is an agent-led Blender and frontend workflow. The included rectangula
 
 ## Select an implementation route
 
-Use `scripts/project.py` when the project fits its documented schema and the user wants a fast, reproducible coordination study. Its room/furniture bounds protect that particular primitive model and fixed-sheet layout.
+Use `scripts/interior_design.py project` when the project fits its documented schema and the user wants a fast, reproducible coordination study. Its room/furniture bounds protect that particular primitive model and fixed-sheet layout.
 
 Use project-specific Blender Python, an available Blender connection or an existing native scene when the task needs multiple rooms, nonrectangular walls, rotated furniture, detailed joinery, changes of level or other real project geometry. Keep the scripts, source contract and export adapter with the project. Do not silently clamp a real room to the starter limits or delete unsupported geometry to make validation pass.
 

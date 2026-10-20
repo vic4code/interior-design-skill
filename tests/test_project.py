@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]/'skills/interior-design'
-sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0,str(ROOT/'scripts/_internal'))
 from project import build, validate, review
 from geometry import wall_panels
 
@@ -81,7 +81,7 @@ class ProjectTests(unittest.TestCase):
     def test_invalid_cli_fails_without_success_manifest(self):
         with tempfile.TemporaryDirectory() as temp:
             p=Path(temp)/'bad.json';p.write_text('{}');out=Path(temp)/'out'
-            result=subprocess.run([sys.executable,str(ROOT/'scripts/project.py'),'build',str(p),'--out',str(out)],capture_output=True)
+            result=subprocess.run([sys.executable,str(ROOT/'scripts/interior_design.py'),'project','build',str(p),'--out',str(out)],capture_output=True)
             self.assertNotEqual(result.returncode,0);self.assertFalse((out/'manifest.json').exists())
     def test_text_cannot_break_svg_markup(self):
         self.data['furniture'][0]['name']='<script>& bad'

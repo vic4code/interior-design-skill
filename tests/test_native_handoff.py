@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]/'skills/interior-design'
-sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0,str(ROOT/'scripts/_internal'))
 from extract_native_model import feature_edges
 from build_native_handoff import section_segments,build,draw_view,planar_station_evidence
 
@@ -108,5 +108,37 @@ class NativeHandoffTests(unittest.TestCase):
         self.assertEqual(record['cut_segments'],0);self.assertEqual(record['projected_segments'],0)
         self.assertTrue(any('omitted' in issue['question'].lower() for issue in issues))
         with self.assertRaises(ValueError):draw_view(dict(objects=[obj]),dict(kind='plan',title='Too large',scale=.01),'M001',{},[])
+
+    def test_annotations_require_basis_valid_world_position_and_real_sheet_reference(self):
+        view=dict(kind='plan',title='Annotated plan',annotations=[dict(kind='room',id='R01',text='Work zone',at_mm=[500,500,0],basis='Owner use label; native location')])
+        _,_,record=draw_view(dict(objects=[box()]),view,'N101',{},[])
+        self.assertEqual(record['annotations'][0]['id'],'R01')
+        bad=copy.deepcopy(view);bad['annotations'][0].pop('basis')
+        with self.assertRaisesRegex(ValueError,'source basis'):draw_view(dict(objects=[box()]),bad,'N101',{},[])
+        bad=copy.deepcopy(view);bad['annotations'][0]['at_mm'][0]=2000
+        with self.assertRaisesRegex(ValueError,'outside'):draw_view(dict(objects=[box()]),bad,'N101',{},[])
+        bad=copy.deepcopy(view);bad['annotations'][0].update(kind='sectionmark',reference_sheet='MISSING')
+        with self.assertRaisesRegex(ValueError,'unknown drawing'):draw_view(dict(objects=[box()]),bad,'N101',{},[])
+
+    def test_dimension_chain_uses_real_face_checks_and_preserves_dimension_evidence(self):
+        view=dict(kind='plan',title='Native chain',dimension_chains=[dict(id='P01',axis='x',stations_mm=[0,1000],at_mm=[0,500,500],basis='Selected native faces')])
+        _,_,record=draw_view(dict(objects=[box()]),view,'N101',{},[])
+        self.assertEqual(record['dimensions'][0]['id'],'P01.1')
+        self.assertEqual(record['dimensions'][0]['value_mm'],1000)
+        view['dimension_chains'][0]['stations_mm']=[0,750]
+        with self.assertRaisesRegex(ValueError,'planar-face evidence'):draw_view(dict(objects=[box()]),view,'N101',{},[])
+
+    def test_schedules_and_sheet_register_follow_actual_annotations_and_material_assignments(self):
+        with tempfile.TemporaryDirectory() as td:
+            base=Path(td);source=base/'inventory.json';out=base/'out';profile=base/'selection.json'
+            obj=box();obj['material_names']=['Original model finish']
+            source.write_text(json.dumps(dict(format='native-model-inventory-v1',units=dict(coordinate_unit='mm'),source=dict(filename='test.blend',sha256='0'*64),objects=[obj])))
+            config=dict(include_register=True,include_schedules=True,views=[dict(sheet='N101',kind='plan',title='Native room plan',annotations=[dict(kind='room',id='R01',text='Open studio',at_mm=[500,500,0],basis='Current model use zone')])],materials=[dict(id='M01',name='Cabinet finish',source_include='cabinet',basis='Native material assignment; product unconfirmed')])
+            profile.write_text(json.dumps(config));records=build(source,out,profile)
+            self.assertEqual([r['sheet'] for r in records],['N000','N101','N501','N502'])
+            self.assertIn('Open studio',(out/'annotation-register.csv').read_text())
+            self.assertIn('Original model finish',(out/'material-register.csv').read_text())
+            self.assertIn('N501',(out/'sheet-register.csv').read_text())
+            self.assertIn('N502.svg',json.loads((out/'manifest.json').read_text())['files'])
 
 if __name__=='__main__':unittest.main()

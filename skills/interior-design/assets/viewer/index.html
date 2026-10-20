@@ -1,13 +1,149 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#203e35"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23203e35%27/%3E%3Cpath d=%27M8 24V8h16v16H8M16 8v16%27 stroke=%27%23f5f3ed%27 fill=%27none%27/%3E%3C/svg%3E"><title>Interior / 把想像變成空間</title></head>
-<body>
-<header><a class="brand" href="/">INTERIOR<span>DESIGN SKILL / OPEN SOURCE</span></a><span class="edition">LOCAL FIRST · 01</span></header>
-<main>
-<section class="intro"><div><p class="eyebrow">從心中的樣子，到可以討論的設計</p><h1>你的空間，<br>開始有了形狀。</h1><p class="lead">用尺寸對齊想像，用光線表達感受。<br>一份設計，同步呈現模型、高清渲染與溝通圖面。</p></div><div class="project-meta"><span class="eyebrow">CURRENT STUDY</span><h2 id="project-name">正在讀取專案…</h2><p id="brief"></p><dl id="facts"></dl></div></section>
-<section aria-label="設計檢視器" class="workspace"><div class="toolbar"><div role="group" aria-label="檢視方式" class="tabs"><button data-mode="render" aria-pressed="true">高清渲染</button><button data-mode="model" aria-pressed="false">3D 空間</button><button data-mode="plan" aria-pressed="false">尺寸平面</button></div><span id="view-label">1920 × 1440 / PNG</span></div>
-<div id="stage" class="stage"><img id="render" alt="專案的等角透視高清渲染"><div id="model" hidden aria-label="可拖曳旋轉的三維模型" role="img"></div><img id="plan" hidden alt="A101 帶尺寸與家具編號的平面協調草圖"><p id="status" role="status">讀取設計中…</p></div>
-<div class="view-footer"><p id="hint">光線、材質與比例的第一輪對話。</p><div id="model-controls" hidden><button id="rotate">暫停旋轉</button><button id="reset">重設視角</button><label><input id="walls" type="checkbox"> 顯示完整外牆</label></div><a id="current-download" download>下載此圖 ↗</a></div></section>
-<section class="handoff"><div><p class="eyebrow">FROM VISION TO CONVERSATION</p><h2>把設計，帶進下一次討論。</h2><p>這是一份可修改的協調草圖。讓設計師理解風格與配置，讓工程師看見尺寸、門窗位置與待確認事項。</p><p class="notice">尚不可直接施工或下單。現場丈量、施工節點、水電與專業覆核仍須另外完成。</p></div><div><h3>設計溝通包</h3><div id="downloads" class="downloads"></div><p id="review-count" class="small"></p></div></section>
-<section class="review-section"><h2>下一步，需要一起確認的事。</h2><ol id="reviews"></ol></section>
-</main><footer><span>FREE TO CREATE. BUILT TO COMMUNICATE.</span><span>Blender + Three.js · 無付費 API · 開源核心</span></footer>
-<script type="module" src="/src/main.js"></script></body></html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f7f6f2" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%232b332e' d='M0 0h32v32H0z'/%3E%3Cpath stroke='%23fff' fill='none' d='M8 24V8h16v16H8M16 8v16'/%3E%3C/svg%3E"
+    />
+    <title>Interior · 空間設計</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./">Interior<span>空間設計工作室</span></a
+      ><span class="header-note">從空間想像，到每一個細節。</span
+      ><a href="#delivery" class="text-link">交付內容 ↗</a>
+    </header>
+    <main>
+      <section class="project-header">
+        <div>
+          <p class="kicker">空間設計提案</p>
+          <h1 id="project-name">正在讀取空間…</h1>
+          <p id="brief" class="brief"></p>
+        </div>
+        <dl id="facts" class="facts"></dl>
+      </section>
+      <section class="workspace" aria-label="空間設計與工程圖面">
+        <div class="workspace-main">
+          <div class="mode-tabs" role="group" aria-label="檢視方式">
+            <button data-mode="layout" aria-pressed="false">平面配置</button
+            ><button data-mode="model" aria-pressed="false">3D 擺設</button
+            ><button data-mode="render" aria-pressed="true">設計效果</button
+            ><button data-mode="mep" aria-pressed="false">機電配置</button
+            ><button data-mode="drawings" aria-pressed="false">工程圖面</button>
+          </div>
+          <div id="sheet-controls" class="sheet-toolbar" hidden>
+            <label for="sheet-select">選擇圖面</label
+            ><select id="sheet-select"></select
+            ><span id="sheet-count"></span
+            ><a id="sheet-original" target="_blank" rel="noopener"
+              >開啟原圖 ↗</a
+            >
+          </div>
+          <div id="gallery-controls" class="gallery-controls" hidden>
+            <label>空間 <select id="space-select" aria-label="篩選空間"></select></label>
+            <label>視角 <select id="view-select" aria-label="選擇設計視角"></select></label>
+            <span id="view-count"></span>
+          </div>
+          <div id="mode-context" class="mode-context"></div>
+          <div id="stage" class="stage">
+            <img id="render" alt="空間設計效果" />
+            <div
+              id="model"
+              hidden
+              role="img"
+              aria-label="可旋轉的三維空間"
+            ></div>
+            <div id="drawing-viewport" tabindex="0" aria-label="圖面檢視；放大後可拖曳或用方向鍵平移" hidden>
+              <img id="plan" alt="尺寸配置圖" />
+            </div>
+            <p id="status" role="status">讀取設計中…</p>
+          </div>
+          <div class="stage-tools">
+            <span id="view-label"></span>
+            <div id="presentation-controls">
+              <button id="base-toggle" hidden>對照空間基底</button>
+            </div>
+            <div id="model-controls" hidden>
+              <button id="rotate">開始旋轉</button
+              ><button id="reset">重設視角</button
+              ><label id="walls-control"
+                ><input id="walls" type="checkbox" /> 完整外牆</label
+              >
+            </div>
+            <div id="zoom-controls" hidden>
+              <button id="zoom-out" aria-label="縮小圖面">−</button
+              ><output id="zoom-value">100%</output
+              ><button id="zoom-in" aria-label="放大圖面">＋</button
+              ><button id="zoom-fit">適合視窗</button>
+              <span id="pan-controls" hidden role="group" aria-label="平移放大圖面">
+                <button data-pan="left" aria-label="向左檢視圖面">←</button>
+                <button data-pan="up" aria-label="向上檢視圖面">↑</button>
+                <button data-pan="down" aria-label="向下檢視圖面">↓</button>
+                <button data-pan="right" aria-label="向右檢視圖面">→</button>
+              </span>
+            </div>
+            <a id="current-original" class="text-link" target="_blank" rel="noopener" hidden>開啟原圖 ↗</a>
+            <a id="current-download" class="text-link" download>下載 ↗</a>
+          </div>
+          <div id="view-thumbnails" class="view-thumbnails" role="group" aria-label="已完成的設計視角" hidden></div>
+          <p id="mep-availability" class="availability-note" hidden></p>
+          <p id="hint" class="view-hint"></p>
+        </div>
+        <aside class="project-sidebar">
+          <div id="variants-section" hidden>
+            <p class="sidebar-heading">同一個空間，不同的生活表情</p>
+            <div
+              id="variants"
+              class="variants"
+              role="group"
+              aria-label="設計風格"
+            ></div>
+          </div>
+          <div class="design-note">
+            <p class="sidebar-heading">本次設計</p>
+            <h2 id="style-name">空間提案</h2>
+            <p id="style-description"></p>
+            <p id="presentation-badge" class="evidence-label"></p>
+            <p id="presentation-review" class="small"></p>
+            <a
+              id="provenance"
+              class="text-link"
+              target="_blank"
+              rel="noopener"
+              hidden
+              >查看生成依據 ↗</a
+            >
+          </div>
+          <div class="delivery-summary">
+            <p class="sidebar-heading">從提案，到現場的對話</p>
+            <p id="package-status">工程尺寸與未決事項見圖面。</p>
+            <a id="primary-pdf" class="primary-link" download hidden
+              >下載完整圖冊 <span>↓</span></a
+            ><a href="#delivery" class="text-link">查看全部交付檔案 ↗</a>
+          </div>
+        </aside>
+      </section>
+      <section id="delivery" class="delivery">
+        <div>
+          <p class="kicker">設計交付</p>
+          <h2>讓每個細節，都能被理解。</h2>
+          <p>配置、材質與圖面放在同一份提案。工程尺寸以圖面及現場覆核為準。</p>
+          <p id="review-count" class="small"></p>
+        </div>
+        <div id="downloads" class="downloads"></div>
+      </section>
+      <section id="review-section" class="review-section" hidden>
+        <h2>下一步，一起確認。</h2>
+        <ol id="reviews"></ol>
+      </section>
+    </main>
+    <footer>
+      <span>Interior · 空間設計與工程協調</span
+      ><span>設計效果 / 空間幾何 / 工程圖面</span>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
