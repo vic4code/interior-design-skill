@@ -36,6 +36,9 @@ def build_viewer(viewer: Path | None = None) -> Path:
         dist = viewer.resolve()
     else:
         root = Path(__file__).resolve().parents[2] / 'assets/viewer'
+        from quickstart import available
+        if available(root.parents[1], root/'prebuilt', 'viewer'):
+            return root/'prebuilt'
         dist = root / 'dist'
         inputs = []
         for directory, subdirectories, filenames in os.walk(root):

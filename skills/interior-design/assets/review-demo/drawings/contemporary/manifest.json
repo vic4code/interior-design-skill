@@ -1,0 +1,31 @@
+{
+  "format": "drawing-studies-v1",
+  "units": "mm",
+  "style": "contemporary",
+  "status": "design coordination / technical development",
+  "sources": {
+    "project.json": "97a9bb9ad0f80db7cb03233b7687cd851c0633fd96df34eecf8c68881ac6b6a6",
+    "joinery.json": "c3532c7ffd14fb6391d7b057788b0c6736b539a72538562a5ef285286746eb26",
+    "styles.json": "afb2762f1a29aca5995e7dc60ffc6e1042a71603f6cec4cf71e13fa752fba90b",
+    "build_drawing_studies.py": "2c797ca796392ea452a01e2c346a9a40acc23be7d9007833bff2caa5be003bd0"
+  },
+  "files": {
+    "G000.svg": "92784a84cd993abe23b4781f82b0fbef53eab4f1f62f07a6538e0f4e2a5576bd",
+    "A101.svg": "99b328e355a678d7a14caa6c09786c812f8c5a337500f946cd2d6fa536d1185c",
+    "A102.svg": "7d68b28aeaeb854663441a92c57e41eb68c09a6f6ed59fbf25df14b9289b4761",
+    "A201.svg": "8f1759a6bb9ad27546c4f454a016f4c1712043a054044a6f8c9b270d1537012c",
+    "A202.svg": "e42303cdb892f4730f3fd7c7723c6dabbd90c5ff24fdac1b203d828c36db7017",
+    "J301.svg": "9e9805cd44354cfb7a8c3de49e48b8e42cf95b41a6a8d8956884eb16213462a8",
+    "J401.svg": "2570949c554ad031e9e83a9ea933f5c5c3f03a0bc44f8f9d8c596472f46b89e5",
+    "S001.svg": "544a421ccb4c73ca59bb17834ce35b1aba72c3a41da375398472ff8786531261",
+    "design-coordination.pdf": "2097ea8cbce1466a2be70df2fc63467fa9e3e5c1352b9d01317eb868264eb724",
+    "project.json": "57e3ab77945ba913ffd96f653c5126475eda5ecd456652049da405aac2e984a0",
+    "joinery.json": "c3532c7ffd14fb6391d7b057788b0c6736b539a72538562a5ef285286746eb26",
+    "plan.dxf": "07657b87ce40ac3481ccd3a6d18937fb38733b202d77d26faeb9652b06ebed58",
+    "furniture.csv": "5c34cb00a2c4397096d3a0123ae243a047309a6841fb7f35046b0b3e4e83b9c4",
+    "materials.csv": "2b993d5776aebfd53f1ee5f596fef5db724bf6eba6aba26cd48f68e0918fef6b",
+    "openings.csv": "6973a8192bf3c4468ee78680bc1c27a3dc3878091f28bb812dc6edfdf2212760",
+    "joinery.csv": "e1d31ec04102eb5819750e06a8609430a99c6c78a479725b2868d8c9d1b9005a",
+    "issues.csv": "f73738c6a32cfe5a76ed8dc7587c6ce9e5b2d72fcecda5134f59a9e3d8aeda27"
+  }
+}

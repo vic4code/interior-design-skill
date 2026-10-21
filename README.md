@@ -151,19 +151,20 @@ Project drawings should include room/use labels, internal dimension chains, open
 
 ## Try the complete example
 
-From a checkout, the single workflow entry generates the four-style example and **opens the browser automatically**:
+From a checkout, use Python 3.11+ to open the bundled four-style example and **opens the browser automatically**:
 
 ```bash
 cd skills/interior-design
-bash scripts/setup.sh
-.venv/bin/python scripts/interior_design.py demo --out /path/to/my-design
+python3 scripts/interior_design.py demo --out /path/to/my-design
 ```
 
 Outputs are grouped under `drawings/` and `review/`. The demo includes base-conditioned image-gen results and matching example geometry; it does not call a paid image API or run Blender. Real projects use the host's image tool for new visualizations. The agent should run the workflow for you; these commands are also available for a direct local trial.
 
-Python 3.11+ runs the drawing tools. Node.js builds the browser frontend; Blender 4.3+ is needed only for native extraction/model work and optional model-faithful rendering. Image generation needs a host tool or configured provider, with access, quotas and possible costs depending on that service. A simple spatial model/base view can reduce detailed material authoring and local render work; image generation does not guarantee Blender-equivalent geometry.
+The unchanged demo needs only Python 3.11+: its drawings and production viewer are bundled, so first launch skips PyPI, npm and local builds. Reopen with `python3 scripts/interior_design.py review --existing /path/to/my-design/review`.
 
-Windows: create `.venv` with `py -m venv .venv`, install `scripts/requirements.lock.txt` with `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, and use that Python executable for the entry point.
+For new drawing generation or `demo --rebuild`, run `bash scripts/setup.sh` once and use `.venv/bin/python`. Setup reuses matching dependencies and prefers `uv` when available. Node.js is needed only to rebuild changed frontend sources; Blender 4.3+ is needed only for native extraction/model work and optional model-faithful rendering. Image generation needs a host tool or configured provider, with access, quotas and possible costs depending on that service. A simple spatial model/base view can reduce detailed material authoring and local render work; image generation does not guarantee Blender-equivalent geometry.
+
+Windows: use `py` for the offline demo. For drawing generation, create `.venv` with `py -m venv .venv`, install `scripts/requirements.lock.txt` with `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt`, and use that Python executable for the entry point.
 
 ## A portable, organized skill
 

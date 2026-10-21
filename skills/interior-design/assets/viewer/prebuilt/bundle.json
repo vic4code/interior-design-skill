@@ -1,0 +1,55 @@
+{
+  "format": "quickstart-viewer-v1",
+  "files": [
+    {
+      "name": "THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "name": "assets/index-CAIx0XFn.css",
+      "bytes": 11524,
+      "sha256": "8315a2caea394307277642653aefa5b5cb7086860711b800e507fb85d43a78f7"
+    },
+    {
+      "name": "assets/index-CHqA6_qk.js",
+      "bytes": 18426,
+      "sha256": "dd6158a32739ab732be52686dcfe3203f447ad836bc9a4c6d06a17872411c168"
+    },
+    {
+      "name": "assets/model-D_VGlDyU.js",
+      "bytes": 6545,
+      "sha256": "3a955ef50a835651fb35b0324dce39675218b115f88a9b87ba3b7a50099afc35"
+    },
+    {
+      "name": "assets/three-addons-C2esUWVR.js",
+      "bytes": 65983,
+      "sha256": "5ac7b04cdb0f8c3233d8b2395934da9b749f121c3bbcf06c4eac5b5dd1c3b53e"
+    },
+    {
+      "name": "assets/three-renderer-im9xAzPe.js",
+      "bytes": 324409,
+      "sha256": "3a8459faa9ee11281eb8bb4d1ea540cbdadb623f1482660c02c70af42c01086f"
+    },
+    {
+      "name": "assets/three-scene-B6elCE6I.js",
+      "bytes": 207680,
+      "sha256": "8c62c096242683d1aca9634900488b16963b47d3b50f0259db0a805af7720e9f"
+    },
+    {
+      "name": "index.html",
+      "bytes": 7765,
+      "sha256": "df65c77024ac4de023027738fb833df5353764e004c428dfc72472d1d3f92961"
+    }
+  ],
+  "inputs": {
+    "assets/viewer/index.html": "34cff8fc954229f6298d63d9475f3c1c43f6f698413c561804eb6216751f9dec",
+    "assets/viewer/package-lock.json": "e85c713ae9e67c3c7961d6747c57ac2ed73712755a057ac9cfa2451ca953c940",
+    "assets/viewer/package.json": "b338bc97e1858e2c7d37228a650373f7c7624f4748b34d96da4b4eb1051c1164",
+    "assets/viewer/src/lighting.js": "f22077a3d2372cb98ebc327335bad0b5554dc0228deb09344d6fb4b0335eaea1",
+    "assets/viewer/src/main.js": "fa8e1ab834d6f7f064fdfc8979bccbd1b1ec40bb4f6f26fd5c7e04ccf0e691b7",
+    "assets/viewer/src/model.js": "ec18e904a588b8b090c9062dede538aba019e6254da08f6ed05aca8d6fdc2305",
+    "assets/viewer/src/style.css": "135a73ef40dcaac556fc10280810ec6dc15a66182b1f06a6340ea76dcc9b49f8",
+    "assets/viewer/vite.config.js": "0082eec425a572ff859254da3f5e817e159399f33f6ea9fd612f0497d9b3a8e5"
+  }
+}

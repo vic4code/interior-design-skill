@@ -35,6 +35,9 @@ class ReviewExtensions(unittest.TestCase):
         rects=[n for n in root.iter() if n.tag.endswith('rect')]
         self.assertTrue(any(n.get('x')=='1000' and n.get('y')=='3500' and n.get('width')=='1200' for n in rects))
         self.assertNotIn('Dimensioned furniture sheet',(self.out/'layout.svg').read_text())
+        visible_labels = [''.join(n.itertext()) for n in root.iter() if n.tag.endswith('text')]
+        self.assertIn('Desk', visible_labels)
+        self.assertIn('F01', visible_labels)
         self.assertEqual(result['mep'],[])
 
     def test_mep_only_with_actual_registered_sheet_or_checksummed_attachment(self):

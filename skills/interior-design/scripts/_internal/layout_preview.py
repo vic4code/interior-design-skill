@@ -2,6 +2,7 @@
 import copy
 import html
 import math
+import unicodedata
 import xml.etree.ElementTree as ET
 
 SVG = 'http://www.w3.org/2000/svg'
@@ -15,7 +16,7 @@ def structured_layout(project):
         return None
     # This route is exclusively for the structured rectangular starter contract.
     parts = [f'<svg xmlns="{SVG}" viewBox="-400 -400 {w+800} {d+800}" role="img" aria-label="Furniture layout">',
-             '<rect x="-400" y="-400" width="100%" height="100%" fill="#f8f6f0"/>',
+             f'<rect x="-400" y="-400" width="{w+800}" height="{d+800}" fill="#ffffff"/>',
              f'<rect width="{w}" height="{d}" fill="#e9e2d6" stroke="#35473e" stroke-width="30"/>']
     for opening in project.get('openings', []):
         offset, width = opening.get('offset', 0), opening.get('width', 0)
@@ -28,7 +29,7 @@ def structured_layout(project):
             y1, y2 = d-offset-width, d-offset
         else:
             continue
-        color = '#b8ced0' if opening.get('kind') == 'window' else '#f8f6f0'
+        color = '#b8ced0' if opening.get('kind') == 'window' else '#ffffff'
         parts.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{color}" stroke-width="48"/>')
     for item in project.get('furniture', []):
         x, y, iw, depth = (item.get(k, 0) for k in ('x', 'y', 'width', 'depth'))
@@ -38,7 +39,12 @@ def structured_layout(project):
         top = d-y-depth
         ident = html.escape(str(item.get('id', '')))
         name = html.escape(str(item.get('name', ident)))
-        parts.append(f'<g><title>{ident} · {name}</title><rect x="{x}" y="{top}" width="{iw}" height="{depth}" rx="25" fill="#c3b49c" stroke="#556358" stroke-width="12"/><text x="{x+iw/2}" y="{top+depth/2}" text-anchor="middle" dominant-baseline="middle" font-size="95" fill="#253b30">{ident}</text></g>')
+        # Source names are primary; retain the full bilingual name in title.
+        label = str(item.get('name', item.get('id', ''))).split(' / ')[0]
+        units = sum(1 if unicodedata.east_asian_width(c) in ('W', 'F') else .55 for c in label)
+        size = min(150, max(1, iw-70)/max(1, units), max(1, depth*.3))
+        cx, cy = x+iw/2, top+depth/2
+        parts.append(f'<g><title>{ident} · {name}</title><rect x="{x}" y="{top}" width="{iw}" height="{depth}" rx="25" fill="#c3b49c" stroke="#556358" stroke-width="12"/><text x="{cx}" y="{cy-100}" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="80" fill="#556358">{ident}</text><text x="{cx}" y="{cy+45}" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="{size:g}" font-weight="500" fill="#253b30">{html.escape(label)}</text></g>')
     parts.append('</svg>')
     return ''.join(parts)
 

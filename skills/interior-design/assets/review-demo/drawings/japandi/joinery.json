@@ -1,0 +1,50 @@
+{
+  "revision": "S01",
+  "object_id": "F05",
+  "units": "mm",
+  "basis": "synthetic design dimensions; fabrication details require site and selected-hardware review",
+  "carcass_thickness": 18,
+  "top_thickness": 20,
+  "shelf_thickness": 18,
+  "back_thickness": 9,
+  "plinth_height": 80,
+  "door_thickness": 18,
+  "door_gap": 3,
+  "front_clearance": 3,
+  "bays": 4,
+  "shelf_top_height": 428,
+  "finish": "style-specific veneer or lacquer; verify finish/sample",
+  "hardware": {
+    "hinge": "concealed hinge concept; model and drilling not selected",
+    "anchor": "wall substrate, fixing type and loading not verified"
+  },
+  "service_points": [
+    {
+      "id": "L01",
+      "system": "lighting",
+      "x": 3000,
+      "y": 2400,
+      "z": 2500,
+      "status": "proposed",
+      "basis": "design assumption"
+    },
+    {
+      "id": "P01",
+      "system": "power",
+      "x": 5500,
+      "y": 4800,
+      "z": 300,
+      "status": "proposed",
+      "basis": "design assumption; verify desk/equipment access"
+    },
+    {
+      "id": "P02",
+      "system": "power",
+      "x": 4500,
+      "y": 0,
+      "z": 1100,
+      "status": "proposed",
+      "basis": "design assumption; above cabinet top"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ description: Turn everyday interior-design needs, optional plans and existing pr
 license: MIT
 metadata:
   version: "0.1.0"
-compatibility: Host image tool for AI visuals; Python 3.11+ for drawings; Node.js 20.19+ or 22.12+ for browser builds; Blender 4.3+ only for native extraction/model work.
+  compatibility: Host image tool for AI visuals; Python 3.11+ for the offline demo; drawing dependencies for generating sheets; Node.js 20.19+ or 22.12+ only to rebuild the viewer; Blender 4.3+ only for native extraction/model work.
 ---
 
 # Interior Design
@@ -51,7 +51,7 @@ Follow [construction documents](references/construction-documents.md) and [drawi
 
 Inspect the actual PDF/SVG at print scale for legibility, missing glyphs, overlaps, omitted geometry and consistent references. Explain issue status honestly. Coordination drawings become construction/fabrication releases only after the necessary site/product/trade decisions and review.
 
-Keep the clean layout distinct from technical sheets: layout shows placement and circulation without title-block tables; engineering sheets carry dimensions, datums, sections and assembly information. Register available lighting/power, HVAC or plumbing drawings in the separate MEP mode with their source revision and review status. The demo's A102 is lighting/electrical intent. Do not invent complete circuits, service sizing or plumbing routes from a furniture plan; list missing inputs and trade decisions instead.
+Keep the clean layout distinct from technical sheets: layout shows placement and circulation without title-block tables; label each furniture footprint with its source name in the user’s language and keep its ID secondary for drawing cross-reference; engineering sheets carry dimensions, datums, sections and assembly information. Register available lighting/power, HVAC or plumbing drawings in the separate MEP mode with their source revision and review status. The demo's A102 is lighting/electrical intent. Do not invent complete circuits, service sizing or plumbing routes from a furniture plan; list missing inputs and trade decisions instead.
 
 ## 4. Package and open the browser
 
@@ -80,11 +80,10 @@ The agent handles setup when needed; explain unavailable dependencies rather tha
 For a separate synthetic demonstration, never as a replacement for the user's project:
 
 ```bash
-bash scripts/setup.sh
-.venv/bin/python scripts/interior_design.py demo --out /path/to/demo
+python3 scripts/interior_design.py demo --out /path/to/demo
 ```
 
-The demo uses four genuinely same-base-conditioned image-generated alternatives, matching 3D examples and four eight-sheet drawing sets in one switchable page; no Blender render is required to view it. `--no-serve` is for artifact-only CI. Windows uses `.venv\Scripts\python` after creating the environment with `py -m venv .venv` and installing the lock file.
+Try the demo directly before installing dependencies. Its four same-base-conditioned image alternatives, matching 3D examples, four eight-sheet drawing sets and production viewer are bundled; opening the unchanged sample needs only Python's standard library, with no PyPI/npm downloads or Blender. Use `review --existing /path/to/demo/review` to reopen it. For new drawings or `demo --rebuild`, run `bash scripts/setup.sh` once and use `.venv/bin/python`; setup reuses matching dependencies. Changed drawing/viewer sources invalidate their bundled builds and use the normal build path. If package downloads time out, report the failing dependency and stop setup instead of inventing manual wheel-download scripts; the bundled demo remains available. `--no-serve` is for artifact-only CI. Windows can run the offline demo with `py`; drawing generation uses its virtual environment after installing the lock file.
 
 ## Load references as needed
 

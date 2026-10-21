@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 420 297">
+<rect width="420" height="297" fill="#ffffff"/>
+<rect x="10" y="10" width="400" height="277" fill="none" stroke="#243345" stroke-width="0.35"/>
+<text x="17" y="20" font-family="Arial, sans-serif" font-size="3" fill="#986747" text-anchor="start">INTERIOR / DESIGN DEVELOPMENT</text>
+<text x="17" y="29" font-family="Arial, sans-serif" font-size="5.1" fill="#243345" text-anchor="start">F05 SIDEBOARD - GENERAL ARRANGEMENT</text>
+<text x="403" y="20" font-family="Arial, sans-serif" font-size="5" fill="#243345" text-anchor="end">J301</text>
+<line x1="10" y1="35" x2="410" y2="35" stroke="#243345" stroke-width="0.35"/>
+<rect x="10" y="264" width="400" height="23" fill="none" stroke="#243345" stroke-width="0.35"/>
+<line x1="228" y1="264" x2="228" y2="287" stroke="#243345" stroke-width="0.25"/>
+<line x1="308" y1="264" x2="308" y2="287" stroke="#243345" stroke-width="0.25"/>
+<line x1="365" y1="264" x2="365" y2="287" stroke="#243345" stroke-width="0.25"/>
+<text x="15" y="270" font-family="Arial, sans-serif" font-size="2.7" fill="#243345" text-anchor="start">GALLERY LIVING / SYNTHETIC STYLE STUDY</text>
+<text x="15" y="276" font-family="Arial, sans-serif" font-size="2.7" fill="#986747" text-anchor="start">DESIGN COORDINATION / TECHNICAL DEVELOPMENT</text>
+<text x="15" y="282" font-family="Arial, sans-serif" font-size="2.5" fill="#66727c" text-anchor="start">All dimensions mm. Assumed design measurements. Verify on site.</text>
+<text x="233" y="270" font-family="Arial, sans-serif" font-size="2.4" fill="#66727c" text-anchor="start">SCALE AT A3</text>
+<text x="233" y="278" font-family="Arial, sans-serif" font-size="3.4" fill="#243345" text-anchor="start">1:20</text>
+<text x="313" y="270" font-family="Arial, sans-serif" font-size="2.4" fill="#66727c" text-anchor="start">REVISION</text>
+<text x="313" y="278" font-family="Arial, sans-serif" font-size="3.4" fill="#243345" text-anchor="start">S01</text>
+<text x="370" y="270" font-family="Arial, sans-serif" font-size="2.4" fill="#66727c" text-anchor="start">SHEET</text>
+<text x="370" y="280" font-family="Arial, sans-serif" font-size="4.3" fill="#243345" text-anchor="start">J301</text>
+<text x="38" y="49" font-family="Arial, sans-serif" font-size="4" fill="#986747" text-anchor="start">F05 / CUSTOM LOW SIDEBOARD</text>
+<rect x="38" y="75.5" width="110.0" height="37.5" fill="#ece9e3" stroke="#243345" stroke-width="0.35"/>
+<line x1="38" y1="109.0" x2="148.0" y2="109.0" stroke="#243345" stroke-width="0.25"/>
+<line x1="38" y1="76.5" x2="148.0" y2="76.5" stroke="#243345" stroke-width="0.25"/>
+<rect x="38.15" y="76.65" width="27.3125" height="32.2" fill="none" stroke="#243345" stroke-width="0.18"/>
+<line x1="63.462500000000006" y1="93" x2="63.462500000000006" y2="97" stroke="#243345" stroke-width="0.3"/>
+<rect x="65.6125" y="76.65" width="27.3125" height="32.2" fill="none" stroke="#243345" stroke-width="0.18"/>
+<line x1="90.925" y1="93" x2="90.925" y2="97" stroke="#243345" stroke-width="0.3"/>
+<rect x="93.075" y="76.65" width="27.3125" height="32.2" fill="none" stroke="#243345" stroke-width="0.18"/>
+<line x1="118.3875" y1="93" x2="118.3875" y2="97" stroke="#243345" stroke-width="0.3"/>
+<rect x="120.53750000000001" y="76.65" width="27.3125" height="32.2" fill="none" stroke="#243345" stroke-width="0.18"/>
+<line x1="145.85000000000002" y1="93" x2="145.85000000000002" y2="97" stroke="#243345" stroke-width="0.3"/>
+<line x1="38" y1="75.5" x2="38" y2="64.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="148.0" y1="75.5" x2="148.0" y2="64.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="38" y1="62.5" x2="148.0" y2="62.5" stroke="#243345" stroke-width="0.13"/>
+<line x1="37" y1="63.5" x2="39" y2="61.5" stroke="#243345" stroke-width="0.3"/>
+<line x1="147.0" y1="63.5" x2="149.0" y2="61.5" stroke="#243345" stroke-width="0.3"/>
+<text x="93.0" y="60.7" font-family="Arial, sans-serif" font-size="2.6" fill="#243345" text-anchor="middle">2200</text>
+<line x1="38" y1="75.5" x2="23" y2="75.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="38" y1="113" x2="23" y2="113" stroke="#66727c" stroke-width="0.1"/>
+<line x1="25" y1="75.5" x2="25" y2="113" stroke="#243345" stroke-width="0.13"/>
+<line x1="24" y1="76.5" x2="26" y2="74.5" stroke="#243345" stroke-width="0.3"/>
+<line x1="24" y1="114" x2="26" y2="112" stroke="#243345" stroke-width="0.3"/>
+<text x="27" y="95.05" font-family="Arial, sans-serif" font-size="2.6" fill="#243345" text-anchor="start">750</text>
+<text x="38" y="123" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">01 / FRONT ELEVATION   1:20</text>
+<rect x="38" y="159" width="110.0" height="22.5" fill="#ece9e3" stroke="#243345" stroke-width="0.35"/>
+<line x1="38" y1="180.45" x2="148.0" y2="180.45" stroke="#243345" stroke-width="0.18"/>
+<line x1="38" y1="159" x2="23" y2="159" stroke="#66727c" stroke-width="0.1"/>
+<line x1="38" y1="181.5" x2="23" y2="181.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="25" y1="159" x2="25" y2="181.5" stroke="#243345" stroke-width="0.13"/>
+<line x1="24" y1="160" x2="26" y2="158" stroke="#243345" stroke-width="0.3"/>
+<line x1="24" y1="182.5" x2="26" y2="180.5" stroke="#243345" stroke-width="0.3"/>
+<text x="27" y="171.05" font-family="Arial, sans-serif" font-size="2.6" fill="#243345" text-anchor="start">450</text>
+<text x="38" y="191.5" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">02 / PLAN   1:20</text>
+<rect x="183" y="75.5" width="22.5" height="37.5" fill="#ece9e3" stroke="#243345" stroke-width="0.35"/>
+<line x1="183" y1="109.0" x2="205.5" y2="109.0" stroke="#243345" stroke-width="0.25"/>
+<line x1="183" y1="75.5" x2="183" y2="64.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="205.5" y1="75.5" x2="205.5" y2="64.5" stroke="#66727c" stroke-width="0.1"/>
+<line x1="183" y1="62.5" x2="205.5" y2="62.5" stroke="#243345" stroke-width="0.13"/>
+<line x1="182" y1="63.5" x2="184" y2="61.5" stroke="#243345" stroke-width="0.3"/>
+<line x1="204.5" y1="63.5" x2="206.5" y2="61.5" stroke="#243345" stroke-width="0.3"/>
+<text x="194.25" y="60.7" font-family="Arial, sans-serif" font-size="2.6" fill="#243345" text-anchor="middle">450</text>
+<text x="183" y="123" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">03 / SIDE  1:20</text>
+<text x="250" y="50" font-family="Arial, sans-serif" font-size="3.5" fill="#986747" text-anchor="start">CONSTRUCTION INTENT</text>
+<text x="250" y="62" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">Overall W 2200 / D 450 / H 750.</text>
+<text x="250" y="75" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">4 bays, clear width 527.5 each between 18 mm</text>
+<text x="250" y="80" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">dividers.</text>
+<text x="250" y="93" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">4 overlay leaves: 546.25 wide each; 3 mm</text>
+<text x="250" y="98" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">perimeter/inter-leaf design gaps.</text>
+<text x="250" y="111" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">Depth stack: 18 door + 3 gap + 429 body = 450.</text>
+<text x="250" y="124" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">Body internal depth: 429 - 9 back = 420.</text>
+<text x="250" y="137" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">Door height 644 is provisional: top +727 / bottom</text>
+<text x="250" y="142" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">+83. Select hinges before overlay/drilling</text>
+<text x="250" y="147" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">release.</text>
+<text x="250" y="160" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">Section, shelf datum and unresolved fixing</text>
+<text x="250" y="165" font-family="Arial, sans-serif" font-size="2.9" fill="#243345" text-anchor="start">interfaces: J401. Finish sample: S001.</text>
+<text x="38" y="226" font-family="Arial, sans-serif" font-size="3" fill="#986747" text-anchor="start">FINISH</text>
+<text x="38" y="234" font-family="Arial, sans-serif" font-size="2.8" fill="#243345" text-anchor="start">Bauhaus: style-specific veneer or lacquer; verify finish/sample. Grain direction, edge treatment and sheen</text>
+<text x="38" y="238.6" font-family="Arial, sans-serif" font-size="2.8" fill="#243345" text-anchor="start">require an approved physical sample.</text>
+</svg>

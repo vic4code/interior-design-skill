@@ -14,6 +14,9 @@ import shutil
 import subprocess
 import sys
 
+if sys.version_info < (3, 11):
+    sys.exit('Python 3.11+ is required. Run this command with python3.11 or a newer interpreter.')
+
 ROOT = Path(__file__).resolve().parents[1]
 INTERNAL = ROOT / 'scripts/_internal'
 sys.path.insert(0, str(INTERNAL))
@@ -67,6 +70,7 @@ def main():
     views.add_argument('--budget', type=int, default=12, help='Maximum planned image jobs across all spaces (default: 12).')
     demo = commands.add_parser('demo', help='Try a complete eight-sheet sample and conditioned presentation.')
     demo.add_argument('--out', required=True, type=Path)
+    demo.add_argument('--rebuild', action='store_true', help='Regenerate demo drawings instead of using the bundled sample; requires drawing dependencies.')
     browser_arguments(demo)
     review = commands.add_parser('review', help='Package existing drawings and presentation; open the browser.')
     source = review.add_mutually_exclusive_group(required=True)
@@ -111,7 +115,6 @@ def main():
         print(f"Planned {len(result['jobs'])} image views: {args.out}")
         print('Use the agent image-generation tool for each ready job; missing references remain needs-base.')
     elif args.command == 'demo':
-        from build_drawing_studies import build
         assets = ROOT / 'assets'
         sample = assets/'review-demo'
         styles = [('mcm', 'Mid-century Modern', '#956c47'), ('japandi', 'Japandi', '#c9bb9d'),
@@ -123,10 +126,20 @@ def main():
             parser.error('The complete skill must include a shared demo base and four presentation/provenance/GLB variants.')
         verify_inputs_outside(args.out, [assets])
         output = verify_output_directory(args.out, expected={'format': 'demo-output-v1'})
+        from quickstart import available
+        bundled = sample/'drawings'
+        use_bundle = not args.rebuild and available(ROOT, bundled, 'drawings')
+        if not use_bundle:
+            from build_drawing_studies import build
+        print('Preparing bundled demo (no package downloads).' if use_bundle else 'Generating demo drawings.', flush=True)
         entries = []
         for ident, label, swatch in styles:
             drawings = output/'drawings'/ident
-            build(assets/'style-studies/project.json', assets/'style-studies/joinery.json', drawings, style=ident)
+            if use_bundle:
+                verify_output_directory(drawings, expected={'format': 'drawing-studies-v1'})
+                shutil.copytree(bundled/ident, drawings, dirs_exist_ok=True)
+            else:
+                build(assets/'style-studies/project.json', assets/'style-studies/joinery.json', drawings, style=ident)
             variant = sample/'variants'/ident
             entries.append(dict(id=ident, label=label, swatch=swatch, source=str(drawings),
                                 presentation=str(variant/'presentation.jpg'), base_image=str(sample/'base.jpg'),
@@ -184,6 +197,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+    except ModuleNotFoundError as error:
+        print(f'Missing dependency: {error.name}. Run bash scripts/setup.sh and use .venv/bin/python for drawing generation. The unchanged bundled demo needs no dependency installation.', file=sys.stderr)
+        sys.exit(1)
     except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError) as error:
         print(f'Interior design failed: {error}', file=sys.stderr)
         sys.exit(1)

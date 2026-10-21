@@ -1,0 +1,4 @@
+id,kind,wall,offset,width,height,sill
+D01,door,south,700,900,2100,0
+W01,window,north,1400,2800,1400,900
+W02,window,east,2600,1400,1400,900

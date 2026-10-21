@@ -55,7 +55,7 @@
   "furniture": [
     {
       "id": "F01",
-      "name": "Linen sofa",
+      "name": "亞麻沙發 / Linen sofa",
       "kind": "sofa",
       "x": 700,
       "y": 3200,
@@ -67,7 +67,7 @@
     },
     {
       "id": "F02",
-      "name": "Coffee table",
+      "name": "茶几 / Coffee table",
       "kind": "table",
       "x": 1300,
       "y": 1850,
@@ -79,7 +79,7 @@
     },
     {
       "id": "F03",
-      "name": "Work desk",
+      "name": "書桌 / Work desk",
       "kind": "table",
       "x": 4000,
       "y": 3400,
@@ -91,7 +91,7 @@
     },
     {
       "id": "F04",
-      "name": "Desk chair",
+      "name": "書椅 / Desk chair",
       "kind": "chair",
       "x": 4400,
       "y": 2600,
@@ -103,7 +103,7 @@
     },
     {
       "id": "F05",
-      "name": "Custom low sideboard",
+      "name": "訂製矮櫃 / Custom low sideboard",
       "kind": "cabinet",
       "x": 3400,
       "y": 250,

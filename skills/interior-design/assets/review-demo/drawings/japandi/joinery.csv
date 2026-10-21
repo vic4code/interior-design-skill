@@ -1,0 +1,15 @@
+parameter,value,units
+width,2200,mm
+depth,450,mm
+height,750,mm
+body_depth,429,mm
+inner_depth,420,mm
+bay_clear,527.5,mm
+leaf_width,546.25,mm
+base_top,98,mm
+top_under,730,mm
+shelf_top,428,mm
+shelf_bottom,410,mm
+door_top,727,mm
+door_bottom,83,mm
+leaf_height,644,mm

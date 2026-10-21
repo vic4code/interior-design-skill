@@ -151,19 +151,20 @@ Agent 負責整理資料與執行工具；有舊專案就使用舊專案。尺�
 
 ## 直接試用完整範例
 
-在 checkout 中使用單一入口，產出四種風格並**自動開啟瀏覽器**：
+在 checkout 中以 Python 3.11+ 使用單一入口，開啟內附四種風格並**自動開啟瀏覽器**：
 
 ```bash
 cd skills/interior-design
-bash scripts/setup.sh
-.venv/bin/python scripts/interior_design.py demo --out /path/to/my-design
+python3 scripts/interior_design.py demo --out /path/to/my-design
 ```
 
 輸出整理在 `drawings/` 與 `review/`。範例內附以基底圖生成的效果圖與對應範例幾何，不呼叫付費圖片 API，也不需跑 Blender 渲染。真正的新方案由 agent 使用平台的 image gen 工具製作；平常由 agent 替你執行流程，這些指令也可直接本機試用。
 
-Python 3.11+ 執行出圖工具，Node.js 建置前端；Blender 4.3+ 僅用於原生模型擷取／建模與選用的模型渲染。Image gen 需要平台工具或已設定的服務，權限、額度與可能費用依服務而定。簡化幾何與基底視角可減少精細材質與本機渲染工作，但不保證生成圖與 Blender 幾何完全一致。
+原樣試用範例只需 Python 3.11+：圖面與正式版前端已內附，首次啟動略過 PyPI、npm 與本機建置。重開可用 `python3 scripts/interior_design.py review --existing /path/to/my-design/review`。
 
-Windows：用 `py -m venv .venv` 建立環境，以 `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt` 安裝依賴，再使用該 Python 執行單一入口。
+需要新出圖或 `demo --rebuild` 時，再執行一次 `bash scripts/setup.sh` 並使用 `.venv/bin/python`。Setup 會沿用符合鎖定版本的依賴，有 `uv` 時優先使用；只有修改前端原始碼後重建才需要 Node.js；Blender 4.3+ 僅用於原生模型擷取／建模與選用的模型渲染。Image gen 需要平台工具或已設定的服務，權限、額度與可能費用依服務而定。簡化幾何與基底視角可減少精細材質與本機渲染工作，但不保證生成圖與 Blender 幾何完全一致。
+
+Windows：離線範例可直接用 `py`；需要出圖時，用 `py -m venv .venv` 建立環境，以 `.venv\Scripts\python -m pip install -r scripts/requirements.lock.txt` 安裝依賴，再使用該 Python 執行單一入口。
 
 ## 可攜、清楚的 skill 結構
 

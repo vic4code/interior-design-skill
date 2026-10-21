@@ -5,10 +5,12 @@
       "kind": "source-geometry-layout",
       "source": "skills/interior-design/assets/style-studies/project.json",
       "svg": "docs/showcase/five-deliverables/layout.svg",
-      "image_sha256": "4af5e2baae2718a7887b34613a696b97a21198d8b6a8fc8e3a701f72d39a4061",
-      "source_sha256": "d9b1a054ca8bdadd123b9b3e4c7456e6bb85a0dae06d3a5b09d7aadc07e0efd2",
+      "image_sha256": "0a5676c6008045f789c8919faf499ba69bb144758dfb196b2c69821687820e81",
+      "source_sha256": "97a9bb9ad0f80db7cb03233b7687cd851c0633fd96df34eecf8c68881ac6b6a6",
       "width": 900,
-      "height": 675
+      "height": 675,
+      "svg_sha256": "ae11d673ecde2ee94f70428608a07beb3984723edc690f905f4812256dacb974",
+      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained."
     },
     "03-imagegen.jpg": {
       "kind": "completion-simulation",
@@ -22,18 +24,20 @@
     "04-mep.jpg": {
       "kind": "lighting-electrical-coordination",
       "source": "docs/showcase/drawings/A102.svg",
-      "image_sha256": "a67b26bb6a14a808a5f41bf0b5ba5c8f1f31dea991ed64beb0f0ec414e62c00c",
+      "image_sha256": "ef4373bcc6a8a98d194b94cfddf0a21769b34a988fdadeb4d06d48431eacd5df",
       "source_sha256": "7d68b28aeaeb854663441a92c57e41eb68c09a6f6ed59fbf25df14b9289b4761",
       "width": 900,
-      "height": 675
+      "height": 675,
+      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained."
     },
     "05-engineering.jpg": {
       "kind": "cabinet-arrangement",
       "source": "docs/showcase/drawings/J301.svg",
-      "image_sha256": "95730c3bc6839f0d299f82aa36faae6abcedc0ec0bdc19a58d9fa3e66d09b4fb",
+      "image_sha256": "0d4df434b176b7880e392cd23eeeeb0e8078842f9e0bf6406500b25c49b054e4",
       "source_sha256": "d249efae3f72b85bd8696ba693cf847b50999f4d29f44d93edbb96836f74af5e",
       "width": 900,
-      "height": 675
+      "height": 675,
+      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained."
     },
     "02-3d.jpg": {
       "kind": "interactive-geometry-screenshot",
@@ -47,7 +51,7 @@
         "lights_on": true
       },
       "view": "Default MCM camera fit, open enclosure; real-time appearance preview, not photometric simulation.",
-      "method": "Screenshot of the actual WebGL model canvas at a fixed 900 \u00d7 675 viewport, without generative image editing.",
+      "method": "Screenshot of the actual WebGL model canvas at a fixed 900 × 675 viewport, without generative image editing.",
       "lighting_provenance": "docs/showcase/lighting-3d/provenance.json"
     }
   }

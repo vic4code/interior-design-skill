@@ -197,8 +197,8 @@ h1 {
 }
 #drawing-viewport {
   overflow: hidden;
-  background: #e4e2db;
-  padding: 16px;
+  background: #ffffff;
+  padding: 0;
 }
 #plan {
   display: block;
