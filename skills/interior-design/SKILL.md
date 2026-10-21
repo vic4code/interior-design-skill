@@ -3,7 +3,7 @@ name: interior-design
 description: Turn everyday interior-design needs, optional plans and existing projects into image-generated design visualizations, spatial layouts and dimensioned drawing deliveries, then open the results in a local browser. Use for room design, renovation, furniture/material selection, model-guided image generation and contractor/designer coordination. Continue existing geometry first; use project-specific models for arbitrary room shapes and multiple rooms.
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
   compatibility: Host image tool for AI visuals; Python 3.11+ for the offline demo; drawing dependencies for generating sheets; Node.js 20.19+ or 22.12+ only to rebuild the viewer; Blender 4.3+ only for native extraction/model work.
 ---
 

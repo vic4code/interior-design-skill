@@ -4,7 +4,7 @@
 
 English · [繁體中文](README.zh-TW.md)
 
-[Release v0.1.0](https://github.com/vic4code/interior-design-skill/releases/tag/v0.1.0) · [Changelog](CHANGELOG.md)
+[Release v0.1.1](https://github.com/vic4code/interior-design-skill/releases/tag/v0.1.1) · [Changelog](CHANGELOG.md)
 
 For **Codex, Claude Code, Cursor and GitHub Copilot**. Tell your agent how you want to live, what you like and what needs to fit. It develops the spatial proposal, creates image-gen visualizations, prepares dimensioned drawings and opens one local review page. Plans and measurements improve precision; you can start with words and clearly marked assumptions.
 

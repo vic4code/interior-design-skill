@@ -4,7 +4,7 @@
 
 [English](README.md) · 繁體中文
 
-[正式版本 v0.1.0](https://github.com/vic4code/interior-design-skill/releases/tag/v0.1.0) · [版本紀錄](CHANGELOG.md)
+[正式版本 v0.1.1](https://github.com/vic4code/interior-design-skill/releases/tag/v0.1.1) · [版本紀錄](CHANGELOG.md)
 
 支援 **Codex、Claude Code、Cursor、GitHub Copilot**。告訴 agent 生活需求、喜歡的風格與要放的東西，它會整理空間提案、製作 image gen 效果圖、準備尺寸圖冊，最後自動開啟同一個本機檢視頁。提供平面圖與量測會更精準；沒有也能先用清楚標示的假設開始。
 

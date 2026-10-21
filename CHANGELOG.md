@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 — 2026-10-21
+
+- Ship the four-style demo drawings and production viewer for offline startup with Python 3.11+; no PyPI/npm downloads are needed for the unchanged demo.
+- Reuse matching setup dependencies, prefer uv when available, and bound package-download retries. Source fingerprints invalidate stale bundled builds.
+- Show furniture names directly on the layout, retaining smaller IDs for drawing references.
+- Remove extra drawing-preview mats while preserving proportional 900 × 675 canvases.
+- Separate English and Traditional Chinese README layout images.
+
 ## 0.1.0 — 2026-10-21
 
 First public release of the portable Interior Design skill.
