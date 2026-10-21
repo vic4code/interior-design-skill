@@ -3,7 +3,7 @@ name: interior-design
 description: Develop interior-design proposals and contractor coordination packages from briefs, plans or existing models, with visualizations, dimensioned drawings, specifications and traceable open decisions. Use for room design, renovation, furniture/material selection, construction-detail development and quotation preparation. Continue actual project geometry and open the delivery in a local browser.
 license: MIT
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
   compatibility: Host image tool for AI visuals; Python 3.11+ for the offline demo; drawing dependencies for generating sheets; Node.js 20.19+ or 22.12+ only to rebuild the viewer; Blender 4.3+ only for native extraction/model work.
 ---
 

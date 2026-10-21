@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 — 2026-10-21
+
+- Route professional and contractor-facing requests through dimensioned drawings, linked specifications, trade interfaces and traceable open decisions.
+- Define scoped readiness for coordination, quotation, construction and fabrication; keep assumed dimensions and unverified product/site information explicit.
+- Add quotation quantity bases, inclusions/exclusions and decision closure evidence without implying new calculation or viewer capabilities.
+- Update Traditional Chinese handoff guidance and add cabinet-coordination and screenshot-only MEP evaluation scenarios.
+
 ## 0.1.1 — 2026-10-21
 
 - Ship the four-style demo drawings and production viewer for offline startup with Python 3.11+; no PyPI/npm downloads are needed for the unchanged demo.
