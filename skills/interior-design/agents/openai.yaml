@@ -1,4 +1,4 @@
 interface:
   display_name: "Interior Design"
-  short_description: "From room ideas to visual concepts and detailed drawings"
-  default_prompt: "Use $interior-design to turn my room needs and preferred style into a visual proposal, layout and dimensioned drawing package. Use any plans or measurements I provide; otherwise mark assumptions and tell me what to measure next."
+  short_description: "Interior concepts, drawings and contractor coordination"
+  default_prompt: "Use $interior-design to develop my interior project from its actual plans, measurements and needs. For contractor discussions, prepare dimensioned drawings, linked specifications, trade interfaces, open decisions and an honest readiness assessment. For quotations, include scope and quantity bases. Distinguish assumed dimensions from verified site evidence and ask for the few missing decisions that affect the next revision. Open the completed delivery in my browser."

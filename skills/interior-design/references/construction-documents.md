@@ -2,6 +2,8 @@
 
 A professional-looking sheet is only useful when its dimensions, specifications and details resolve what the recipient needs to build. Set the drawing register for the actual project and track incomplete technical evidence instead of filling gaps with invented details.
 
+For professional, quotation or contractor-facing requests, use [contractor-coordination.md](contractor-coordination.md) for the required record fields, trade interfaces and issue gates. This reference covers drawing content and graphical checks; the coordination reference governs package completeness.
+
 ## Scope the sheet register
 
 | Discipline / sheet | Required content where applicable |

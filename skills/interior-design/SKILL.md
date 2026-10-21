@@ -1,6 +1,6 @@
 ---
 name: interior-design
-description: Turn everyday interior-design needs, optional plans and existing projects into image-generated design visualizations, spatial layouts and dimensioned drawing deliveries, then open the results in a local browser. Use for room design, renovation, furniture/material selection, model-guided image generation and contractor/designer coordination. Continue existing geometry first; use project-specific models for arbitrary room shapes and multiple rooms.
+description: Develop interior-design proposals and contractor coordination packages from briefs, plans or existing models, with visualizations, dimensioned drawings, specifications and traceable open decisions. Use for room design, renovation, furniture/material selection, construction-detail development and quotation preparation. Continue actual project geometry and open the delivery in a local browser.
 license: MIT
 metadata:
   version: "0.1.1"
@@ -45,9 +45,15 @@ Record `mode`, `image_sha256`, `review_status`, and `base_sha256` when condition
 
 ## 3. Develop drawings people can work through
 
+When the user asks for professional detail, discussions with trades, quotations, fabrication or construction, read [contractor coordination](references/contractor-coordination.md) before preparing the delivery. Default these requests to an engineering coordination package, and state its actual readiness. Agree the requested use from the brief; an informal request to discuss with a carpenter does not imply a complete building-services design.
+
+For that route, deliver the relevant drawings together with linked specifications, an issue register, trade interfaces and a readiness assessment. Quotation requests also need a measured scope with inclusions, exclusions and quantity bases. Every included construction item must trace to its location, drawing/detail, specification and evidence or an explicit unresolved decision. Generate the useful substantiated detail now; missing inputs become targeted questions with consequences, owners and closure evidence. Completion means the requested scope is covered or individually accounted for in the gaps, rather than merely producing a PDF or an interactive plan.
+
 Use the same model revision for plans, elevations, sections and component dimensions. Establish a readable sheet register, room/use labels, internal and overall dimension chains, opening IDs/location, detail/section references, material legends and schedules appropriate to the project. A mesh outline with only a bounding-box dimension is not a complete construction drawing.
 
 Follow [construction documents](references/construction-documents.md) and [drawing handoff](references/drawing-handoff.zh-TW.md). Verify clear sizes, panel thickness, datums and dimension closure against actual modeled faces; keep envelopes distinct from functional openings. Record hardware, joints, fixing substrates, loads, services and site items that remain unresolved. Do not invent construction details merely to fill a sheet.
+
+Separate document purpose, dimensional evidence, proposed/selected product status and actual review records. A visually accepted rendering or a populated checklist does not advance a construction issue status. Keep unresolved work usable for discussion and record exactly which procurement, fabrication or site operation it blocks. Advance issue status only for the scope supported by the recorded evidence and responsible review; preserve any excluded or held scope.
 
 Inspect the actual PDF/SVG at print scale for legibility, missing glyphs, overlaps, omitted geometry and consistent references. Explain issue status honestly. Coordination drawings become construction/fabrication releases only after the necessary site/product/trade decisions and review.
 
@@ -66,6 +72,8 @@ For an existing drawing delivery and its generated visual:
 Provide `--model /path/to/space.glb` when an actual matching model is available. For native extraction plus delivery, use the entry point's `native --help`; preserve the real view/selection profile. Never force an existing project through the synthetic demo.
 
 The review command packages the actual sheet register, clean layout and separate visual/base/provenance, builds the viewer when needed, serves only that review package on localhost and opens the browser automatically. Show presentation first, room/view selection, base comparison, spatial/model inspection, available MEP and drawings/downloads. Do not require a separate terminal/server command from the user. Return the URL and saved delivery location. See [browser review](references/browser-review.md) for same-space variants and metadata. Reopen with `review --existing /path/to/review`; `--stop` stops its local review server.
+
+For contractor-facing work, expose the issue purpose/revision and links to the coordination records as well as the drawings. Use point/route selection to expose technical records when that interaction is actually implemented. The bundled viewer and packer do not automatically ingest the coordination tables defined in the professional reference: provide them as separate linked project artifacts, or implement and verify the integration. Report the actual coverage; count only generated and inspected artifacts as delivered.
 
 Start 3D with the interior visible through a view-only cutaway, with a control to restore the full enclosure; preserve source geometry. Keep plan, MEP and drawing content in a consistent viewing frame with fit/zoom controls. Avoid nested vertical scrolling inside the page's content blocks.
 

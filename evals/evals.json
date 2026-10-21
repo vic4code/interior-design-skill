@@ -5,7 +5,9 @@
       "id": 1,
       "prompt": "I installed only this skill folder. Use its supplied fictional room data to create a drawings-only review package from a different working directory. I do not have Blender available. Tell me what I can discuss with my contractor and what still needs verification.",
       "expected_output": "A generated PDF/SVG/DXF/CSV package with matching revision and source hashes, clear model-unavailable status and unresolved trade questions; no dependency on the parent repository.",
-      "files": ["skills/interior-design/assets/example-project.json"]
+      "files": [
+        "skills/interior-design/assets/example-project.json"
+      ]
     },
     {
       "id": 2,
@@ -17,6 +19,21 @@
       "id": 3,
       "prompt": "The layout changed in my browser after the last Blender export. Make a realistic finished-room image and a dimensioned handoff for my designer without losing those changes.",
       "expected_output": "A plan to reconcile or freeze the evaluated scene, regenerate model-derived deliverables for the same revision, and preserve geometry-faithful base renders separately from optional AI appearance simulations with provenance.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "使用提供的虛構客廳 F05 矮櫃資料，幫我整理能和木作、水電討論並詢價的工程協調包。鉸鏈和固定牆體還沒選定。",
+      "expected_output": "Relevant dimensioned drawings with source revision, linked material/hardware specifications, trade interfaces, an issue register with proposed owners and required-before milestones, and quotation scope with quantity bases and inclusions/exclusions. Preserve assumed measurement status and unknown product/anchor details. Do not declare fabrication ready merely because cabinet dimension chains close. Distinguish generated artifacts from proposed viewer features.",
+      "files": [
+        "skills/interior-design/assets/style-studies/project.json",
+        "skills/interior-design/assets/style-studies/joinery.json"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "我只有一張別人家的手機截圖，上面有插座編號和給排水路徑。照這種專業程度幫我準備自己家的水電發包圖，目前沒有尺寸、設備或現況管線資料。",
+      "expected_output": "A useful initial inventory and coordination scope that separates screenshot inspiration from site evidence, targeted requests for calibration, actual equipment and existing services, linked unknowns and work they hold, and an honest achieved-purpose assessment. Do not infer final circuiting, cable/pipe sizes, drainage slopes, concealed routes, quantities, prices or construction approval from the screenshot.",
       "files": []
     }
   ]
