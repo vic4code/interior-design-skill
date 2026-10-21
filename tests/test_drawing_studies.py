@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]/'skills/interior-design'
@@ -69,5 +70,61 @@ class DrawingStudyTests(unittest.TestCase):
             for svg in svgs:
                 root=ET.parse(svg).getroot();self.assertEqual(root.attrib['viewBox'],'0 0 420 297')
             self.assertGreater((out/'design-coordination.pdf').stat().st_size,15000)
+
+    def test_existing_project_files_are_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as td:
+            out=Path(td)/'project';out.mkdir()
+            (out/'author.blend').write_bytes(b'original model')
+            (out/'A101.svg').write_bytes(b'original drawing')
+            before={p.name:p.read_bytes() for p in out.iterdir()}
+            with self.assertRaises(ValueError):
+                build(ROOT/'assets/style-studies/project.json',ROOT/'assets/style-studies/joinery.json',out)
+            self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+
+    def test_reduced_sheet_scope_does_not_leave_obsolete_owned_drawings(self):
+        with tempfile.TemporaryDirectory() as td:
+            out=Path(td)/'issued'
+            project=ROOT/'assets/style-studies/project.json';joinery=ROOT/'assets/style-studies/joinery.json'
+            build(project,joinery,out)
+            selected=make_sheets(self.project,self.joinery,self.style)[:1]
+            with patch('build_drawing_studies.make_sheets',return_value=selected):
+                build(project,joinery,out)
+                self.assertEqual({path.name for path in out.glob('*.svg')},{selected[0].code+'.svg'})
+                manifest=json.loads((out/'manifest.json').read_text())
+                self.assertEqual(set(manifest['files']),{path.name for path in out.iterdir()}-{'manifest.json'})
+                build(project,joinery,out)
+                self.assertEqual(manifest['files'],json.loads((out/'manifest.json').read_text())['files'])
+
+    def test_owned_output_rebuilds_but_changes_unknown_files_and_symlinks_are_preserved(self):
+        for alteration in ('none','modified','unknown','symlink'):
+            with self.subTest(alteration=alteration),tempfile.TemporaryDirectory() as td:
+                base=Path(td);out=base/'issued'
+                build(ROOT/'assets/style-studies/project.json',ROOT/'assets/style-studies/joinery.json',out)
+                original=json.loads((out/'manifest.json').read_text())['files']
+                if alteration=='modified':(out/'A101.svg').write_bytes(b'edited drawing')
+                if alteration=='unknown':(out/'author.blend').write_bytes(b'original model')
+                if alteration=='symlink':
+                    target=base/'original.svg';target.write_bytes(b'original external drawing')
+                    (out/'A101.svg').unlink();(out/'A101.svg').symlink_to(target)
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                if alteration=='none':
+                    build(ROOT/'assets/style-studies/project.json',ROOT/'assets/style-studies/joinery.json',out)
+                    self.assertEqual(original,json.loads((out/'manifest.json').read_text())['files'])
+                else:
+                    with self.assertRaises(ValueError):
+                        build(ROOT/'assets/style-studies/project.json',ROOT/'assets/style-studies/joinery.json',out)
+                    self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+                    if alteration=='symlink':self.assertEqual(target.read_bytes(),b'original external drawing')
+
+    def test_project_and_joinery_inputs_inside_output_are_rejected(self):
+        for inside in ('project','joinery'):
+            with self.subTest(inside=inside),tempfile.TemporaryDirectory() as td:
+                base=Path(td);out=base/'issued';out.mkdir()
+                project=(out if inside=='project' else base)/'project.json'
+                joinery=(out if inside=='joinery' else base)/'joinery.json'
+                project.write_text(json.dumps(self.project));joinery.write_text(json.dumps(self.joinery))
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                with self.assertRaises(ValueError):build(project,joinery,out)
+                self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
 
 if __name__=='__main__':unittest.main()

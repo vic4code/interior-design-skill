@@ -17,6 +17,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 INTERNAL = ROOT / 'scripts/_internal'
 sys.path.insert(0, str(INTERNAL))
+from output_ownership import verify_output_directory, verify_inputs_outside, write_output_manifest
 
 
 def run_helper(name, arguments):
@@ -44,11 +45,17 @@ def browser_arguments(parser):
     parser.add_argument('--viewer', type=Path, help='Optional prebuilt viewer directory.')
 
 
-def package_review(drawings, out, args):
+def package_review(drawings, out, args, *, open_viewer=True):
     from build_review import build
     build(drawings, out, presentation=args.image, base_image=args.base_image,
           provenance=args.provenance, model=args.model, metadata=args.metadata)
-    finish(out, args)
+    if open_viewer:
+        finish(out, args)
+
+
+def review_inputs(args):
+    from build_review import metadata_inputs
+    return [args.image, args.base_image, args.provenance, args.model, *metadata_inputs(args.metadata)]
 
 
 def main():
@@ -114,7 +121,8 @@ def main():
                      for name in ('presentation.jpg', 'image-provenance.json', 'space.glb')]
         if not all(path.is_file() for path in required):
             parser.error('The complete skill must include a shared demo base and four presentation/provenance/GLB variants.')
-        output = args.out.resolve()
+        verify_inputs_outside(args.out, [assets])
+        output = verify_output_directory(args.out, expected={'format': 'demo-output-v1'})
         entries = []
         for ident, label, swatch in styles:
             drawings = output/'drawings'/ident
@@ -130,6 +138,7 @@ def main():
         config.write_text(json.dumps(dict(variants=entries), indent=2)+'\n', encoding='utf-8')
         from build_review import build_variants
         build_variants(config, output/'review')
+        write_output_manifest(output, 'demo-output-v1')
         finish(output/'review', args)
     elif args.command == 'review':
         if args.existing:
@@ -147,12 +156,13 @@ def main():
                 if any((args.image, args.base_image, args.provenance, args.model, args.metadata)):
                     parser.error('Put per-variant presentation options in --variants configuration')
                 from build_review import build_variants
-                build_variants(args.variants, args.out.resolve())
+                build_variants(args.variants, args.out)
                 finish(args.out.resolve(), args)
             else:
-                package_review(args.drawings, args.out.resolve(), args)
+                package_review(args.drawings, args.out, args)
     elif args.command == 'native':
-        output = args.out.resolve()
+        verify_inputs_outside(args.out, [args.blend, args.inventory, args.config, *review_inputs(args)])
+        output = verify_output_directory(args.out, expected={'format': 'native-output-v1'})
         inventory = args.inventory
         if args.blend:
             binary = shutil.which(args.blender)
@@ -166,7 +176,9 @@ def main():
                             '--python', str(INTERNAL/'extract_native_model.py'), '--', '--out', str(inventory)], check=True)
         from build_native_handoff import build
         build(inventory.resolve(), output/'drawings', args.config.resolve())
-        package_review(output/'drawings', output/'review', args)
+        package_review(output/'drawings', output/'review', args, open_viewer=False)
+        write_output_manifest(output, 'native-output-v1')
+        finish(output/'review', args)
 
 
 if __name__ == '__main__':

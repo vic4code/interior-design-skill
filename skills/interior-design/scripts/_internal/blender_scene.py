@@ -51,7 +51,15 @@ def furniture(f):
 
 
 def main():
-    args=sys.argv[sys.argv.index('--')+1:];source,out=Path(args[0]),Path(args[1]);data=json.loads(source.read_text());r=data['room']
+    args=sys.argv[sys.argv.index('--')+1:];source,out=Path(args[0]),Path(args[1])
+    if out.is_symlink():
+        raise ValueError('Output cannot be a symlink')
+    out=out.resolve()
+    for name in ('scene.glb','scene.blend','render.png','render-settings.json'):
+        target=out/name
+        if target.exists() or target.is_symlink():
+            raise ValueError('Render output already exists; choose a new directory: '+name)
+    data=json.loads(source.read_text());r=data['room']
     bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
     scene=bpy.context.scene;scene.unit_settings.system='METRIC';scene.unit_settings.scale_length=1
     wall=material('Warm wall',data['finishes']['wall']['color']);floor=material('Oak floor',data['finishes']['floor']['color'])

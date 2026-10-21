@@ -15,6 +15,7 @@ from pathlib import Path
 import re
 import textwrap
 from build_drawing_studies import Sheet, INK, MUTED, ACCENT, PALE, table, number
+from output_ownership import verify_output_directory, verify_inputs_outside
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 
@@ -354,6 +355,9 @@ def supplementary_sheets(config,records,inventory,issues):
 
 
 def build(inventory_path,out,config_path=None):
+    verify_inputs_outside(out,[inventory_path]+([config_path] if config_path else []))
+    out=verify_output_directory(out,expected={'format':'native-handoff-v1'})
+    previous_files=set(json.loads((out/'manifest.json').read_text())['files']) if (out/'manifest.json').is_file() else set()
     inventory_path=Path(inventory_path);inventory=json.loads(inventory_path.read_text())
     if inventory.get('format')!='native-model-inventory-v1' or inventory.get('units',{}).get('coordinate_unit')!='mm':raise ValueError('Expected native-model-inventory-v1, world-space mm')
     if len({o['id'] for o in inventory['objects']})!=len(inventory['objects']):raise ValueError('Duplicate object IDs')
@@ -375,7 +379,7 @@ def build(inventory_path,out,config_path=None):
         view_register=[extra_records[0]]+view_register+extra_records[1:]
     codes=[sheet.code for sheet in sheets]
     if len(set(codes))!=len(codes) or any(not re.fullmatch(r'[A-Za-z][A-Za-z0-9_-]{0,25}',code) for code in codes):raise ValueError('Sheet IDs must be unique safe filenames')
-    out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    out.mkdir(parents=True,exist_ok=True)
     pdf=canvas.Canvas(str(out/'native-coordination.pdf'),pagesize=(420*mm,297*mm),pageCompression=1,invariant=1)
     pdf.setTitle(config.get('project','Native model coordination'));pdf.setAuthor('Interior Design Skill')
     for sh in sheets:sh.save(out/(sh.code+'.svg'),pdf)
@@ -399,6 +403,9 @@ def build(inventory_path,out,config_path=None):
     sha=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
     sources=dict(inventory=sha(inventory_path),native_file=inventory['source']['sha256'],generator=sha(__file__),drawing_renderer=sha(Path(__file__).with_name('build_drawing_studies.py')))
     if config_path:sources['selection_config']=sha(config_path)
+    # Sheet IDs and scope can change between revisions. Remove only verified
+    # previous registrations after all new output has been generated.
+    for name in previous_files-{f.name for f in files}:(out/name).unlink()
     (out/'manifest.json').write_text(json.dumps(dict(format='native-handoff-v1',source_hashes=sources,files={f.name:sha(f) for f in files}),indent=2)+'\n')
     return view_register
 

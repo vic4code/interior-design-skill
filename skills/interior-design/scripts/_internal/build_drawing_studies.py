@@ -20,6 +20,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor
 from reportlab.lib.units import mm
 from project import validate, dxf
+from output_ownership import verify_output_directory, verify_inputs_outside
 
 ROOT = Path(__file__).resolve().parents[2]
 INK, MUTED, ACCENT, PALE = '#243345', '#66727c', '#986747', '#ece9e3'
@@ -394,11 +395,14 @@ def write_csv(path,fields,rows):
         writer=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(rows)
 
 def build(project_path,joinery_path,out,style='mcm'):
+    verify_inputs_outside(out,[project_path,joinery_path])
+    out=verify_output_directory(out,expected={'format':'drawing-studies-v1'})
+    previous_files=set(json.loads((out/'manifest.json').read_text())['files']) if (out/'manifest.json').is_file() else set()
     p=json.loads(Path(project_path).read_text());j=json.loads(Path(joinery_path).read_text())
     validate(p);g=joinery_geometry(p,j)
     styles=json.loads((ROOT/'assets/style-studies/styles.json').read_text())
     if style not in styles:raise ValueError(f'Unknown style {style}')
-    sheets=make_sheets(p,j,styles[style]);out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    sheets=make_sheets(p,j,styles[style]);out.mkdir(parents=True,exist_ok=True)
     pdf=canvas.Canvas(str(out/'design-coordination.pdf'),pagesize=(420*mm,297*mm),pageCompression=1,invariant=1)
     pdf.setTitle('Gallery Living - design coordination');pdf.setAuthor('Interior Design Skill')
     for sh in sheets:sh.save(out/(sh.code+'.svg'),pdf)
@@ -413,6 +417,9 @@ def build(project_path,joinery_path,out,style='mcm'):
     files=[out/(s.code+'.svg') for s in sheets]+[out/n for n in ['design-coordination.pdf','project.json','joinery.json','plan.dxf','furniture.csv','materials.csv','openings.csv','joinery.csv','issues.csv']]
     digest=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
     sources={name:digest(path) for name,path in [('project.json',project_path),('joinery.json',joinery_path),('styles.json',ROOT/'assets/style-studies/styles.json'),('build_drawing_studies.py',__file__)]}
+    # All old registrations were verified before writing; prune obsolete sheets
+    # only once every replacement artifact has been produced successfully.
+    for name in previous_files-{f.name for f in files}:(out/name).unlink()
     (out/'manifest.json').write_text(json.dumps(dict(format='drawing-studies-v1',units='mm',style=style,status='design coordination / technical development',sources=sources,files={f.name:digest(f) for f in files}),indent=2)+'\n')
     return sheets
 

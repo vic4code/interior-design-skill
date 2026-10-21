@@ -12,5 +12,6 @@ if command -v blender >/dev/null 2>&1; then
 else
   printf '%s\n' 'Blender is optional: use your agent image tool for presentation; native geometry extraction requires Blender.'
 fi
-printf '%s\n' 'Try the complete sample: .venv/bin/python scripts/interior_design.py demo --out output/first-review'
+printf '%s\n' 'Try the complete sample: .venv/bin/python scripts/interior_design.py demo --out /path/to/project/review'
+printf '%s\n' 'Replace /path/to/project/review with a project directory outside this installed skill.'
 printf '%s\n' 'The review opens in your browser. Add --no-serve to only package files.'

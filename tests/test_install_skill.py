@@ -86,6 +86,36 @@ class InstallSkillTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertEqual(len(result.stdout.splitlines()), 4)
 
+    def test_used_skill_keeps_bundled_assets_without_copying_outputs_or_sessions(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / 'source'
+            source.mkdir()
+            (source / 'SKILL.md').write_text('test')
+            bundled = source / 'assets/review-demo/presentation.jpg'
+            bundled.parent.mkdir(parents=True)
+            bundled.write_bytes(b'synthetic bundled image')
+            private_paths = (
+                'output/first-review/review/private-plan.json',
+                'output/first-review/review/.viewer-session.json',
+                'outputs/project/review/private-plan.json',
+                'assets/work/output/private-plan.json',
+                '.viewer-session.json',
+                'assets/review-demo/.viewer-session.json',
+            )
+            for name in private_paths:
+                path = source / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('synthetic private runtime data')
+            for agent in installer.HOSTS:
+                with self.subTest(agent=agent):
+                    installed = installer.install(agent, project=root, source=source)
+                    self.assertEqual((installed / bundled.relative_to(source)).read_bytes(), bundled.read_bytes())
+                    self.assertTrue((installed / 'SKILL.md').is_file())
+                    for name in private_paths:
+                        self.assertFalse((installed / name).exists(), name)
+                        self.assertTrue((source / name).is_file(), name)
+
     def test_install_rejects_source_recursion_and_invalid_scope(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

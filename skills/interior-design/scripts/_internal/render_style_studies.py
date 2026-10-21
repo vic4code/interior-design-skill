@@ -12,6 +12,10 @@ from pathlib import Path
 import random
 import sys
 
+# Blender's --python runner does not consistently add the script directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from output_ownership import require_empty_output, verify_inputs_outside
+
 import bpy
 from mathutils import Vector
 
@@ -406,6 +410,8 @@ def main():
     parser.add_argument('--samples',type=int,default=48)
     parser.add_argument('--device',choices=['cpu','metal'],default='cpu',help='Portable CPU default; Metal uses available Apple GPU with CPU fallback')
     args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+    args.out = require_empty_output(args.out)
+    verify_inputs_outside(args.out, [args.project, args.styles, args.joinery])
     # Factory UI avoids serializing user workspace state into distributable native scenes.
     bpy.ops.wm.read_factory_settings(use_empty=True)
     for screen in bpy.data.screens:

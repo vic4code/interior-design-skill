@@ -132,6 +132,40 @@ class ReviewPackageTests(unittest.TestCase):
             build(self.source, other)
         self.assertTrue((other/'notes.txt').exists())
 
+    def test_existing_review_rejects_authored_files_and_edited_artifacts_before_replacement(self):
+        self.native()
+        for mode in ('unmanaged', 'extra-file', 'edited-artifact', 'symlink'):
+            with self.subTest(mode=mode):
+                out = self.root/('review-'+mode)
+                if mode == 'unmanaged':
+                    out.mkdir()
+                    (out/'authored.blend').write_bytes(b'original Blender project')
+                else:
+                    build(self.source, out)
+                    if mode == 'extra-file':
+                        (out/'authored.blend').write_bytes(b'original Blender project')
+                    elif mode == 'edited-artifact':
+                        (out/'N301.svg').write_bytes(b'author revised drawing')
+                    else:
+                        (out/'linked-source').symlink_to(self.source, target_is_directory=True)
+                before = {p.relative_to(out).as_posix(): p.read_bytes()
+                          for p in out.rglob('*') if p.is_file()}
+                with self.assertRaises(ValueError):
+                    build(self.source, out)
+                self.assertEqual({p.relative_to(out).as_posix(): p.read_bytes()
+                                  for p in out.rglob('*') if p.is_file()}, before)
+
+    def test_metadata_attachment_inside_existing_output_is_preserved(self):
+        self.native()
+        build(self.source, self.out)
+        source = self.out/'N301.svg'
+        metadata = self.root/'metadata.json'
+        metadata.write_text(json.dumps(dict(mep=[dict(id='MEP1', source=str(source))])))
+        before = source.read_bytes()
+        with self.assertRaisesRegex(ValueError, 'outside and separate'):
+            build(self.source, self.out, metadata=metadata)
+        self.assertEqual(source.read_bytes(), before)
+
 
 class SameSpaceVariantTests(unittest.TestCase):
     def setUp(self):
@@ -247,9 +281,28 @@ class SameSpaceVariantTests(unittest.TestCase):
             build_variants(self.config, self.out)
 
     def test_config_inside_output_is_never_deleted(self):
-        with self.assertRaisesRegex(ValueError, 'separate from variants configuration'):
+        with self.assertRaisesRegex(ValueError, 'outside and separate'):
             build_variants(self.config, self.root)
         self.assertTrue(self.config.is_file())
+
+    def test_variants_rebuild_refuses_authored_or_changed_output_and_preserves_every_byte(self):
+        build_variants(self.config, self.out)
+        build_variants(self.config, self.out)
+        for name in ('authored.blend', 'variants/mcm/A101.svg'):
+            with self.subTest(name=name):
+                artifact = self.out/name
+                previous = artifact.read_bytes() if artifact.exists() else None
+                artifact.write_bytes(b'author source must survive')
+                before = {p.relative_to(self.out).as_posix(): p.read_bytes()
+                          for p in self.out.rglob('*') if p.is_file()}
+                with self.assertRaises(ValueError):
+                    build_variants(self.config, self.out)
+                self.assertEqual({p.relative_to(self.out).as_posix(): p.read_bytes()
+                                  for p in self.out.rglob('*') if p.is_file()}, before)
+                if previous is None:
+                    artifact.unlink()
+                else:
+                    artifact.write_bytes(previous)
 
     def test_different_conditioning_reference_is_rejected(self):
         provenance = self.root/self.items[1]['provenance']

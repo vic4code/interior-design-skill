@@ -79,6 +79,66 @@ class NativeHandoffTests(unittest.TestCase):
             for name,digest in manifest['files'].items():self.assertEqual(digest,hashlib.sha256((out/name).read_bytes()).hexdigest())
             self.assertEqual(manifest['source_hashes']['inventory'],hashlib.sha256(source.read_bytes()).hexdigest())
 
+    def test_existing_project_files_are_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as td:
+            base=Path(td);source=base/'inventory.json';out=base/'project';out.mkdir()
+            source.write_text(json.dumps(dict(format='native-model-inventory-v1',units=dict(coordinate_unit='mm'),source=dict(filename='example.blend',sha256='0'*64),objects=[box()])))
+            (out/'author.blend').write_bytes(b'original model')
+            (out/'M001.svg').write_bytes(b'original drawing')
+            before={p.name:p.read_bytes() for p in out.iterdir()}
+            with self.assertRaises(ValueError):build(source,out)
+            self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+
+    def test_owned_output_rebuilds_but_changes_unknown_files_and_symlinks_are_preserved(self):
+        for alteration in ('none','modified','unknown','symlink'):
+            with self.subTest(alteration=alteration),tempfile.TemporaryDirectory() as td:
+                base=Path(td);source=base/'inventory.json';out=base/'issued'
+                source.write_text(json.dumps(dict(format='native-model-inventory-v1',units=dict(coordinate_unit='mm'),source=dict(filename='example.blend',sha256='0'*64),objects=[box()])))
+                build(source,out)
+                original=json.loads((out/'manifest.json').read_text())['files']
+                if alteration=='modified':(out/'M001.svg').write_bytes(b'edited drawing')
+                if alteration=='unknown':(out/'author.blend').write_bytes(b'original model')
+                if alteration=='symlink':
+                    target=base/'original.svg';target.write_bytes(b'original external drawing')
+                    (out/'M001.svg').unlink();(out/'M001.svg').symlink_to(target)
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                if alteration=='none':
+                    build(source,out)
+                    self.assertEqual(original,json.loads((out/'manifest.json').read_text())['files'])
+                else:
+                    with self.assertRaises(ValueError):build(source,out)
+                    self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+                    if alteration=='symlink':self.assertEqual(target.read_bytes(),b'original external drawing')
+
+    def test_inventory_and_config_inputs_inside_output_are_rejected(self):
+        for inside in ('inventory','config'):
+            with self.subTest(inside=inside),tempfile.TemporaryDirectory() as td:
+                base=Path(td);out=base/'issued';out.mkdir()
+                source=(out if inside=='inventory' else base)/'inventory.json'
+                config=(out if inside=='config' else base)/'selection.json'
+                source.write_text(json.dumps(dict(format='native-model-inventory-v1',units=dict(coordinate_unit='mm'),source=dict(filename='example.blend',sha256='0'*64),objects=[box()])))
+                config.write_text('{}')
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                with self.assertRaises(ValueError):build(source,out,config)
+                self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+
+    def test_changed_sheet_ids_and_count_replace_only_owned_obsolete_sheets(self):
+        with tempfile.TemporaryDirectory() as td:
+            base=Path(td);source=base/'inventory.json';profile=base/'selection.json';out=base/'issued'
+            source.write_text(json.dumps(dict(format='native-model-inventory-v1',units=dict(coordinate_unit='mm'),source=dict(filename='example.blend',sha256='0'*64),objects=[box()])))
+            profile.write_text(json.dumps(dict(views=[dict(sheet='N101',kind='plan',title='Plan'),dict(sheet='N201',kind='elevation',title='Elevation',axis='y')],include_register=True,include_schedules=True)))
+            first=build(source,out,profile)
+            self.assertGreater(len(first),2)
+            profile.write_text(json.dumps(dict(views=[dict(sheet='N102',kind='plan',title='Revised plan')])))
+            second=build(source,out,profile)
+            self.assertEqual([view['sheet'] for view in second],['N102'])
+            self.assertEqual({path.name for path in out.glob('*.svg')},{'N102.svg'})
+            manifest=json.loads((out/'manifest.json').read_text())
+            self.assertEqual(set(manifest['files']),{path.name for path in out.iterdir()}-{'manifest.json'})
+            third=build(source,out,profile)
+            self.assertEqual(second,third)
+            self.assertEqual(manifest['files'],json.loads((out/'manifest.json').read_text())['files'])
+
     def test_traditional_chinese_pdf_uses_unicode_font_and_wraps_by_display_width(self):
         from build_drawing_studies import paragraph_lines
         import shutil

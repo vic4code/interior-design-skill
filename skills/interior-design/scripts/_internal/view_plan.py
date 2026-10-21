@@ -195,12 +195,18 @@ def plan(data, base_dir, budget=12):
 
 
 def build(source, out, budget=12):
-    source, out = Path(source).resolve(), Path(out).resolve()
+    source, out = Path(source).resolve(), Path(out).absolute()
+    if out.is_symlink():
+        raise ValueError('Output view plan cannot be a symlink')
+    out = out.resolve()
     if source == out:
         raise ValueError('Output must not overwrite the input spaces JSON')
+    if out.exists():
+        raise ValueError('Output view plan already exists; choose a new file or revision')
     result = plan(json.loads(source.read_text(encoding='utf-8')), source.parent, budget)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    with out.open('x', encoding='utf-8') as stream:
+        stream.write(json.dumps(result, ensure_ascii=False, indent=2)+'\n')
     return result
 
 

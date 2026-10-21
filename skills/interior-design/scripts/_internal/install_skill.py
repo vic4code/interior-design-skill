@@ -15,8 +15,8 @@ HOSTS = {
 }
 IGNORE = (
     ".git", ".venv", "venv", ".cache", ".pytest_cache", ".mypy_cache",
-    "node_modules", "dist", "generated", "__pycache__", ".DS_Store",
-    "*.pyc", "*.pyo", ".env", ".env.*",
+    "node_modules", "dist", "generated", "output", "outputs", "__pycache__", ".DS_Store",
+    "*.pyc", "*.pyo", ".env", ".env.*", ".viewer-session.json",
 )
 
 

@@ -7,6 +7,7 @@ import html
 import json
 import math
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -230,15 +231,70 @@ def write_csv(path,fields,rows):
             writer.writerow(safe)
 
 
+DRAWING_FILES = ('project.json','drawings.pdf','A101.svg',*[f'A20{i}.svg' for i in range(1,5)],
+                 'plan.dxf','furniture.csv','openings.csv','materials.csv','review.json','handoff.md')
+MODEL_FILES = ('scene.glb','scene.blend','render.png','render-settings.json')
+
+
+def verified_previous_outputs(out):
+    """Prove ownership and unchanged bytes before replacing any output artifact."""
+    if not out.exists():
+        return set()
+    if not out.is_dir():
+        raise ValueError('Output must be a directory')
+    contents = {path.name for path in out.iterdir()}
+    if not contents:
+        return set()
+    manifest_path = out/'manifest.json'
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise ValueError('Refusing to replace an unmanaged nonempty output directory; choose a new directory')
+    manifest = json.loads(manifest_path.read_text())
+    if (not isinstance(manifest, dict) or manifest.get('schema_version') != '1.0'
+            or manifest.get('status') != 'coordination_draft'
+            or not isinstance(manifest.get('has_model'), bool)
+            or not isinstance(manifest.get('source_sha256'), str)
+            or not re.fullmatch(r'[0-9a-f]{64}', manifest['source_sha256'])
+            or not isinstance(manifest.get('files'), list)):
+        raise ValueError('Output does not contain a valid generated project manifest')
+    expected = set(DRAWING_FILES) | (set(MODEL_FILES) if manifest['has_model'] else set())
+    registered = set()
+    for item in manifest['files']:
+        if not isinstance(item, dict):
+            raise ValueError('Invalid generated artifact registration')
+        name = item.get('name')
+        if not isinstance(name, str) or name not in expected or name in registered:
+            raise ValueError('Invalid or duplicate generated artifact name')
+        path = out/name
+        if (path.is_symlink() or not path.is_file()
+                or type(item.get('bytes')) is not int or item['bytes'] <= 0
+                or path.stat().st_size != item['bytes']
+                or hashlib.sha256(path.read_bytes()).hexdigest() != item.get('sha256')):
+            raise ValueError('Refusing to replace missing or modified output artifact: '+name)
+        registered.add(name)
+    if registered != expected or contents != registered | {'manifest.json'}:
+        raise ValueError('Output contains missing or unregistered artifacts; preserve them and choose a new directory')
+    return registered
+
+
 def build(source,out,blender=False):
     data=validate(json.loads(source.read_text()))
-    out=out.resolve();out.mkdir(parents=True,exist_ok=True)
+    original_out=Path(out).absolute()
+    if original_out.is_symlink(): raise ValueError('Output cannot be a symlink')
+    out=original_out.resolve()
     if source.resolve().is_relative_to(out): raise ValueError('Source project must be outside output directory')
-    # Clear known optional artifacts on every successful rebuild; never show stale models.
-    for name in ('scene.glb','scene.blend','render.png','scene.blend1','render-settings.json','manifest.json'):
+    previous=verified_previous_outputs(out)
+    binary=shutil.which('blender') if blender else None
+    if blender and not binary:
+        raise ValueError('Blender 4.3+ is required for --blender; install Blender or omit this flag for drawings only')
+    sheets=drawings(data)
+    issues=review(data)
+    source_sha256=hashlib.sha256(source.read_bytes()).hexdigest()
+    out.mkdir(parents=True,exist_ok=True)
+    # Only a verified generated package owns these optional artifacts. Authored
+    # files and Blender backups are never inferred to be stale by their names.
+    for name in (previous & set(MODEL_FILES)) | {'manifest.json'}:
         (out/name).unlink(missing_ok=True)
     (out/'project.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
-    sheets=drawings(data)
     pdf=canvas.Canvas(str(out/'drawings.pdf'),pagesize=(420*mm,297*mm))
     pdf.setTitle('Interior coordination drawings - '+data['project']['revision'])
     for sh in sheets:
@@ -251,19 +307,16 @@ def build(source,out,blender=False):
     write_csv(out/'materials.csv',['surface','finish','net_area_m2','basis'],[
         {'surface':'floor','finish':data['finishes']['floor']['name'],'net_area_m2':round(floor,3),'basis':'Net geometry; excludes waste, skirting and build-up'},
         {'surface':'wall','finish':data['finishes']['wall']['name'],'net_area_m2':round(walls,3),'basis':'One interior face; openings deducted; no reveals or waste'}])
-    issues=review(data);(out/'review.json').write_text(json.dumps(issues,indent=2))
+    (out/'review.json').write_text(json.dumps(issues,indent=2))
     (out/'handoff.md').write_text('# Coordination package / 工程協調草圖\n\n**NOT FOR CONSTRUCTION — 不可直接施工或下單。**\n\n'
         +'Project: '+data['project']['name']+' / '+data['project']['revision']+'\n\n'
         +'詳細圖面說明見已安裝 skill 的 references/drawing-handoff.zh-TW.md。尺寸單位 mm，模型單位 m；PDF 為 A3，100% 列印；比例請看各張圖框（通常 1:50，深房間平面 1:100）。優先以標註尺寸為準，不量螢幕截圖。\n\n'
         +'現階段只有單房幾何、家具包絡、門窗名義尺寸及牆面立面。未設計水電、天花、消防、防水與施工節點；沒有聲稱滿足任何建築法規。\n\n'
         +'## Outstanding review\n\n'+'\n'.join(f'- {i["id"]} / {i["topic"]}: {i["detail"]}' for i in issues)+'\n')
     if blender:
-        binary=shutil.which('blender')
-        if not binary: raise ValueError('Blender 4.3+ is required for --blender; install Blender or omit this flag for drawings only')
         subprocess.run([binary,'--background','--threads','4','--python-exit-code','1','--python',str(ROOT/'scripts/_internal/blender_scene.py'),'--',str(out/'project.json'),str(out)],check=True)
-    files=['project.json','drawings.pdf','A101.svg',*[f'A20{i}.svg' for i in range(1,5)],'plan.dxf','furniture.csv','openings.csv','materials.csv','review.json','handoff.md']
-    if blender: files+=['scene.glb','scene.blend','render.png','render-settings.json']
-    manifest={'schema_version':'1.0','revision':data['project']['revision'],'status':'coordination_draft','has_model':blender,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'files':[]}
+    files=list(DRAWING_FILES)+(list(MODEL_FILES) if blender else [])
+    manifest={'schema_version':'1.0','revision':data['project']['revision'],'status':'coordination_draft','has_model':blender,'source_sha256':source_sha256,'files':[]}
     for name in files:
         p=out/name
         if not p.is_file() or not p.stat().st_size: raise ValueError(f'Missing or empty output: {name}')

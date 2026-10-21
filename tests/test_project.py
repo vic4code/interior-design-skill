@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]/'skills/interior-design'
@@ -45,9 +46,9 @@ class ProjectTests(unittest.TestCase):
         self.data['furniture'][1]['x']=800;self.data['furniture'][1]['y']=3300
         validate(self.data)
         self.assertTrue(any(i['id'].startswith('CLASH-') for i in review(self.data)))
-    def test_package_units_quantities_revision_and_stale_artifacts(self):
+    def test_package_units_quantities_and_revision(self):
         with tempfile.TemporaryDirectory() as temp:
-            out=Path(temp)/'package';out.mkdir();(out/'scene.glb').write_bytes(b'stale')
+            out=Path(temp)/'package'
             manifest=build(ROOT/'assets/example-project.json',out)
             self.assertFalse((out/'scene.glb').exists());self.assertFalse(manifest['has_model'])
             self.assertEqual(manifest['revision'],'P01')
@@ -63,6 +64,69 @@ class ProjectTests(unittest.TestCase):
             self.assertAlmostEqual(float(rows[1]['net_area_m2']),52.71)
             self.assertIn('$INSUNITS\n70\n4', (out/'plan.dxf').read_text())
             self.assertTrue((out/'drawings.pdf').read_bytes().startswith(b'%PDF-'))
+    def test_unmanaged_output_preserves_authored_files_and_stale_looking_models(self):
+        for name in ('scene.blend', 'scene.blend1', 'scene.glb', 'project.json'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temp:
+                out=Path(temp)/'existing-project';out.mkdir()
+                original=out/name;original.write_bytes(b'authored project sentinel')
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                with self.assertRaisesRegex(ValueError, 'unmanaged nonempty'):
+                    build(ROOT/'assets/example-project.json',out)
+                self.assertEqual({p.name:p.read_bytes() for p in out.iterdir()},before)
+
+    def build_model_package(self, out):
+        # Replace only the external Blender process; exercise the real builder,
+        # generated manifest and subsequent rebuild through their public API.
+        def export(_command, **_kwargs):
+            for name in ('scene.glb','scene.blend','render.png','render-settings.json'):
+                (out/name).write_bytes(('generated '+name).encode())
+        with patch('project.shutil.which', return_value='/example/blender'), \
+                patch('project.subprocess.run', side_effect=export):
+            return build(ROOT/'assets/example-project.json',out,blender=True)
+
+    def test_verified_model_package_can_rebuild_without_stale_models(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out=Path(temp)/'package'
+            original=self.build_model_package(out)
+            self.assertTrue(original['has_model'])
+            manifest=build(ROOT/'assets/example-project.json',out)
+            self.assertFalse(manifest['has_model'])
+            for name in ('scene.glb','scene.blend','render.png','render-settings.json'):
+                self.assertFalse((out/name).exists())
+            # A normal drawing-only package remains rebuildable as well.
+            rebuilt=build(ROOT/'assets/example-project.json',out)
+            self.assertEqual(rebuilt['revision'],manifest['revision'])
+            for item in rebuilt['files']:
+                self.assertEqual(hashlib.sha256((out/item['name']).read_bytes()).hexdigest(),item['sha256'])
+
+    def test_modified_registered_blend_is_preserved_before_any_rebuild_writes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out=Path(temp)/'package';self.build_model_package(out)
+            (out/'scene.blend').write_bytes(b'new authored edit')
+            before={p.name:p.read_bytes() for p in out.iterdir()}
+            with self.assertRaisesRegex(ValueError, 'modified output artifact: scene.blend'):
+                build(ROOT/'assets/example-project.json',out)
+            self.assertEqual({p.name:p.read_bytes() for p in out.iterdir()},before)
+
+    def test_unregistered_blender_source_and_backup_are_preserved_in_managed_output(self):
+        for name in ('scene.blend','scene.blend1'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temp:
+                out=Path(temp)/'package';build(ROOT/'assets/example-project.json',out)
+                (out/name).write_bytes(b'authored source or backup')
+                before={p.name:p.read_bytes() for p in out.iterdir()}
+                with self.assertRaisesRegex(ValueError, 'unregistered artifacts'):
+                    build(ROOT/'assets/example-project.json',out)
+                self.assertEqual({p.name:p.read_bytes() for p in out.iterdir()},before)
+
+    def test_source_inside_output_is_rejected_without_creating_artifacts(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out=Path(temp)/'existing-project';out.mkdir()
+            source=out/'input.json';source.write_text(json.dumps(self.data))
+            before=source.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'outside output'):
+                build(source,out)
+            self.assertEqual(source.read_bytes(),before)
+            self.assertEqual([p.name for p in out.iterdir()],['input.json'])
     def test_large_room_plan_fits_sheet_and_csv_is_not_formula(self):
         from project import drawings, write_csv
         self.data['room']['depth']=10000

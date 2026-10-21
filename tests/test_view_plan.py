@@ -92,6 +92,24 @@ class ViewPlanTests(unittest.TestCase):
             self.assertEqual(len(data['jobs']), 3)
             self.assertEqual(data['deferred_views'], 1)
 
+    def test_existing_plan_source_and_conditioning_images_are_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); source=root/'spaces.json'; base=root/'reference.png'; out=root/'plan.json'
+            base.write_bytes(b'authored spatial reference')
+            source.write_text(json.dumps(dict(spaces=[dict(id='room',area_m2=25)],
+                                             existing_views=[dict(id='front',space='room',base_image='reference.png')])))
+            build(source,out)
+            before={p.name:p.read_bytes() for p in root.iterdir()}
+            for target in (source,base,out):
+                with self.subTest(target=target.name), self.assertRaises(ValueError):
+                    build(source,target)
+                self.assertEqual({p.name:p.read_bytes() for p in root.iterdir()},before)
+            link=root/'alias.json'; link.symlink_to(root/'future.json')
+            with self.assertRaisesRegex(ValueError,'symlink'):
+                build(source,link)
+            self.assertTrue(link.is_symlink())
+            self.assertFalse((root/'future.json').exists())
+
 
 if __name__ == '__main__':
     unittest.main()

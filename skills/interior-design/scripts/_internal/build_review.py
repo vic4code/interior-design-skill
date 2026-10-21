@@ -14,6 +14,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 from layout_preview import create_layout
 from pdf_preview import render_pdf_pages
+from output_ownership import verify_output_directory, verify_inputs_outside
 
 ALLOWED = {'.json', '.svg', '.pdf', '.csv', '.dxf', '.md', '.txt', '.png', '.jpg', '.jpeg', '.webp', '.glb'}
 IMAGE_TYPES = {'.png', '.jpg', '.jpeg', '.webp'}
@@ -26,6 +27,33 @@ def digest(path):
 
 def read_json(path):
     return json.loads(Path(path).read_text(encoding='utf-8'))
+
+
+def metadata_inputs(metadata):
+    """Resolve attachment inputs for preflight before an enclosing build writes."""
+    if metadata is None:
+        return []
+    metadata = Path(metadata)
+    data = read_json(metadata)
+    if not isinstance(data, dict):
+        raise ValueError('Review metadata must be an object')
+    paths = [metadata]
+    for group, keys in (('presentations', ('image', 'base_image', 'provenance')), ('mep', ('source',))):
+        entries = data.get(group, [])
+        if not isinstance(entries, list):
+            raise ValueError('Metadata '+group+' must be a list')
+        for entry in entries:
+            if not isinstance(entry, dict):
+                raise ValueError('Invalid metadata attachment entry')
+            for key in keys:
+                value = entry.get(key)
+                if value is None:
+                    continue
+                if not isinstance(value, str) or not value:
+                    raise ValueError('Invalid metadata attachment path')
+                path = Path(value)
+                paths.append(path if path.is_absolute() else metadata.resolve().parent/path)
+    return paths
 
 
 def safe_file(root, name):
@@ -110,15 +138,8 @@ def project_and_sheets(files, manifest):
 
 def build(source, out, presentation=None, base_image=None, provenance=None, model=None, metadata=None):
     source = Path(source).resolve()
-    original_out = Path(out).absolute()
-    if original_out.is_symlink():
-        raise ValueError('Output cannot be a symlink')
-    out = original_out.resolve()
-    if source == out or source in out.parents or out in source.parents:
-        raise ValueError('Output must be separate from source')
-    if out.exists() and (not out.is_dir() or any(out.iterdir())):
-        if not (out / 'manifest.json').is_file() or read_json(out / 'manifest.json').get('schema_version') not in ('1.0', '2.0'):
-            raise ValueError('Refusing to replace a directory without a browser package manifest')
+    verify_inputs_outside(out, [source, presentation, base_image, provenance, model, *metadata_inputs(metadata)])
+    out = verify_output_directory(out, expected={'schema_version': '2.0'})
     issued = read_json(safe_file(source, 'manifest.json'))
     files = registered_files(source, issued)
     project, sheets = project_and_sheets(files, issued)
@@ -301,15 +322,8 @@ def build_variants(config, out):
     variants = spec.get('variants') if isinstance(spec, dict) else None
     if not isinstance(variants, list) or not variants:
         raise ValueError('Variants config must contain a nonempty variants list')
-    output = Path(out).absolute()
-    if output.is_symlink():
-        raise ValueError('Output cannot be a symlink')
-    output = output.resolve()
-    if config == output or output in config.parents:
-        raise ValueError('Output must be separate from variants configuration')
-    if output.exists() and (not output.is_dir() or any(output.iterdir())):
-        if not (output/'manifest.json').is_file() or read_json(output/'manifest.json').get('schema_version') != '2.0':
-            raise ValueError('Refusing to replace a directory without a browser package manifest')
+    verify_inputs_outside(out, [config])
+    output = verify_output_directory(out, expected={'schema_version': '2.0'})
     entries, identities, base_hashes = [], [], []
     seen = set()
     for item in variants:
@@ -332,6 +346,7 @@ def build_variants(config, out):
                 paths[key] = (config.parent/path).resolve() if not path.is_absolute() else path.resolve()
                 if paths[key] == output or output in paths[key].parents or paths[key] in output.parents:
                     raise ValueError('Output must be separate from all variant inputs')
+        verify_inputs_outside(output, [*paths.values(), *metadata_inputs(paths.get('metadata'))])
         if 'source' not in paths:
             raise ValueError('Variant source is required: ' + ident)
         issued = read_json(safe_file(paths['source'], 'manifest.json'))

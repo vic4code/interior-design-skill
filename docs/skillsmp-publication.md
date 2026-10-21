@@ -8,8 +8,8 @@ This repo has a public source and a standard skill folder. Installation:
 npx skills add vic4code/interior-design-skill --skill interior-design
 ```
 
-Suggested positioning: **Turn interior ideas into Blender scenes, interactive reviews and dimensioned coordination drawings.**
+Suggested positioning: **Describe your space, explore image-generated designs and open layouts, interactive 3D, MEP coordination and dimensioned drawings in one browser review.**
 
-Prepare a strong synthetic showcase: an actual base render, useful camera/detail views, a plan comparison, and, optionally, a separately labelled AI completion simulation. An attractive conceptual image is not evidence of geometry consistency or implemented features.
+The synthetic showcase includes the same space in four styles, actual image-generated completion simulations, independent day/night and lamp controls in the interactive model, a clean plan and an eight-sheet coordination package. Image generation is the presentation route; model geometry and drawing dimensions provide the spatial evidence. A generated image does not certify geometry consistency or construction readiness.
 
 After merging changes, verify public access to SKILL.md and companion references, then search SkillsMP for the exact repo/name. If absent, use only a current, confirmed submission/support route on the site. Do not claim marketplace acceptance or indexing before a real listing exists.

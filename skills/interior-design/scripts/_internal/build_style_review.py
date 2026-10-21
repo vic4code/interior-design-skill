@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 import shutil
 from PIL import Image
+from build_review import safe_file
+from output_ownership import verify_inputs_outside, verify_output_directory
 
 
 def digest(path):
@@ -14,9 +16,9 @@ def digest(path):
 
 
 def build(study, drawings, out):
-    study, drawings, out = [Path(p).resolve() for p in (study, drawings, out)]
-    if study == out or drawings == out or study in out.parents or drawings in out.parents:
-        raise ValueError('Output must be separate from source study/drawings')
+    study, drawings = [Path(p).resolve() for p in (study, drawings)]
+    out = verify_output_directory(out, expected={'schema_version': '1.0'})
+    verify_inputs_outside(out, [study, drawings])
     rendered = json.loads((study/'render-settings.json').read_text())
     issued = json.loads((drawings/'manifest.json').read_text())
     dimensions = json.loads((study/'model_dimensions.json').read_text())
@@ -28,20 +30,24 @@ def build(study, drawings, out):
         raise ValueError('Render and drawing revisions differ')
     if rendered['style'] != issued['style']:
         raise ValueError('Render and drawing styles differ')
+    source_files = {name: safe_file(drawings, name) for name in issued['files']}
     for name, sha in issued['files'].items():
-        if digest(drawings/name) != sha:
+        if digest(source_files[name]) != sha:
             raise ValueError('Drawing artifact checksum mismatch: '+name)
     expected = {f['id']: [f[k] for k in ('x','y','width','depth','height')] for f in project['furniture']}
     actual = {f['id']: [f[k] for k in ('x','y','width','depth','height')] for f in dimensions['furniture']}
     if expected != actual:
         raise ValueError('Render/drawing nominal furniture dimensions differ')
     out.mkdir(parents=True, exist_ok=True)
-    for stale in ('manifest.json','scene.blend','scene.glb','render.png','render-settings.json'):
-        (out/stale).unlink(missing_ok=True)
+    if (out/'manifest.json').is_file():
+        previous = json.loads((out/'manifest.json').read_text())
+        for item in previous['files']:
+            (out/item['name']).unlink()
+        (out/'manifest.json').unlink()
     names = []
     for name in issued['files']:
         target = 'drawings.pdf' if name == 'design-coordination.pdf' else name
-        shutil.copyfile(drawings/name, out/target); names.append(target)
+        shutil.copyfile(source_files[name], out/target); names.append(target)
     for name in ('scene.glb','render-settings.json','model_dimensions.json'):
         shutil.copyfile(study/name, out/name); names.append(name)
     with Image.open(study/'hero.png') as image:

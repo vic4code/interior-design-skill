@@ -10,6 +10,13 @@ parser.add_argument('--samples',type=int,default=128);parser.add_argument('--out
 args=parser.parse_args(sys.argv[sys.argv.index('--')+1:])
 if not (256 <= args.width <= 8192 and 256 <= args.height <= 8192 and 1 <= args.samples <= 4096):
     parser.error('Resolution must be 256..8192 and samples 1..4096')
+args.out = args.out.expanduser().absolute()
+if bpy.data.filepath and args.out.resolve() == Path(bpy.data.filepath).resolve():
+    parser.error('Output cannot overwrite the source Blender file')
+if args.out.exists() or args.out.is_symlink():
+    parser.error('Output image already exists; choose a new file or revision')
+if args.out.suffix.lower() != '.png':
+    parser.error('Output image must use a .png extension')
 args.out.parent.mkdir(parents=True,exist_ok=True)
 scene=bpy.context.scene;scene.render.resolution_x=args.width;scene.render.resolution_y=args.height;scene.render.resolution_percentage=100
 scene.render.engine='CYCLES';scene.cycles.samples=args.samples;scene.cycles.use_denoising=bool(getattr(__import__('_cycles'),'with_openimagedenoise',False))
