@@ -1,12 +1,29 @@
 # Interior Design Skill
 
-**Describe your space. Explore the design. Open the complete delivery in your browser.**
+**From interior ideas to contractor coordination: bring the design, specifications and open decisions together.**
 
 English · [繁體中文](README.zh-TW.md)
 
-[Release v0.1.1](https://github.com/vic4code/interior-design-skill/releases/tag/v0.1.1) · [Changelog](CHANGELOG.md)
+[Version v0.1.2](https://github.com/vic4code/interior-design-skill/tree/v0.1.2) · [Changelog](CHANGELOG.md)
 
 For **Codex, Claude Code, Cursor and GitHub Copilot**. Tell your agent how you want to live, what you like and what needs to fit. It develops the spatial proposal, creates image-gen visualizations, prepares dimensioned drawings and opens one local review page. Plans and measurements improve precision; you can start with words and clearly marked assumptions.
+
+## v0.1.2: prepare for the contractor conversation
+
+Ask for a professional coordination package or quotation scope, and the agent follows a new [contractor-coordination workflow](skills/interior-design/references/contractor-coordination.md). It develops the relevant drawings and records from the actual project, with assumptions and missing decisions kept visible.
+
+| Deliverable | What it helps you resolve |
+| --- | --- |
+| Linked drawings and specifications | Locate each item and find its dimensions, material/build-up, product selection status and detail references. |
+| Point and equipment schedules | Distinguish existing and proposed points, their setting-out datum, evidence and equipment interfaces. |
+| Trade interface register | Identify who should supply, install, connect and make good, and which work must happen first. |
+| Open decisions / RFIs | State the exact question, affected work, proposed owner, required-before milestone and evidence needed to close it. |
+| Quotation scope | Compare quantities, measurement bases, inclusions/exclusions, alternatives and held work; leave unsourced prices blank. |
+| Scoped readiness and revision record | Show what is ready for discussion, pricing or issue, what remains held, and which drawings/specifications must change together. |
+
+For example, an unspecified cabinet hinge becomes a decision linked to **F05 / J301 / J401**, with a proposed joiner/hardware-supplier role and a required-before-ordering milestone. A closed dimension chain alone does not release the cabinet for fabrication.
+
+**This version upgrades agent instructions and delivery requirements.** The existing demo images, eight-sheet sets and viewer remain the same. The agent prepares the additional project-specific coordination records as separate deliverables; the demo command does not automatically generate these records or add interactive point editing. Construction/fabrication issue status still depends on actual site, product and responsible trade review.
 
 ## You get five connected views
 
@@ -139,6 +156,10 @@ npx skills add vic4code/interior-design-skill --skill interior-design
 
 > Use interior-design. I want a warm living room with reading space, concealed storage and a work corner. Compare MCM, Japandi and Bauhaus in the same layout. Plan enough image-generated views to show each activity, including daylight with the lights off and warm lights-on views. Use matching image sizes and camera framing. Give me a layout, interactive 3D, available MEP coordination and dimensioned drawings, then open it all in my browser. I can provide a floor plan and measurements later.
 
+For contractor discussions or quotations:
+
+> Use interior-design to prepare an engineering coordination and quotation package from my existing project. Link the relevant plans, elevations, sections and details to material/hardware specifications and point schedules. Include trade interfaces, open decisions with proposed owners and required-before milestones, quantity bases and inclusions/exclusions. Show what is ready for discussion or pricing and what still holds procurement, fabrication or site work. Preserve unknown dimensions and product choices; open the actual delivery and link any separate coordination records.
+
 The agent handles data preparation and tools. With an existing project, it uses that project. Without measured dimensions, it labels assumptions and lists what to measure next. Available outputs depend on the host's image/model tools and project evidence; [host compatibility](docs/agent-compatibility.md) distinguishes installation checks from live workflow tests.
 
 ## Actual drawing deliverables
@@ -151,7 +172,7 @@ Project drawings should include room/use labels, internal dimension chains, open
 
 ## Try the complete example
 
-From a checkout, use Python 3.11+ to open the bundled four-style example and **opens the browser automatically**:
+From a checkout, use Python 3.11+ to open the bundled four-style example **automatically in your browser**:
 
 ```bash
 cd skills/interior-design
