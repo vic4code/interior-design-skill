@@ -18,7 +18,7 @@
     <td width="50%" valign="top"><strong>2. 3D 設計</strong></td>
   </tr>
   <tr>
-    <td width="50%" valign="top"><a href="docs/showcase/five-deliverables/layout.svg"><img src="docs/showcase/five-deliverables/01-layout.jpg" alt="同一個空間的乾淨平面配置，包含門窗與五件家具範圍" width="440" height="330"></a></td>
+    <td width="50%" valign="top"><a href="docs/showcase/five-deliverables/layout-zh-TW.svg"><img src="docs/showcase/five-deliverables/01-layout-zh-TW.jpg" alt="同一個空間的乾淨平面配置，包含門窗與五件家具範圍" width="440" height="330"></a></td>
     <td width="50%" valign="top"><a href="docs/showcase/five-deliverables/02-3d.jpg"><img src="docs/showcase/five-deliverables/02-3d.jpg" alt="打開外牆的彩色互動空間模型與日光預覽" width="440" height="330"></a></td>
   </tr>
   <tr>

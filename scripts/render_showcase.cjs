@@ -4,17 +4,40 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const folder = path.join(root, 'docs/showcase/five-deliverables');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 
 (async () => {
+  // Generate each language from the same geometry and source furniture names.
+  execFileSync(process.env.INTERIOR_PYTHON || 'python3', ['-c', `
+import copy, json, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+sys.path.insert(0, str(root/'skills/interior-design/scripts/_internal'))
+from layout_preview import structured_layout
+project = json.loads((root/'skills/interior-design/assets/style-studies/project.json').read_text())
+for language, filename in [('en', 'layout.svg'), ('zh-TW', 'layout-zh-TW.svg')]:
+    localized = copy.deepcopy(project)
+    for item in localized['furniture']:
+        names = item['name'].split(' / ', 1)
+        item['name'] = names[-1] if language == 'en' else names[0]
+    (root/'docs/showcase/five-deliverables'/filename).write_text(structured_layout(localized))
+`, root]);
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     const page = await browser.newPage({ viewport: { width: 900, height: 675 }, deviceScaleFactor: 1 });
     const provenance = JSON.parse(fs.readFileSync(path.join(folder, 'provenance.json')));
+    provenance.previews['01-layout.jpg'].language = 'en';
+    provenance.previews['01-layout-zh-TW.jpg'] = {
+      ...provenance.previews['01-layout.jpg'],
+      svg: 'docs/showcase/five-deliverables/layout-zh-TW.svg',
+      language: 'zh-TW',
+    };
     for (const [name, source] of [
       ['01-layout.jpg', 'docs/showcase/five-deliverables/layout.svg'],
+      ['01-layout-zh-TW.jpg', 'docs/showcase/five-deliverables/layout-zh-TW.svg'],
       ['04-mep.jpg', 'docs/showcase/drawings/A102.svg'],
       ['05-engineering.jpg', 'docs/showcase/drawings/J301.svg'],
     ]) {

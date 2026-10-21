@@ -2,6 +2,8 @@
 
 These previews show real outputs of the bundled S01 room example. Each JPEG uses the same 900 × 675 px canvas. The browser keeps the layout, interactive geometry, image-gen results, MEP references and engineering sheets in separate modes of one review page.
 
+The English README uses [English furniture labels](layout.svg); the Traditional Chinese README uses [Chinese furniture labels](layout-zh-TW.svg). Both layouts share the same source geometry, canvas and camera-free plan framing.
+
 | Preview | Actual source | Meaning |
 | --- | --- | --- |
 | [1. Layout](layout.svg) | Room, opening and furniture coordinates in the shared structured project | Clean nominal furniture footprints for discussing arrangement; no invented measured dimensions |

@@ -5,12 +5,13 @@
       "kind": "source-geometry-layout",
       "source": "skills/interior-design/assets/style-studies/project.json",
       "svg": "docs/showcase/five-deliverables/layout.svg",
-      "image_sha256": "0a5676c6008045f789c8919faf499ba69bb144758dfb196b2c69821687820e81",
+      "image_sha256": "9e0623d782cb7bb07ac7e0ab14ded252249da5054fe1116448b7639e7e934f14",
       "source_sha256": "97a9bb9ad0f80db7cb03233b7687cd851c0633fd96df34eecf8c68881ac6b6a6",
       "width": 900,
       "height": 675,
-      "svg_sha256": "ae11d673ecde2ee94f70428608a07beb3984723edc690f905f4812256dacb974",
-      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained."
+      "svg_sha256": "bffd55bb998cc04acd64ea5e8e7bdc78c36f9086df8b4db48906f203a8331b78",
+      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained.",
+      "language": "en"
     },
     "03-imagegen.jpg": {
       "kind": "completion-simulation",
@@ -53,6 +54,18 @@
       "view": "Default MCM camera fit, open enclosure; real-time appearance preview, not photometric simulation.",
       "method": "Screenshot of the actual WebGL model canvas at a fixed 900 × 675 viewport, without generative image editing.",
       "lighting_provenance": "docs/showcase/lighting-3d/provenance.json"
+    },
+    "01-layout-zh-TW.jpg": {
+      "kind": "source-geometry-layout",
+      "source": "skills/interior-design/assets/style-studies/project.json",
+      "svg": "docs/showcase/five-deliverables/layout-zh-TW.svg",
+      "image_sha256": "0a5676c6008045f789c8919faf499ba69bb144758dfb196b2c69821687820e81",
+      "source_sha256": "97a9bb9ad0f80db7cb03233b7687cd851c0633fd96df34eecf8c68881ac6b6a6",
+      "width": 900,
+      "height": 675,
+      "svg_sha256": "a48ada4882c070336dc508978822671c54263a8cee169a4076ac8ce3308b5d9b",
+      "method": "Browser rasterization; white 900 × 675 canvas, contain without stretching, colored mat or added frame. Original drawing sheet borders retained.",
+      "language": "zh-TW"
     }
   }
 }
