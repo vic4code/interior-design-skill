@@ -8,6 +8,12 @@ English · [繁體中文](README.zh-TW.md)
 
 For **Codex, Claude Code, Cursor and GitHub Copilot**. Tell your agent how you want to live, what you like and what needs to fit. It develops the spatial proposal, creates image-gen visualizations, prepares dimensioned drawings and opens one local review page. Plans and measurements improve precision; you can start with words and clearly marked assumptions.
 
+## Lightweight walkthrough (unreleased)
+
+In 3D, choose **走入空間** to enter the existing model at eye level. Drag to look, tap **前進 / 後退**, or focus the canvas and use W/S or up/down. Movement translates the camera, with near/far parallax; reset restores the entry pose and **返回旋轉** restores overview. Existing materials and day/night lighting remain available. No runtime dependencies or model downloads are added, and a settled view skips redraws.
+
+Walking uses supported single-level floor geometry and conservative obstacle checks. Unsupported models retain overview; this is not full physics or stair navigation. See [behavior and limits](skills/interior-design/references/lightweight-walkthrough.md) and [measured verification](docs/reviews/2026-10-22-lightweight-walkthrough.md). The published version remains v0.1.2 until release.
+
 ## v0.1.2: prepare for the contractor conversation
 
 Ask for a professional coordination package or quotation scope, and the agent follows a new [contractor-coordination workflow](skills/interior-design/references/contractor-coordination.md). It develops the relevant drawings and records from the actual project, with assumptions and missing decisions kept visible.

@@ -26,3 +26,11 @@ For a real browser acceptance run, omit `--no-serve`; the browser should open au
 Report platform limitations and distinguish passed checks from unverified paths. Keep the core free of required paid API calls. Publish synthetic fixtures and assets cleared for redistribution; document third-party source, author, licence and permitted use. Keep private project content and generated user projects out of Git. Describe unreviewed drawings as coordination drafts.
 
 Report mm/metre conversions and mark breaking schema changes. Improve validation errors rather than relaxing checks merely to make a failing input pass. Use `docs/reviews/` for scoped work records containing acceptance criteria and dated verification results without personal runtime data.
+
+For walkthrough changes, also run `npm --prefix skills/interior-design/assets/viewer test`.
+Run `scripts/test_walkthrough.cjs` against the localhost URL of the generated demo
+with Playwright available (`PLAYWRIGHT_MODULE` can point to an existing installation,
+`CHROME_BIN` selects Chromium). It checks real WebGL camera matrices, touch input,
+all review modes and styles, downloads, responsive controls and idle draws; save
+its synthetic screenshots/results outside the skill runtime. A software-rendered
+browser check does not establish frame rates on a physical phone.

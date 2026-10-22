@@ -8,6 +8,12 @@
 
 支援 **Codex、Claude Code、Cursor、GitHub Copilot**。告訴 agent 生活需求、喜歡的風格與要放的東西，它會整理空間提案、製作 image gen 效果圖、準備尺寸圖冊，最後自動開啟同一個本機檢視頁。提供平面圖與量測會更精準；沒有也能先用清楚標示的假設開始。
 
+## 輕量室內走動（尚未發布）
+
+在 3D 選 **走入空間**，以眼高進入既有模型。拖曳環視，點 **前進／後退**，或聚焦畫布後用 W/S、上下鍵移動。鏡頭確實平移，近遠物體會產生視差；重設回到進入時的視角，**返回旋轉** 回到原本總覽。沿用材質與日夜光線，不增加 runtime 依賴或模型下載，畫面靜止後停止重繪。
+
+走動依據可支援的單層地板與保守障礙檢查；不適用的模型保留總覽。這不是完整物理碰撞或樓梯導航。詳見[操作與限制](skills/interior-design/references/lightweight-walkthrough.md)及[實測紀錄](docs/reviews/2026-10-22-lightweight-walkthrough.md)。正式版本維持 v0.1.2，待完成發布。
+
 ## v0.1.2：把圖面帶進工程討論
 
 要求「專業工程協調」或「詢價發包」時，agent 會依新的[工程協調流程](skills/interior-design/references/contractor-coordination.md)，從實際專案製作適用的圖說與記錄，逐項標示假設和缺少的決策。

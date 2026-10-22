@@ -1,0 +1,92 @@
+{
+  "cameraBefore": [
+    3,
+    1.6050000032883627,
+    -0.6150000189526867
+  ],
+  "cameraAfter": [
+    3,
+    1.6050000532089541,
+    -0.9650000543621191
+  ],
+  "translationMetres": 0.3500000354094359,
+  "fixedProjection": true,
+  "parallax": true,
+  "idleDraws": 0,
+  "widths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "styles": 4,
+  "touch": true,
+  "simulatedHiddenDraws": 0,
+  "contextRestored": true,
+  "currentDocumentKeyListeners": 1,
+  "errors": [],
+  "failed": [],
+  "resources": [
+    {
+      "file": "index-BOjtNJrw.js",
+      "bytes": 18622
+    },
+    {
+      "file": "model-CmLb7G3U.js",
+      "bytes": 11670
+    },
+    {
+      "file": "three-renderer-1mT6bfl5.js",
+      "bytes": 324409
+    },
+    {
+      "file": "three-addons-K00L_vD1.js",
+      "bytes": 65986
+    },
+    {
+      "file": "three-scene-ewcXWWuf.js",
+      "bytes": 208920
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2559312
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2745996
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2501796
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2464692
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2559312
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2745996
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2464692
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2559312
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2745996
+    },
+    {
+      "file": "model.glb",
+      "bytes": 2559312
+    }
+  ]
+}

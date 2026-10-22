@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add opt-in eye-level forward/back walking in the existing Three.js viewer, with phone step buttons, focused keyboard controls, floor support and conservative obstacle checks, reset and return to overview.
+- Reuse materials, full enclosure and lighting with no new runtime dependency or model assets; skip settled and hidden-view rendering.
+- Document the single-level preview limits and reproducible resource/navigation acceptance checks.
+
 ## 0.1.2 — 2026-10-21
 
 - Route professional and contractor-facing requests through dimensioned drawings, linked specifications, trade interfaces and traceable open decisions.
