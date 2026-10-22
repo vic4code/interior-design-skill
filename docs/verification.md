@@ -22,3 +22,9 @@ Browser acceptance checks must use real generated packages, not only mocked rout
 Test day/night and indoor-light on/off independently, including a selection made while the model is loading. Inspect actual model pixels, not the background average: daylight must remain when lamps are off, night lighting must retain local contrast, and wood/fabric colors must survive export. Check thin rugs/floors for depth artifacts on the real GPU. Compare actual README image bounds and top edges at desktop/mobile sizes; equal source pixels alone do not establish equal displayed columns.
 
 The automated suite covers validation, geometry evidence, native annotations/schedules, copied-skill independence, same-space source/base consistency, image provenance, package hashes, local serving/isolation/reuse/stop and installation safety. Host file paths do not prove live model behavior in every host; see [compatibility](agent-compatibility.md). Image quality, site dimensions and professional construction approval cannot be established by code tests alone.
+
+The [lightweight walkthrough acceptance](reviews/2026-10-22-lightweight-walkthrough.md)
+records camera translation, parallax, floor/obstacle limits, resource deltas and
+idle draw measurements. Reproduce with the Node navigation tests and
+`scripts/test_walkthrough.cjs` on a generated demo; rebuild the shipped bundle
+before verifying the offline path.

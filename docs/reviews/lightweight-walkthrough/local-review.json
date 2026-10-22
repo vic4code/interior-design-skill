@@ -1,0 +1,18 @@
+{
+  "base_sha": "41b3c2949937b49a6c974573cb9937b0be22f612",
+  "independent_review": "passed after fixes; no remaining blocking findings",
+  "findings_fixed": [
+    "WebGL context restoration: rebuild PMREM, refresh cached shadows, invalidate scene",
+    "Superseded GLB load: defer canvas attachment and OrbitControls document listeners until current-version check",
+    "Avoid repeated unchanged aria-live mutations"
+  ],
+  "independent_context_recovery": {
+    "recovery_draws": 507,
+    "settled_draws": 0,
+    "before_after_png_sha256": "725c210f361213818b3be3bd8f080e5cfe928068d8e7ceacf804f54f779677a6"
+  },
+  "python_tests": 99,
+  "navigation_tests": 5,
+  "physical_phone_fps": "not measured",
+  "reference_video_interactivity": "not verified"
+}

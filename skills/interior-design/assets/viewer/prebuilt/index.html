@@ -9,8 +9,8 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%232b332e' d='M0 0h32v32H0z'/%3E%3Cpath stroke='%23fff' fill='none' d='M8 24V8h16v16H8M16 8v16'/%3E%3C/svg%3E"
     />
     <title>Interior · 空間設計</title>
-    <script type="module" crossorigin src="/assets/index-CHqA6_qk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CAIx0XFn.css">
+    <script type="module" crossorigin src="/assets/index-BOjtNJrw.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BxoJbL2L.css">
   </head>
   <body>
     <header class="site-header">
@@ -70,8 +70,7 @@
             <div
               id="model"
               hidden
-              role="img"
-              aria-label="可旋轉的三維空間"
+              aria-label="互動三維空間"
             ></div>
             <div id="drawing-viewport" tabindex="0" aria-label="圖面檢視；放大後可拖曳或用方向鍵平移" hidden>
               <img id="plan" alt="尺寸配置圖" />
@@ -84,11 +83,12 @@
               <button id="base-toggle" hidden>對照空間基底</button>
             </div>
             <div id="model-controls" hidden>
-              <button id="rotate">開始旋轉</button
+              <button id="walk" aria-pressed="false" disabled>走入空間</button
+              ><button id="rotate">開始旋轉</button
               ><button id="reset">重設視角</button
               ><label id="walls-control"
                 ><input id="walls" type="checkbox" /> 完整外牆</label
-              >
+              ><span id="walk-availability" role="status" hidden></span>
             </div>
             <div id="zoom-controls" hidden>
               <button id="zoom-out" aria-label="縮小圖面">−</button
@@ -104,6 +104,13 @@
             </div>
             <a id="current-original" class="text-link" target="_blank" rel="noopener" hidden>開啟原圖 ↗</a>
             <a id="current-download" class="text-link" download>下載 ↗</a>
+          </div>
+          <div id="walk-tools" class="walk-tools" hidden>
+            <div role="group" aria-label="室內前後移動">
+              <button id="walk-forward">前進</button>
+              <button id="walk-back">後退</button>
+            </div>
+            <output id="walk-status" role="status" aria-live="polite"></output>
           </div>
           <div id="view-thumbnails" class="view-thumbnails" role="group" aria-label="已完成的設計視角" hidden></div>
           <p id="mep-availability" class="availability-note" hidden></p>

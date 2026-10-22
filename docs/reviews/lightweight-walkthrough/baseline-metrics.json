@@ -1,0 +1,44 @@
+{
+  "errors": [],
+  "drawCalls": 262,
+  "elapsedMs": 2005.1000000000058,
+  "canvas": [
+    853,
+    640
+  ],
+  "resources": [
+    {
+      "name": "index-CHqA6_qk.js",
+      "bytes": 18426
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 22955
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 9144
+    },
+    {
+      "name": "model-D_VGlDyU.js",
+      "bytes": 6545
+    },
+    {
+      "name": "three-renderer-im9xAzPe.js",
+      "bytes": 324409
+    },
+    {
+      "name": "three-scene-B6elCE6I.js",
+      "bytes": 207680
+    },
+    {
+      "name": "three-addons-C2esUWVR.js",
+      "bytes": 65983
+    },
+    {
+      "name": "model.glb",
+      "bytes": 2559312
+    }
+  ],
+  "renderer": "WebKit WebGL"
+}

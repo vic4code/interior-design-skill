@@ -22,6 +22,8 @@ Use `--inventory /project/geometry-inventory.json` instead of `--blend` to reuse
 
 The clean layout presents room/furniture placement without the full title block and technical tables. Engineering mode opens a detail or section when available, preserving the complete dimensioned sheet set. Start 3D in a view-only cutaway with the interior visible and an option to restore the enclosure. Use one consistent viewing frame and fit/zoom controls across drawing modes; avoid vertical scroll containers nested inside the page.
 
+The 3D toolbar also offers **走入空間** for floor-supported eye-level movement. Drag to look, tap **前進 / 後退**, or focus the canvas and use W/S or up/down. Reset returns to the entry pose; **返回旋轉** restores overview. This conservatively checks supported single-level floor geometry and mesh obstacles; unsupported models keep overview with walking unavailable. See [lightweight walkthrough](lightweight-walkthrough.md) for limits, resource budgets and verification. Lighting and source GLB downloads remain the same in both modes.
+
 Reopen with `review --existing /project/review`; stop its local server with the same arguments plus `--stop`. `--no-open` serves for automated browser checks, and `--no-serve` builds artifacts only. The server exposes only its built UI and selected review artifacts on loopback, not the workspace root.
 
 ## Same space, several alternatives

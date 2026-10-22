@@ -3,6 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { createLightingPreview } from "./lighting.js";
+import { createWalkthrough } from "./walkthrough.js";
 const $ = (id) => document.getElementById(id);
 export async function loadModel(
   isActive,
@@ -23,30 +24,30 @@ export async function loadModel(
   renderer.localClippingEnabled = true;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color("#e9e4d9");
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const room = new RoomEnvironment();
-  const environment = pmrem.fromScene(room, 0.04);
-  scene.environment = environment.texture;
+  let environment;
+  function refreshEnvironment() {
+    environment?.dispose();
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const room = new RoomEnvironment();
+    environment = pmrem.fromScene(room, 0.04);
+    scene.environment = environment.texture;
+    room.dispose();
+    pmrem.dispose();
+  }
+  refreshEnvironment();
   scene.environmentIntensity = 0.55;
-  room.dispose();
-  pmrem.dispose();
   const camera = new THREE.PerspectiveCamera(40, 1, 0.01, 200);
-  host.replaceChildren(renderer.domElement);
   renderer.domElement.tabIndex = 0;
   renderer.domElement.setAttribute(
     "aria-label",
     "3D 空間：拖曳旋轉、滾輪縮放、方向鍵平移",
   );
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.autoRotate = false;
-  controls.autoRotateSpeed = 0.35;
-  controls.listenToKeyEvents(renderer.domElement);
+  let controls;
   let gltf;
   try {
     gltf = await new GLTFLoader().loadAsync(url);
   } catch (error) {
-    controls.dispose();
+    controls?.dispose();
     environment.dispose();
     renderer.dispose();
     renderer.domElement.remove();
@@ -54,10 +55,26 @@ export async function loadModel(
   }
   let disposed = false;
   let lighting;
+  let walk;
+  let dirty = true;
+  const invalidate = () => { dirty = true; };
+  const events = new AbortController();
   function disposeModel() {
     if (disposed) return;
     disposed = true;
     renderer.setAnimationLoop(null);
+    events.abort();
+    if (walk) {
+      for (const id of ["walk", "rotate", "reset"]) $(id).onclick = null;
+      $("walls").onchange = null;
+      $("walls").disabled = false;
+      $("rotate").disabled = false;
+      $("walk-tools").hidden = true;
+      $("walk-availability").hidden = true;
+      $("walk").setAttribute("aria-pressed", "false");
+      $("walk").textContent = "走入空間";
+    }
+    walk?.dispose();
     lighting?.dispose();
     gltf.scene.traverse((node) => {
       node.geometry?.dispose();
@@ -71,7 +88,7 @@ export async function loadModel(
         material.dispose();
       }
     });
-    controls.dispose();
+    controls?.dispose();
     environment.dispose();
     renderer.dispose();
     renderer.domElement.remove();
@@ -80,13 +97,26 @@ export async function loadModel(
     disposeModel();
     return { dispose: disposeModel };
   }
+  // Bind controls only after the request wins ownership. Pending canvases may
+  // otherwise be detached by a newer load before OrbitControls disconnects its
+  // document-level listener, leaving stale controls retained by the document.
+  host.replaceChildren(renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.autoRotate = false;
+  controls.autoRotateSpeed = 0.35;
+  controls.listenToKeyEvents(renderer.domElement);
+  controls.addEventListener("change", invalidate);
+  document.addEventListener("visibilitychange", invalidate, {signal: events.signal});
+  renderer.domElement.addEventListener("webglcontextrestored", () => {
+    refreshEnvironment();
+    lighting?.updateShadows();
+    invalidate();
+  }, {signal: events.signal});
   scene.add(gltf.scene);
   const bounds = new THREE.Box3().setFromObject(gltf.scene);
   if (bounds.isEmpty()) {
-    controls.dispose();
-    environment.dispose();
-    renderer.dispose();
-    renderer.domElement.remove();
+    disposeModel();
     throw new Error("模型沒有可檢視的幾何");
   }
   const center = bounds.getCenter(new THREE.Vector3());
@@ -104,6 +134,7 @@ export async function loadModel(
   const cutCenter = center.clone();
   cutCenter.y = bounds.min.y + (cutHeight - bounds.min.y) / 2;
   function reset() {
+    if (walk?.enabled) { walk.reset(); return; }
     const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
     const horizontal = Math.atan(Math.tan(vertical) * camera.aspect);
     const distance = (radius / Math.sin(Math.min(vertical, horizontal))) * 1.08;
@@ -173,13 +204,37 @@ export async function loadModel(
       material.needsUpdate = true;
     });
     controls.target.copy(complete ? center : cutCenter);
-    controls.update();
+    if (!walk?.enabled) controls.update();
     lighting?.updateShadows();
+    invalidate();
   };
   toggleWalls();
   lighting = createLightingPreview(scene, gltf.scene, renderer, bounds);
   $("walls").onchange = toggleWalls;
   $("reset").onclick = reset;
+  walk = createWalkthrough(gltf.scene, bounds, camera, renderer.domElement, isActive, invalidate);
+  let overviewWalls = false;
+  $("walk").onclick = () => {
+    const entering = !walk.enabled;
+    controls.autoRotate = false;
+    // Clear residual OrbitControls damping before changing camera ownership.
+    controls.enableDamping = false;
+    controls.update();
+    controls.enableDamping = true;
+    camera.fov = entering ? 65 : 40;
+    camera.updateProjectionMatrix();
+    controls.enabled = !entering;
+    controls.enableZoom = !entering;
+    controls.enablePan = !entering;
+    if (entering) overviewWalls = $("walls").checked;
+    $("walls").checked = entering ? true : overviewWalls;
+    $("walls").disabled = entering;
+    toggleWalls();
+    walk.setEnabled(entering);
+    $("rotate").disabled = entering;
+    if (!entering) reset();
+    rotateLabel();
+  };
   function rotateLabel() {
     $("rotate").textContent = controls.autoRotate ? "暫停旋轉" : "開始旋轉";
   }
@@ -187,24 +242,36 @@ export async function loadModel(
   $("rotate").onclick = () => {
     controls.autoRotate = !controls.autoRotate;
     rotateLabel();
+    invalidate();
   };
   function resize() {
     if (!host.clientWidth || !host.clientHeight) return;
     camera.aspect = host.clientWidth / host.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(host.clientWidth, host.clientHeight, false);
-    if (!userMoved) reset();
+    if (!userMoved && !walk?.enabled) reset();
+    invalidate();
   }
   const observer = new ResizeObserver(resize);
   observer.observe(host);
   resize();
-  renderer.setAnimationLoop(() => {
-    if (!isActive() || document.hidden) return;
-    controls.update();
+  let lastTime = performance.now();
+  let wasActive = false;
+  renderer.setAnimationLoop((time) => {
+    const dt = (time - lastTime) / 1000;
+    lastTime = time;
+    walk.update(dt);
+    const active = isActive() && !document.hidden;
+    if (active && !wasActive) invalidate();
+    wasActive = active;
+    if (!active) return;
+    const changed = walk.enabled ? false : controls.update();
+    if (!dirty && !changed) return;
     renderer.render(scene, camera);
+    dirty = false;
   });
   return {
-    setLighting: (state) => lighting.setLighting(state),
+    setLighting: (state) => { invalidate(); return lighting.setLighting(state); },
     getLighting: () => lighting.getLighting(),
     dispose() {
       observer.disconnect();

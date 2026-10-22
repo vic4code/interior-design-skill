@@ -210,6 +210,7 @@ async function setMode(mode) {
   $("zoom-controls").hidden = !["layout", "drawings", "mep"].includes(mode);
   $("model-controls").hidden = mode !== "model";
   $("lighting-controls").hidden = mode !== "model";
+  $("walk-tools").hidden = mode !== "model" || $("walk").getAttribute("aria-pressed") !== "true";
   $("presentation-controls").hidden = mode !== "render";
   const sheet = mode === "layout" ? layout : currentSheet();
   const file =
@@ -233,7 +234,7 @@ async function setMode(mode) {
       : presentation?.kind === "model-render"
         ? "模型基底 · 幾何檢查"
         : "IMAGE GEN · 空間設計效果",
-    model: "3D 空間 · 拖曳旋轉 / 滾輪縮放",
+    model: "3D 空間 · 旋轉檢視 / 走入空間",
     layout: "平面配置 · 家具位置與日常動線",
     mep: `${sheet?.id || ""} · 機電協調配置`,
     drawings: `${sheet?.id || ""} · ${sheet?.scale || "依圖面標註比例"}`,
@@ -244,7 +245,7 @@ async function setMode(mode) {
     drawings: "給設計師與工班核對：尺寸定位、立面剖面、櫃體板厚與節點，依圖號查閱。",
     mep: sheet?.status ? `機電協調圖 · ${{ coordination_draft: "協調草案", concept: "概念配置", proposed: "設計提案", "coordination-only": "僅供協調" }[sheet.status] || sheet.status}；設備容量、回路與管線仍需依工程專業覆核。` : "燈具、開關、插座與設備定位。實際提供範圍以圖面為準。",
     render: "選擇已完成的空間與視角，查看 image gen 設計效果。",
-    model: "旋轉空間，核對家具配置與尺度；切換白天、夜晚及室內燈，預覽光線層次。",
+    model: "旋轉或走入空間，核對家具配置與尺度；切換白天、夜晚及室內燈，預覽光線層次。",
   }[mode];
   if (mode === "mep" && sheet?.reference) $("mode-context").textContent += ` ${sheet.reference}`;
   $("hint").textContent =
@@ -255,7 +256,7 @@ async function setMode(mode) {
           ? "風格概念圖；尚未與實際空間幾何核對。"
           : "以空間輪廓與視角引導生成；材質與細節為設計模擬，尺寸仍以圖面為準。"
       : mode === "model"
-        ? "拖曳旋轉、滾輪縮放，方向鍵可平移。光線為視覺預覽；燈位、回路與設備規格請見機電圖面。"
+        ? "旋轉模式可縮放與平移；走入空間後拖曳環視，按前進／後退或 W/S、上下鍵移動。單層地板與障礙檢查為保守預覽。光線為視覺預覽；燈位、回路與設備規格請見機電圖面。"
         : "整張圖面自動符合畫框；放大後可拖曳或用方向鍵平移，也可開啟原圖。施工前請覆核尺寸、五金與現場條件。";
   status("");
   if (["layout", "drawings", "mep"].includes(mode) && sheet) {
