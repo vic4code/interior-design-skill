@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add reference-driven residential delivery scope covering distinct plan disciplines, room-by-room elevations, internal details and acceptance evidence.
+- Add a standard-library acceptance checker for scope coverage, artifact integrity, revisions and explicit holds; it does not approve technical content.
+- Keep the fictional demo separate from full residential delivery acceptance.
+
+## Unreleased
+
 - Add opt-in eye-level forward/back walking in the existing Three.js viewer, with phone step buttons, focused keyboard controls, floor support and conservative obstacle checks, reset and return to overview.
 - Reuse materials, full enclosure and lighting with no new runtime dependency or model assets; skip settled and hidden-view rendering.
 - Document the single-level preview limits and reproducible resource/navigation acceptance checks.

@@ -23,6 +23,8 @@ For the next iteration, ask only for information that changes a consequential de
 
 ## Cover the requested work
 
+For full residential work or a supplied professional example, first use [delivery-scope.md](delivery-scope.md) and its catalog to establish the actual drawing/acceptance matrix. This reference supplies the specification, interface, quotation and readiness records for that matrix.
+
 Build a coverage matrix with `scope_id, room, trade, required_output, artifact_reference, status, gap_issue_ids`. Select relevant rows rather than generating a fixed sheet count. Explicitly mark irrelevant disciplines with a reason; absent evidence is a gap, not an exemption.
 
 - Existing/demolition/proposed work: retained elements, removals and new work, setting-out faces, openings and critical clearances.

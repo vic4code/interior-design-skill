@@ -35,6 +35,18 @@
       "prompt": "我只有一張別人家的手機截圖，上面有插座編號和給排水路徑。照這種專業程度幫我準備自己家的水電發包圖，目前沒有尺寸、設備或現況管線資料。",
       "expected_output": "A useful initial inventory and coordination scope that separates screenshot inspiration from site evidence, targeted requests for calibration, actual equipment and existing services, linked unknowns and work they hold, and an honest achieved-purpose assessment. Do not infer final circuiting, cable/pipe sizes, drainage slopes, concealed routes, quantities, prices or construction approval from the screenshot.",
       "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "這是某設計師的完整交付參考：設計平面、放樣、天花、空調、地坪、水電、燈具位置、開關控制八類平面，另有房間立面索引、各向立面、櫃體內部與衛浴詳圖，以及四張效果圖。請依它規劃我家客廳、主臥、次臥的設計交付與驗收；不要複製參考案尺寸。",
+      "expected_output": "Read delivery-scope and the catalog; build project-specific scope and input registers. Separate plan disciplines, enumerate each room’s elevations and visuals with explicit gaps or justified exclusions, locate internal/section details, and state actual artifact evidence. Keep reference geometry/products private and distinct from site evidence. A passing file checker is only ready_for_review, never construction approval.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "參考圖的天花高度註明未扣木地板，立面卻標在完成面上；同一圖冊各頁日期也不同。現在拿內附八張 demo 當成完整全屋施工交付，直接驗收可以嗎？",
+      "expected_output": "Detect and record the datum/revision conflicts, request actual floor build-up and site/structural evidence, and hold affected work. Actually run the demo and full-residential acceptance inventory; report missing ceiling/HVAC/floor/control and per-room outputs. Do not certify the sample or invent successful dimensional review.",
+      "files": []
     }
   ]
 }

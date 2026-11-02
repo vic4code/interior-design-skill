@@ -92,12 +92,16 @@ def main():
     browser_arguments(native)
     # Advanced actions retain their established arguments behind the same entry point.
     for name, description in [('install', 'Copy the complete skill into an agent host.'),
+                              ('acceptance', 'Check delivery coverage, recorded evidence and unresolved work.'),
                               ('project', 'Validate/build a starter project JSON.'),
                               ('verify', 'Verify a starter output package.'),
                               ('render', 'Optional procedural Blender style study (requires Blender).')]:
         commands.add_parser(name, help=description, add_help=False)
-    if len(sys.argv) > 1 and sys.argv[1] in ('install', 'project', 'verify', 'render'):
+    if len(sys.argv) > 1 and sys.argv[1] in ('install', 'acceptance', 'project', 'verify', 'render'):
         command = sys.argv[1]
+        if command == 'acceptance':
+            from verify_scope import main as acceptance_main
+            raise SystemExit(acceptance_main(sys.argv[2:]))
         helper = dict(install='install_skill', project='project', verify='verify_outputs', render='render_style_studies')[command]
         if command == 'render':
             binary = shutil.which('blender')
