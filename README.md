@@ -176,6 +176,8 @@ A reproducible synthetic **eight-sheet A3 example** shares the same room geometr
 
 Project drawings should include room/use labels, internal dimension chains, openings, section/detail references, component information and material/hardware decisions—not only mesh outlines and outer bounds. Model-derived coordination drawings still require site, product, fixing and trade review before construction or fabrication release.
 
+Full residential delivery follows a [reference-driven scope and acceptance matrix](skills/interior-design/references/delivery-scope.md): distinct plan disciplines, room-by-room elevations, internal/section details, specifications and recorded holds. The [catalog](skills/interior-design/assets/delivery-scope.json) defines the full profile; smaller commissions use a justified custom scope. The `acceptance` command checks declared coverage and file evidence. Its best result is `ready_for_review`, not a technical or construction approval.
+
 ## Try the complete example
 
 From a checkout, use Python 3.11+ to open the bundled four-style example **automatically in your browser**:

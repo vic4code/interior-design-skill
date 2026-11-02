@@ -1,0 +1,252 @@
+{
+  "format": "interior-delivery-catalog-v1",
+  "profile": "full-residential",
+  "categories": [
+    {
+      "id": "basis",
+      "title": "現況、量測與限制",
+      "checks": [
+        "source_revision",
+        "dimension_basis",
+        "levels_and_datum"
+      ],
+      "artifact_types": [
+        ".md",
+        ".csv",
+        ".json",
+        ".xlsx",
+        ".pdf"
+      ]
+    },
+    {
+      "id": "sheet_register",
+      "title": "圖冊目錄與修訂",
+      "checks": [
+        "sheet_locators",
+        "revision_units_scale"
+      ],
+      "artifact_types": [
+        ".md",
+        ".csv",
+        ".json",
+        ".xlsx",
+        ".pdf"
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "設計配置平面",
+      "checks": [
+        "rooms_furniture_circulation",
+        "plan_agreement"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "setting_out",
+      "title": "放樣與隔間",
+      "checks": [
+        "reference_faces_dimensions",
+        "build_up_backing"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "ceiling",
+      "title": "天花平面與節點",
+      "checks": [
+        "levels_and_datum",
+        "recess_tracks_access"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "hvac",
+      "title": "空調配置與檢修",
+      "checks": [
+        "equipment_routes_clearance",
+        "service_access"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "floor_finish",
+      "title": "地坪配置",
+      "checks": [
+        "material_boundaries_direction",
+        "levels_transitions_quantities"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "power_data",
+      "title": "強弱電與設備點位",
+      "checks": [
+        "point_location_height_legend",
+        "equipment_existing_proposed"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "lighting",
+      "title": "燈具配置",
+      "checks": [
+        "fixture_positions_legend",
+        "driver_sensor_access"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "lighting_controls",
+      "title": "燈具開關控制",
+      "checks": [
+        "switch_fixture_mapping",
+        "control_height_existing_proposed"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "elevation_key",
+      "title": "立面索引",
+      "checks": [
+        "room_direction_locators",
+        "targets_resolve"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "elevations",
+      "title": "分區各向立面",
+      "checks": [
+        "plan_elevation_dimensions",
+        "vertical_datums_materials"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "joinery_details",
+      "title": "櫃體內外與剖詳圖",
+      "checks": [
+        "outer_internal_sections",
+        "hardware_gaps_fixing"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "materials_equipment",
+      "title": "材料、五金與設備表",
+      "checks": [
+        "product_selection_status",
+        "drawing_spec_links"
+      ],
+      "artifact_types": [
+        ".md",
+        ".csv",
+        ".json",
+        ".xlsx",
+        ".pdf"
+      ]
+    },
+    {
+      "id": "wet_area",
+      "title": "衛浴與濕區介面",
+      "checks": [
+        "fixtures_levels_build_up",
+        "waterproof_drain_review"
+      ],
+      "artifact_types": [
+        ".pdf",
+        ".svg",
+        ".dxf"
+      ]
+    },
+    {
+      "id": "visualizations",
+      "title": "分空間設計效果",
+      "checks": [
+        "room_view_coverage",
+        "source_revision_geometry_review"
+      ],
+      "artifact_types": [
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".webp"
+      ]
+    },
+    {
+      "id": "coordination_records",
+      "title": "界面、待決與驗收紀錄",
+      "checks": [
+        "located_issues_roles_milestones",
+        "scope_readiness_holds"
+      ],
+      "artifact_types": [
+        ".md",
+        ".csv",
+        ".json",
+        ".xlsx",
+        ".pdf"
+      ]
+    },
+    {
+      "id": "quotation",
+      "title": "詢價工程範圍與數量",
+      "checks": [
+        "quantity_basis_inclusions",
+        "allowances_alternatives"
+      ],
+      "artifact_types": [
+        ".md",
+        ".csv",
+        ".json",
+        ".xlsx",
+        ".pdf"
+      ]
+    }
+  ]
+}
